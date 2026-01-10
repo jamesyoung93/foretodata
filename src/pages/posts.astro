@@ -1,0 +1,119 @@
+---
+import Base from '../layouts/Base.astro';
+
+// In the future, you'll import your blog posts here
+// import { getCollection } from 'astro:content';
+// const posts = await getCollection('blog');
+
+const posts = [
+  {
+    slug: 'causal-inference-primer',
+    title: 'A Practical Guide to Causal Inference in ML',
+    date: '2024-01-15',
+    summary: 'Moving beyond correlation to understand what actually drives your metrics.',
+    tags: ['causal-inference', 'tutorial'],
+  },
+  {
+    slug: 'llm-production-lessons',
+    title: 'Lessons from Deploying LLMs in Production',
+    date: '2024-02-20',
+    summary: 'What I learned shipping LLM applications to real users.',
+    tags: ['llms', 'mlops'],
+  },
+  {
+    slug: 'interpretable-ml-business',
+    title: 'Why Interpretable ML Wins in Business',
+    date: '2024-03-10',
+    summary: 'How SHAP and LIME help you get buy-in from stakeholders.',
+    tags: ['interpretable-ml', 'business'],
+  },
+];
+---
+
+<Base title="Posts | James Young">
+  <Fragment slot="sidebar">
+    <div class="space-y-6">
+      <div>
+        <h2 class="text-terminal-dim text-xs uppercase tracking-wider mb-3">Navigation</h2>
+        <ul class="space-y-1">
+          <li>
+            <a href="/" class="flex items-center gap-2 py-1.5 px-2 rounded text-sm text-terminal-dim hover:bg-terminal-accent/10 hover:text-terminal-accent transition-colors">
+              <span class="text-terminal-accent/50">←</span>
+              <span>Back to Home</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      
+      <div>
+        <h2 class="text-terminal-dim text-xs uppercase tracking-wider mb-3">Topics</h2>
+        <ul class="space-y-1 text-sm">
+          <li>
+            <a href="#" class="block py-1 px-2 text-terminal-dim hover:text-terminal-accent transition-colors">
+              # causal-inference
+            </a>
+          </li>
+          <li>
+            <a href="#" class="block py-1 px-2 text-terminal-dim hover:text-terminal-accent transition-colors">
+              # llms
+            </a>
+          </li>
+          <li>
+            <a href="#" class="block py-1 px-2 text-terminal-dim hover:text-terminal-accent transition-colors">
+              # mlops
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </Fragment>
+
+  <div class="max-w-3xl">
+    <header class="mb-12">
+      <span class="text-terminal-accent font-mono text-sm">~/posts</span>
+      <h1 class="font-display text-4xl font-bold text-terminal-text mt-4 mb-4">
+        Writing
+      </h1>
+      <p class="text-terminal-dim">
+        Thoughts on ML, AI, and building things that work.
+      </p>
+    </header>
+
+    <div class="space-y-4">
+      {posts.map((post) => (
+        <article class="group border border-terminal-border rounded-lg p-5 bg-terminal-surface/30 hover:border-terminal-muted hover:bg-terminal-surface/50 transition-all">
+          <a href={`/posts/${post.slug}`} class="block">
+            <div class="flex items-start justify-between gap-4">
+              <div class="flex-1">
+                <time class="text-terminal-dim text-xs font-mono">{post.date}</time>
+                <h2 class="font-display text-lg font-medium text-terminal-text group-hover:text-terminal-accent transition-colors mt-1 mb-2">
+                  {post.title}
+                </h2>
+                <p class="text-terminal-dim text-sm">
+                  {post.summary}
+                </p>
+                <div class="flex gap-2 mt-3">
+                  {post.tags.map((tag) => (
+                    <span class="text-xs text-terminal-accent/70">#{tag}</span>
+                  ))}
+                </div>
+              </div>
+              <span class="text-terminal-dim group-hover:text-terminal-accent transition-colors shrink-0">
+                →
+              </span>
+            </div>
+          </a>
+        </article>
+      ))}
+    </div>
+
+    <div class="mt-12 p-6 border border-dashed border-terminal-border rounded-lg text-center">
+      <p class="text-terminal-dim text-sm mb-3">
+        Want more? Subscribe to the newsletter.
+      </p>
+      <a href="/newsletter" class="inline-flex items-center gap-2 px-4 py-2 bg-terminal-accent text-terminal-bg font-medium text-sm rounded hover:shadow-glow transition-shadow">
+        Subscribe →
+      </a>
+    </div>
+  </div>
+</Base>
