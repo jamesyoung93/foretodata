@@ -246,6 +246,17 @@ const { title = "James Young | ML & AI Expert" } = Astro.props;
         width: 100%;
       }
 
+      .hover-highlight {
+        transition: all 0.2s;
+      }
+
+      .hover-highlight:hover,
+      .hover-highlight:focus-visible {
+        background: rgba(0, 255, 136, 0.2) !important;
+        color: var(--accent) !important;
+        box-shadow: 0 0 14px rgba(0, 255, 136, 0.35);
+      }
+
       .terminal-prompt {
         margin-top: 1rem;
         color: rgba(128, 128, 128, 0.5);
@@ -645,6 +656,13 @@ const { title = "James Young | ML & AI Expert" } = Astro.props;
         box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
       }
 
+      .cta-button.hover-highlight:hover,
+      .cta-button.hover-highlight:focus-visible {
+        background: var(--accent) !important;
+        color: var(--bg) !important;
+        box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+      }
+
       /* Overlays */
       .scanline-overlay {
         pointer-events: none;
@@ -710,7 +728,7 @@ const { title = "James Young | ML & AI Expert" } = Astro.props;
       <!-- Left Sidebar / Navigation -->
       <aside class="sidebar">
         <header class="sidebar-header">
-          <a href="/foretodata/">
+          <a href="/foretodata/" class="hover-highlight">
             <div class="site-title-row">
               <span class="arrow">▸</span>
               <h1 class="site-title">James Young</h1>
@@ -725,11 +743,11 @@ const { title = "James Young | ML & AI Expert" } = Astro.props;
         
         <footer class="sidebar-footer">
           <div class="footer-links">
-            <a href="https://www.linkedin.com/in/jamesyoungsd/" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.linkedin.com/in/jamesyoungsd/" class="hover-highlight" target="_blank" rel="noopener noreferrer">
               LinkedIn
             </a>
-            <a href="/foretodata/about">About</a>
-            <a href="/foretodata/posts">Posts</a>
+            <a href="/foretodata/about" class="hover-highlight">About</a>
+            <a href="/foretodata/posts" class="hover-highlight">Posts</a>
           </div>
           <div class="terminal-prompt">
             <span class="dollar">$</span> foretodata.com
