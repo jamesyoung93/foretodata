@@ -337,8 +337,8 @@ body {
   text-shadow: 0 0 12px rgba(0, 255, 136, 0.4);
 }
 
-/* Animated ASCII Hero */
-.ascii-hero-container {
+/* Animated ASCII Hero - 3-Panel Grid Layout */
+.ascii-hero-wrapper {
   margin: 1.5rem 0;
   padding: 1rem;
   background: rgba(0, 0, 0, 0.3);
@@ -348,7 +348,7 @@ body {
   overflow: hidden;
 }
 
-.ascii-hero-container::before {
+.ascii-hero-wrapper::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -361,103 +361,154 @@ body {
   pointer-events: none;
 }
 
-.ascii-hero-label {
+/* Unifying header tagline */
+.ascii-hero-header {
+  text-align: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.ascii-hero-tagline {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--dim);
+  opacity: 0.8;
+}
+
+/* 3-column grid layout */
+.ascii-panels-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+/* Individual panel styling */
+.ascii-panel {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ascii-panel:hover {
+  border-color: var(--muted);
+}
+
+/* Panel header */
+.ascii-panel-header {
   display: flex;
   flex-direction: column;
   margin-bottom: 0.5rem;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.ascii-hero-main {
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.15em;
+.ascii-panel-title {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
-.ascii-hero-sub {
-  font-size: 0.65rem;
+.ascii-panel-subtitle {
+  font-size: 0.55rem;
   opacity: 0.6;
   font-style: italic;
+  margin-top: 0.125rem;
 }
 
-.ascii-hero {
+/* Panel ASCII art */
+.ascii-panel-art {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
-  line-height: 1.2;
+  font-size: 0.6rem;
+  line-height: 1.15;
   white-space: pre;
   margin: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  min-height: 14rem;
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 8rem;
 }
 
-.ascii-hero.transitioning {
-  opacity: 0;
-  transform: scale(0.98);
+/* Panel metrics */
+.ascii-metrics {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.55rem;
+}
+
+.metric-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.125rem 0;
+}
+
+.metric-label {
+  opacity: 0.7;
+  font-weight: 500;
+}
+
+.metric-value {
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.metric-up {
+  color: var(--accent) !important;
+}
+
+.metric-down {
+  color: var(--accent) !important;
+}
+
+.status-active {
+  animation: status-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes status-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
 }
 
 /* Color variants with glow effects */
-.ascii-hero.text-accent,
-.ascii-hero-label.text-accent {
+.ascii-panel.text-accent {
   color: var(--accent);
-  text-shadow: 0 0 15px rgba(0, 255, 136, 0.5),
-               0 0 30px rgba(0, 255, 136, 0.2);
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.4),
+               0 0 20px rgba(0, 255, 136, 0.15);
 }
 
-.ascii-hero.text-cyan,
-.ascii-hero-label.text-cyan {
+.ascii-panel.text-accent:hover {
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.15);
+}
+
+.ascii-panel.text-cyan {
   color: var(--cyan);
-  text-shadow: 0 0 15px rgba(0, 212, 255, 0.5),
-               0 0 30px rgba(0, 212, 255, 0.2);
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.4),
+               0 0 20px rgba(0, 212, 255, 0.15);
 }
 
-.ascii-hero.text-amber,
-.ascii-hero-label.text-amber {
+.ascii-panel.text-cyan:hover {
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
+}
+
+.ascii-panel.text-amber {
   color: var(--amber);
-  text-shadow: 0 0 15px rgba(255, 170, 0, 0.5),
-               0 0 30px rgba(255, 170, 0, 0.2);
+  text-shadow: 0 0 10px rgba(255, 170, 0, 0.4),
+               0 0 20px rgba(255, 170, 0, 0.15);
 }
 
-/* Scene indicator dots */
-.ascii-scene-indicators {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 0.75rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--border);
-}
-
-.scene-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--muted);
-  transition: all 0.3s ease;
-}
-
-.scene-dot.active {
-  background: var(--accent);
-  box-shadow: 0 0 8px rgba(0, 255, 136, 0.6);
-  transform: scale(1.3);
-}
-
-/* Pulsing animation for active dot */
-@keyframes pulse-glow {
-  0%, 100% {
-    box-shadow: 0 0 8px rgba(0, 255, 136, 0.6);
-  }
-  50% {
-    box-shadow: 0 0 16px rgba(0, 255, 136, 0.9);
-  }
-}
-
-.scene-dot.active {
-  animation: pulse-glow 2s ease-in-out infinite;
+.ascii-panel.text-amber:hover {
+  box-shadow: 0 0 20px rgba(255, 170, 0, 0.15);
 }
 
 /* Section Headers */
@@ -864,20 +915,54 @@ body {
     font-size: 0.5rem;
   }
 
-  .ascii-hero {
-    font-size: 0.5rem;
-    min-height: 10rem;
+  /* ASCII Hero panels - stack on mobile */
+  .ascii-panels-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
   }
 
-  .ascii-hero-container {
+  .ascii-hero-wrapper {
     padding: 0.75rem;
   }
 
-  .ascii-hero-main {
-    font-size: 0.6rem;
+  .ascii-hero-tagline {
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
   }
 
-  .ascii-hero-sub {
+  .ascii-panel {
+    padding: 0.5rem;
+  }
+
+  .ascii-panel-art {
+    font-size: 0.5rem;
+    min-height: 6rem;
+  }
+
+  .ascii-panel-title {
+    font-size: 0.55rem;
+  }
+
+  .ascii-panel-subtitle {
+    font-size: 0.45rem;
+  }
+
+  .ascii-metrics {
+    font-size: 0.5rem;
+  }
+}
+
+/* Tablet breakpoint - 2 columns then 1 */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .ascii-panels-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ascii-panel:last-child {
+    grid-column: span 2;
+  }
+
+  .ascii-panel-art {
     font-size: 0.55rem;
   }
 }
