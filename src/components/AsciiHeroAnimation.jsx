@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import MolecularViewer from './MolecularViewer';
 import CausalNetworkVisualization from './CausalNetworkVisualization';
+import WaddingtonLandscape from './WaddingtonLandscape';
 
 // ============================================================================
 // PANEL 1: ENZYME ENGINEERING - Navigating sequence space to optimize function
@@ -520,6 +521,7 @@ function AsciiPanel({ panel, frameIndex }) {
   };
 
   // For enzyme panel, use 3D molecular viewer instead of ASCII art
+  // For regulatory panel, use 3D Waddington epigenetic landscape
   // For decision panel, use causal network visualization
   const renderVisualization = () => {
     if (panel.id === 'enzyme') {
@@ -529,6 +531,13 @@ function AsciiPanel({ panel, frameIndex }) {
             allostericPulse={frame.allosteric || [false, false]}
             frameIndex={frameIndex}
           />
+        </div>
+      );
+    }
+    if (panel.id === 'regulatory') {
+      return (
+        <div className="waddington-3d-container">
+          <WaddingtonLandscape frameIndex={frameIndex} />
         </div>
       );
     }
