@@ -337,6 +337,129 @@ body {
   text-shadow: 0 0 12px rgba(0, 255, 136, 0.4);
 }
 
+/* Animated ASCII Hero */
+.ascii-hero-container {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.ascii-hero-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 255, 136, 0.03) 0%,
+    transparent 50%,
+    rgba(0, 212, 255, 0.03) 100%
+  );
+  pointer-events: none;
+}
+
+.ascii-hero-label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.ascii-hero-main {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.ascii-hero-sub {
+  font-size: 0.65rem;
+  opacity: 0.6;
+  font-style: italic;
+}
+
+.ascii-hero {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  line-height: 1.2;
+  white-space: pre;
+  margin: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  min-height: 14rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ascii-hero.transitioning {
+  opacity: 0;
+  transform: scale(0.98);
+}
+
+/* Color variants with glow effects */
+.ascii-hero.text-accent,
+.ascii-hero-label.text-accent {
+  color: var(--accent);
+  text-shadow: 0 0 15px rgba(0, 255, 136, 0.5),
+               0 0 30px rgba(0, 255, 136, 0.2);
+}
+
+.ascii-hero.text-cyan,
+.ascii-hero-label.text-cyan {
+  color: var(--cyan);
+  text-shadow: 0 0 15px rgba(0, 212, 255, 0.5),
+               0 0 30px rgba(0, 212, 255, 0.2);
+}
+
+.ascii-hero.text-amber,
+.ascii-hero-label.text-amber {
+  color: var(--amber);
+  text-shadow: 0 0 15px rgba(255, 170, 0, 0.5),
+               0 0 30px rgba(255, 170, 0, 0.2);
+}
+
+/* Scene indicator dots */
+.ascii-scene-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+}
+
+.scene-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--muted);
+  transition: all 0.3s ease;
+}
+
+.scene-dot.active {
+  background: var(--accent);
+  box-shadow: 0 0 8px rgba(0, 255, 136, 0.6);
+  transform: scale(1.3);
+}
+
+/* Pulsing animation for active dot */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(0, 255, 136, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(0, 255, 136, 0.9);
+  }
+}
+
+.scene-dot.active {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
 /* Section Headers */
 .section-header {
   display: flex;
@@ -739,5 +862,22 @@ body {
 
   .ascii-art {
     font-size: 0.5rem;
+  }
+
+  .ascii-hero {
+    font-size: 0.5rem;
+    min-height: 10rem;
+  }
+
+  .ascii-hero-container {
+    padding: 0.75rem;
+  }
+
+  .ascii-hero-main {
+    font-size: 0.6rem;
+  }
+
+  .ascii-hero-sub {
+    font-size: 0.55rem;
   }
 }
