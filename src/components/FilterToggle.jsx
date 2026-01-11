@@ -1,64 +1,82 @@
 import { useState, useMemo } from 'react';
 
-// Accomplishment data - you'll populate this from your content
+// 6 ML Project Accomplishments
 const accomplishments = [
   {
     id: 1,
     title: "Revenue Optimization Model",
     summary: "Built ML model that lifted B2B conversion rates 23% by identifying high-intent prospects and optimal outreach timing.",
+    goals: ["grow-revenue", "improve-targeting"],
     methods: ["causal-inference", "interpretable-ml"],
-    industries: ["revenue", "b2b-sales"],
-    details: "Used gradient boosting with SHAP explanations to surface the 12 features most predictive of deal closure...",
+    industries: ["b2b-sales", "saas"],
+    details: "Used gradient boosting with SHAP explanations to surface the 12 features most predictive of deal closure. Deployed as real-time scoring API integrated with Salesforce, enabling sales reps to prioritize outreach based on predicted conversion probability and optimal contact timing windows.",
     metrics: ["23% conversion lift", "2.1x ROI on sales spend"],
   },
   {
     id: 2,
     title: "Demand Forecasting Pipeline",
     summary: "Deployed hierarchical forecasting system reducing inventory costs by $2.4M annually through better demand prediction.",
+    goals: ["reduce-costs", "improve-operations"],
     methods: ["mlops", "causal-inference"],
-    industries: ["operations", "supply-chain"],
-    details: "Implemented Prophet + LightGBM ensemble with automated retraining via Airflow...",
+    industries: ["supply-chain", "retail"],
+    details: "Implemented Prophet + LightGBM ensemble with automated retraining via Airflow. System handles 50k SKUs across 200 locations with daily forecast updates. Includes anomaly detection for demand spikes and integration with ERP for automated reorder triggers.",
     metrics: ["$2.4M annual savings", "34% forecast accuracy improvement"],
   },
   {
     id: 3,
     title: "Customer Support Chatbot",
     summary: "Fine-tuned LLM handling 40% of support tickets autonomously with 94% customer satisfaction.",
+    goals: ["reduce-costs", "improve-experience"],
     methods: ["llms", "mlops"],
-    industries: ["operations", "customer-experience"],
-    details: "RAG architecture with custom fine-tuning on 50k historical tickets...",
+    industries: ["customer-support", "e-commerce"],
+    details: "RAG architecture with custom fine-tuning on 50k historical tickets. Includes escalation detection, sentiment monitoring, and seamless handoff to human agents. Integrated with Zendesk for full ticket lifecycle management and automated follow-ups.",
     metrics: ["40% ticket deflection", "94% CSAT score"],
   },
   {
     id: 4,
     title: "Dynamic Pricing Engine",
-    summary: "Causal ML system for real-time price optimization, driving 18% margin improvement.",
+    summary: "Causal ML system for real-time price optimization, driving 18% margin improvement across product catalog.",
+    goals: ["grow-revenue", "improve-margins"],
     methods: ["causal-inference", "interpretable-ml"],
-    industries: ["revenue", "pricing"],
-    details: "Double ML for causal effect estimation combined with contextual bandits...",
+    industries: ["e-commerce", "retail"],
+    details: "Double ML for causal effect estimation combined with contextual bandits for continuous optimization. Handles competitor monitoring, elasticity modeling, and segment-specific pricing. Includes guardrails for price fairness and brand consistency.",
     metrics: ["18% margin improvement", "12% volume increase"],
   },
   {
     id: 5,
     title: "Market Expansion Analysis",
-    summary: "Location intelligence model identifying optimal retail expansion sites with 85% success rate.",
+    summary: "Location intelligence model identifying optimal retail expansion sites with 85% success rate on launched locations.",
+    goals: ["expand-market", "reduce-risk"],
     methods: ["interpretable-ml", "causal-inference"],
-    industries: ["expansion", "retail"],
-    details: "Geospatial features + demographic clustering with explainable predictions...",
+    industries: ["retail", "real-estate"],
+    details: "Geospatial features + demographic clustering with explainable predictions for site selection. Model incorporates foot traffic data, competitor proximity, demographic fit scores, and cannibalization risk assessment. Outputs include confidence intervals and key risk factors.",
     metrics: ["85% site success rate", "14 new locations launched"],
   },
   {
     id: 6,
     title: "Document Intelligence System",
-    summary: "LLM-powered contract analysis reducing legal review time by 60%.",
+    summary: "LLM-powered contract analysis reducing legal review time by 60% while maintaining 99%+ extraction accuracy.",
+    goals: ["reduce-costs", "improve-operations"],
     methods: ["llms", "mlops"],
-    industries: ["operations", "legal"],
-    details: "Custom extraction pipeline with validation workflows...",
+    industries: ["legal", "finance"],
+    details: "Custom extraction pipeline with multi-stage validation workflows. Handles clause identification, obligation extraction, risk flagging, and comparison against standard templates. Includes human-in-the-loop review interface with active learning for continuous improvement.",
     metrics: ["60% time reduction", "99.2% extraction accuracy"],
   },
 ];
 
-// Category definitions
+// Goal Categories (Business Outcomes)
+const goalCategories = {
+  'grow-revenue': { label: 'Grow Revenue', icon: '📈', description: 'Increase sales, conversions, and revenue' },
+  'reduce-costs': { label: 'Reduce Costs', icon: '💰', description: 'Cut operational expenses and inefficiencies' },
+  'improve-operations': { label: 'Improve Operations', icon: '⚡', description: 'Streamline processes and automation' },
+  'improve-experience': { label: 'Improve Experience', icon: '😊', description: 'Enhance customer satisfaction' },
+  'expand-market': { label: 'Expand Market', icon: '🚀', description: 'Enter new markets and segments' },
+  'improve-targeting': { label: 'Improve Targeting', icon: '🎯', description: 'Better audience and lead targeting' },
+  'improve-margins': { label: 'Improve Margins', icon: '📊', description: 'Optimize pricing and profitability' },
+  'reduce-risk': { label: 'Reduce Risk', icon: '🛡️', description: 'Minimize business and operational risk' },
+};
+
+// Method Categories (ML Techniques)
 const methodCategories = {
   'llms': { label: 'LLMs & GenAI', icon: '🔮', description: 'Large language models and generative AI' },
   'interpretable-ml': { label: 'Interpretable ML', icon: '💡', description: 'Transparent models with explainable insights' },
@@ -66,39 +84,59 @@ const methodCategories = {
   'mlops': { label: 'MLOps', icon: '⚙️', description: 'Production ML systems and pipelines' },
 };
 
+// Industry Categories
 const industryCategories = {
-  'revenue': { label: 'Grow Revenue', icon: '💰', description: 'Sales optimization, pricing, conversion' },
-  'operations': { label: 'Streamline Ops', icon: '⚡', description: 'Automation, efficiency, cost reduction' },
-  'expansion': { label: 'Expand Business', icon: '🚀', description: 'Market analysis, location intelligence' },
   'b2b-sales': { label: 'B2B Sales', icon: '🤝', description: 'Enterprise sales and account management' },
-  'pricing': { label: 'Pricing', icon: '📊', description: 'Dynamic pricing and margin optimization' },
+  'saas': { label: 'SaaS', icon: '☁️', description: 'Software as a service' },
   'supply-chain': { label: 'Supply Chain', icon: '📦', description: 'Inventory, logistics, demand planning' },
-  'customer-experience': { label: 'Customer Experience', icon: '💬', description: 'Support, satisfaction, engagement' },
   'retail': { label: 'Retail', icon: '🏪', description: 'Store operations and expansion' },
+  'customer-support': { label: 'Customer Support', icon: '💬', description: 'Help desk and ticket management' },
+  'e-commerce': { label: 'E-commerce', icon: '🛒', description: 'Online retail and marketplaces' },
   'legal': { label: 'Legal', icon: '⚖️', description: 'Contract analysis and compliance' },
+  'finance': { label: 'Finance', icon: '💵', description: 'Financial services and banking' },
+  'real-estate': { label: 'Real Estate', icon: '🏢', description: 'Property and location intelligence' },
 };
 
 export default function FilterToggle() {
-  const [viewMode, setViewMode] = useState('method'); // 'method' or 'industry'
+  const [viewMode, setViewMode] = useState('goal'); // 'goal', 'method', or 'industry'
   const [expandedId, setExpandedId] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
-  const categories = viewMode === 'method' ? methodCategories : industryCategories;
-  const categoryKey = viewMode === 'method' ? 'methods' : 'industries';
+  // Select category based on view mode
+  const getCategoryConfig = () => {
+    switch (viewMode) {
+      case 'goal':
+        return { categories: goalCategories, key: 'goals' };
+      case 'method':
+        return { categories: methodCategories, key: 'methods' };
+      case 'industry':
+        return { categories: industryCategories, key: 'industries' };
+      default:
+        return { categories: goalCategories, key: 'goals' };
+    }
+  };
+
+  const { categories, key: categoryKey } = getCategoryConfig();
 
   // Group accomplishments by selected category type
   const grouped = useMemo(() => {
     const groups = {};
     Object.keys(categories).forEach(cat => {
-      groups[cat] = accomplishments.filter(a => a[categoryKey].includes(cat));
+      groups[cat] = accomplishments.filter(a => a[categoryKey]?.includes(cat));
     });
     return groups;
   }, [viewMode]);
 
   // Filter to show only selected category or all
-  const displayGroups = selectedCategory 
+  const displayGroups = selectedCategory
     ? { [selectedCategory]: grouped[selectedCategory] }
     : grouped;
+
+  const handleViewChange = (mode) => {
+    setViewMode(mode);
+    setSelectedCategory(null);
+    setExpandedId(null);
+  };
 
   return (
     <div>
@@ -107,13 +145,19 @@ export default function FilterToggle() {
           <span className="filter-label">View by:</span>
           <div className="toggle-group">
             <button
-              onClick={() => { setViewMode('method'); setSelectedCategory(null); }}
+              onClick={() => handleViewChange('goal')}
+              className={`toggle-btn ${viewMode === 'goal' ? 'active' : ''}`}
+            >
+              Goal
+            </button>
+            <button
+              onClick={() => handleViewChange('method')}
               className={`toggle-btn ${viewMode === 'method' ? 'active' : ''}`}
             >
               Method
             </button>
             <button
-              onClick={() => { setViewMode('industry'); setSelectedCategory(null); }}
+              onClick={() => handleViewChange('industry')}
               className={`toggle-btn ${viewMode === 'industry' ? 'active' : ''}`}
             >
               Industry
@@ -125,6 +169,7 @@ export default function FilterToggle() {
           <button
             onClick={() => setSelectedCategory(null)}
             className="filter-label hover-highlight"
+            style={{ background: 'none', border: 'none', cursor: 'pointer' }}
           >
             ← Show all
           </button>
@@ -146,7 +191,7 @@ export default function FilterToggle() {
       </div>
 
       {Object.entries(displayGroups).map(([categoryId, items]) => {
-        if (items.length === 0) return null;
+        if (!items || items.length === 0) return null;
         const category = categories[categoryId];
 
         return (
@@ -187,6 +232,16 @@ export default function FilterToggle() {
                     <div className="card-expanded-content">
                       <p className="card-details">{item.details}</p>
                       <div className="tags-group">
+                        <div>
+                          <span className="tags-label">Goals</span>
+                          <div className="tags">
+                            {item.goals.map((goal) => (
+                              <span key={goal} className="tag goal">
+                                {goalCategories[goal]?.label || goal}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
                         <div>
                           <span className="tags-label">Methods</span>
                           <div className="tags">
