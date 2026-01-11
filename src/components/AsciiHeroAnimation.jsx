@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import MolecularViewer from './MolecularViewer';
 
 // ============================================================================
 // PANEL 1: ENZYME ENGINEERING - Navigating sequence space to optimize function
@@ -492,15 +493,32 @@ function AsciiPanel({ panel, frameIndex }) {
     return null;
   };
 
+  // For enzyme panel, use 3D molecular viewer instead of ASCII art
+  const renderVisualization = () => {
+    if (panel.id === 'enzyme') {
+      return (
+        <div className="enzyme-3d-container">
+          <MolecularViewer
+            allostericPulse={frame.allosteric || [false, false]}
+            frameIndex={frameIndex}
+          />
+        </div>
+      );
+    }
+    return (
+      <pre className="ascii-panel-art" aria-hidden="true">
+        {frame.art}
+      </pre>
+    );
+  };
+
   return (
     <div className={`ascii-panel ${panel.color}`}>
       <div className="ascii-panel-header">
         <span className="ascii-panel-title">{panel.title}</span>
         <span className="ascii-panel-subtitle">{panel.subtitle}</span>
       </div>
-      <pre className="ascii-panel-art" aria-hidden="true">
-        {frame.art}
-      </pre>
+      {renderVisualization()}
       {renderMetrics()}
     </div>
   );
