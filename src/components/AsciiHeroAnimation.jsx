@@ -107,56 +107,233 @@ const enzymeFrames = [
 ];
 
 // ============================================================================
-// PANEL 2: REGULATORY CIRCUITS - Network logic controls cellular outcomes
+// PANEL 2: REGULATORY CIRCUITS - Bistable toggle switch controls cell fate
 // ============================================================================
+// Animation tells the story of a bistable genetic switch:
+// - LEFT: Network state with TF1/TF2 mutual repression and expression bars
+// - RIGHT: 2D phenotype space showing cell fate as continuous position
+// - Signal triggers transitions between stable states
+// - Full cycle: 12 frames (~8-9 seconds at 700ms/frame)
 const regulatoryFrames = [
+  // ========== GROWTH STATE (TF1 dominant) ==========
   {
+    // Frame 1: Stable growth state - TF1 high, TF2 low
     art: `
-       ┌───┐  ──▶  ┌───┐
-       │ A │━━━━━▶│ B │
-       └───┘       └───┘
-         │    ╭────╮ ↑
-         ▼    │ FB │─┘
-       ┌───┐  ╰────╯
-       │ C │──┤├──○
-       └───┘  REPR`,
-    growth: '67', stress: 'ACTIVE', bars: '████░░'
+ NETWORK STATE       PHENOTYPE SPACE
+┌──────────────┐   ┌────────────────┐
+│              │   │ S              │
+│  ┌─ TF1 ─┐   │   │ ↑  ○           │
+│  │███████│   │   │ │    ╲         │
+│  └───┬───┘   │   │ │     ╲        │
+│    ⊣─┼─⊣     │   │ │      ╲       │
+│  ┌───┴───┐   │   │ │       ●      │
+│  │░░░░░░░│   │   │ │        ╲  ○  │
+│  └─ TF2 ─┘   │   │ └─────────────→│
+│   ↓     ↓    │   │            G   │
+│ growth stress│   └────────────────┘
+└──────────────┘`,
+    state: 'GROWTH', stability: 94, g: 0.87, s: 0.12
   },
   {
+    // Frame 2: Growth state with repression pulse from TF1
     art: `
-       ┌───┐  ══▶  ┌───┐
-       │ A │══════▶│ B │
-       └───┘       └───┘
-         ║    ╭────╮ ║
-         ▼    │ FB │─╯
-       ┌───┐  ╰────╯
-       │ C │──┤├──●
-       └───┘  REPR`,
-    growth: '71', stress: 'ACTIVE', bars: '█████░'
+ NETWORK STATE       PHENOTYPE SPACE
+┌──────────────┐   ┌────────────────┐
+│              │   │ S              │
+│  ┌─ TF1 ─┐   │   │ ↑  ○           │
+│  │███████│   │   │ │    ╲         │
+│  └───┬───┘   │   │ │     ╲        │
+│    ⊣─●─⊣     │   │ │      ╲       │
+│  ┌───┴───┐   │   │ │       ●      │
+│  │░░░░░░░│   │   │ │        ╲  ○  │
+│  └─ TF2 ─┘   │   │ └─────────────→│
+│   ↓     ↓    │   │            G   │
+│ growth stress│   └────────────────┘
+└──────────────┘`,
+    state: 'GROWTH', stability: 92, g: 0.85, s: 0.14
   },
   {
+    // Frame 3: Signal appears, about to trigger transition
     art: `
-       ┌───┐  ──▶  ┌───┐
-       │ A │━━━━━▶│ B │
-       └───┘       └───┘
-         │    ╭────╮ │
-         ▼    │ FB │◀┘
-       ┌───┐  ╰────╯
-       │ C │──┤├──○
-       └───┘  REPR`,
-    growth: '64', stress: 'MODERATE', bars: '████░░'
+ NETWORK STATE       PHENOTYPE SPACE
+┌──────────────┐   ┌────────────────┐
+│    ⚡signal   │   │ S              │
+│      ↓       │   │ ↑  ○           │
+│  ┌─ TF1 ─┐   │   │ │    ╲         │
+│  │██████░│   │   │ │     ╲        │
+│  └───┬───┘   │   │ │      ╲       │
+│    ⊣─┼─⊣     │   │ │       ●      │
+│  ┌───┴───┐   │   │ │        ╲  ○  │
+│  │░░░░░░░│   │   │ └─────────────→│
+│  └─ TF2 ─┘   │   │            G   │
+│   ↓     ↓    │   │                │
+└──────────────┘   └────────────────┘`,
+    state: 'GROWTH', stability: 78, g: 0.79, s: 0.18
+  },
+  // ========== TRANSITION: GROWTH → STRESS ==========
+  {
+    // Frame 4: Signal triggers, TF1 starts dropping
+    art: `
+ NETWORK STATE       PHENOTYPE SPACE
+┌──────────────┐   ┌────────────────┐
+│    ⚡⚡signal  │   │ S              │
+│      ↓↓      │   │ ↑  ○           │
+│  ┌─ TF1 ─┐   │   │ │    ╲   ·     │
+│  │████░░░│   │   │ │     ╲ ·      │
+│  └───┬───┘   │   │ │      ●       │
+│    ⊣─┼─⊣     │   │ │       ╲      │
+│  ┌───┴───┐   │   │ │        ╲  ○  │
+│  │██░░░░░│   │   │ └─────────────→│
+│  └─ TF2 ─┘   │   │            G   │
+│   ↓     ↓    │   │                │
+└──────────────┘   └────────────────┘`,
+    state: 'transition', stability: 34, g: 0.52, s: 0.48
   },
   {
+    // Frame 5: Mid-transition, crossing the boundary
     art: `
-       ┌───┐  ━━▶  ┌───┐
-       │ A │──────▶│ B │
-       └───┘       └───┘
-         │    ╭────╮ ↑
-         ▼    │ FB │─┤
-       ┌───┐  ╰────╯
-       │ C │──┤├──●
-       └───┘  REPR`,
-    growth: '69', stress: 'ACTIVE', bars: '████░░'
+ NETWORK STATE       PHENOTYPE SPACE
+┌──────────────┐   ┌────────────────┐
+│              │   │ S              │
+│  ┌─ TF1 ─┐   │   │ ↑  ○     ·     │
+│  │██░░░░░│   │   │ │    ╲  ·      │
+│  └───┬───┘   │   │ │     ●        │
+│    ⊣─○─⊣     │   │ │      ╲       │
+│  ┌───┴───┐   │   │ │       ╲      │
+│  │████░░░│   │   │ │        ╲  ○  │
+│  └─ TF2 ─┘   │   │ └─────────────→│
+│   ↓     ↓    │   │            G   │
+│ growth stress│   └────────────────┘
+└──────────────┘`,
+    state: 'transition', stability: 12, g: 0.38, s: 0.61
+  },
+  {
+    // Frame 6: Approaching stress state, TF2 rising
+    art: `
+ NETWORK STATE       PHENOTYPE SPACE
+┌──────────────┐   ┌────────────────┐
+│              │   │ S              │
+│  ┌─ TF1 ─┐   │   │ ↑  ○   ·       │
+│  │█░░░░░░│   │   │ │    ● ·       │
+│  └───┬───┘   │   │ │     ╲        │
+│    ⊣─┼─⊣     │   │ │      ╲       │
+│  ┌───┴───┐   │   │ │       ╲      │
+│  │█████░░│   │   │ │        ╲  ○  │
+│  └─ TF2 ─┘   │   │ └─────────────→│
+│   ↓     ↓    │   │            G   │
+│ growth stress│   └────────────────┘
+└──────────────┘`,
+    state: 'STRESS', stability: 58, g: 0.21, s: 0.78
+  },
+  // ========== STRESS STATE (TF2 dominant) ==========
+  {
+    // Frame 7: Stable stress state - TF2 high, TF1 low
+    art: `
+ NETWORK STATE       PHENOTYPE SPACE
+┌──────────────┐   ┌────────────────┐
+│              │   │ S              │
+│  ┌─ TF1 ─┐   │   │ ↑  ●           │
+│  │░░░░░░░│   │   │ │    ╲ ·       │
+│  └───┬───┘   │   │ │     ╲        │
+│    ⊣─┼─⊣     │   │ │      ╲       │
+│  ┌───┴───┐   │   │ │       ╲      │
+│  │███████│   │   │ │        ╲  ○  │
+│  └─ TF2 ─┘   │   │ └─────────────→│
+│   ↓     ↓    │   │            G   │
+│ growth stress│   └────────────────┘
+└──────────────┘`,
+    state: 'STRESS', stability: 89, g: 0.11, s: 0.91
+  },
+  {
+    // Frame 8: Stress state with repression pulse from TF2
+    art: `
+ NETWORK STATE       PHENOTYPE SPACE
+┌──────────────┐   ┌────────────────┐
+│              │   │ S              │
+│  ┌─ TF1 ─┐   │   │ ↑  ●           │
+│  │░░░░░░░│   │   │ │    ╲         │
+│  └───┬───┘   │   │ │     ╲        │
+│    ⊣─●─⊣     │   │ │      ╲       │
+│  ┌───┴───┐   │   │ │       ╲      │
+│  │███████│   │   │ │        ╲  ○  │
+│  └─ TF2 ─┘   │   │ └─────────────→│
+│   ↓     ↓    │   │            G   │
+│ growth stress│   └────────────────┘
+└──────────────┘`,
+    state: 'STRESS', stability: 91, g: 0.13, s: 0.88
+  },
+  {
+    // Frame 9: Signal appears again, about to flip back
+    art: `
+ NETWORK STATE       PHENOTYPE SPACE
+┌──────────────┐   ┌────────────────┐
+│    ⚡signal   │   │ S              │
+│      ↓       │   │ ↑  ●           │
+│  ┌─ TF1 ─┐   │   │ │    ╲         │
+│  │░░░░░░░│   │   │ │     ╲        │
+│  └───┬───┘   │   │ │      ╲       │
+│    ⊣─┼─⊣     │   │ │       ╲      │
+│  ┌───┴───┐   │   │ │        ╲  ○  │
+│  │██████░│   │   │ └─────────────→│
+│  └─ TF2 ─┘   │   │            G   │
+│   ↓     ↓    │   │                │
+└──────────────┘   └────────────────┘`,
+    state: 'STRESS', stability: 76, g: 0.19, s: 0.82
+  },
+  // ========== TRANSITION: STRESS → GROWTH ==========
+  {
+    // Frame 10: Signal triggers, TF2 starts dropping
+    art: `
+ NETWORK STATE       PHENOTYPE SPACE
+┌──────────────┐   ┌────────────────┐
+│    ⚡⚡signal  │   │ S              │
+│      ↓↓      │   │ ↑  ○  ·        │
+│  ┌─ TF1 ─┐   │   │ │    ●         │
+│  │██░░░░░│   │   │ │     ╲        │
+│  └───┬───┘   │   │ │      ╲       │
+│    ⊣─┼─⊣     │   │ │       ╲      │
+│  ┌───┴───┐   │   │ │        ╲  ○  │
+│  │████░░░│   │   │ └─────────────→│
+│  └─ TF2 ─┘   │   │            G   │
+│   ↓     ↓    │   │                │
+└──────────────┘   └────────────────┘`,
+    state: 'transition', stability: 31, g: 0.45, s: 0.52
+  },
+  {
+    // Frame 11: Crossing back toward growth
+    art: `
+ NETWORK STATE       PHENOTYPE SPACE
+┌──────────────┐   ┌────────────────┐
+│              │   │ S              │
+│  ┌─ TF1 ─┐   │   │ ↑  ○           │
+│  │████░░░│   │   │ │    ╲  ·      │
+│  └───┬───┘   │   │ │     ╲ ·      │
+│    ⊣─○─⊣     │   │ │      ●       │
+│  ┌───┴───┐   │   │ │       ╲      │
+│  │██░░░░░│   │   │ │        ╲  ○  │
+│  └─ TF2 ─┘   │   │ └─────────────→│
+│   ↓     ↓    │   │            G   │
+│ growth stress│   └────────────────┘
+└──────────────┘`,
+    state: 'transition', stability: 18, g: 0.58, s: 0.41
+  },
+  {
+    // Frame 12: Approaching growth state again
+    art: `
+ NETWORK STATE       PHENOTYPE SPACE
+┌──────────────┐   ┌────────────────┐
+│              │   │ S              │
+│  ┌─ TF1 ─┐   │   │ ↑  ○           │
+│  │█████░░│   │   │ │    ╲         │
+│  └───┬───┘   │   │ │     ╲  ·     │
+│    ⊣─┼─⊣     │   │ │      ╲ ·     │
+│  ┌───┴───┐   │   │ │       ●      │
+│  │█░░░░░░│   │   │ │        ╲  ○  │
+│  └─ TF2 ─┘   │   │ └─────────────→│
+│   ↓     ↓    │   │            G   │
+│ growth stress│   └────────────────┘
+└──────────────┘`,
+    state: 'GROWTH', stability: 62, g: 0.74, s: 0.25
   },
 ];
 
@@ -214,7 +391,7 @@ const panels = [
   {
     id: 'regulatory',
     title: 'REGULATORY CIRCUITS',
-    subtitle: 'network → expression → phenotype',
+    subtitle: 'network → dynamics → cell fate',
     color: 'text-cyan',
     frames: regulatoryFrames,
   },
@@ -253,15 +430,23 @@ function AsciiPanel({ panel, frameIndex }) {
     }
 
     if (panel.id === 'regulatory') {
+      const isTransition = frame.state === 'transition';
+      const stateClass = isTransition ? 'status-transition' : (frame.state === 'STRESS' ? 'status-stress' : 'status-growth');
       return (
         <div className="ascii-metrics">
           <div className="metric-row">
-            <span className="metric-label">GROWTH:</span>
-            <span className="metric-value">{frame.bars} {frame.growth}%</span>
+            <span className="metric-label">STATE:</span>
+            <span className={`metric-value ${stateClass}`}>
+              {isTransition ? '◇ switching...' : frame.state}
+            </span>
           </div>
           <div className="metric-row">
-            <span className="metric-label">STRESS:</span>
-            <span className="metric-value status-active">{frame.stress}</span>
+            <span className="metric-label">stability:</span>
+            <span className="metric-value">{frame.stability}%</span>
+          </div>
+          <div className="metric-row">
+            <span className="metric-label">position:</span>
+            <span className="metric-value">G:{frame.g.toFixed(2)} S:{frame.s.toFixed(2)}</span>
           </div>
         </div>
       );
@@ -307,11 +492,12 @@ export default function AsciiHeroAnimation() {
   const [frameIndex, setFrameIndex] = useState(0);
 
   // Animation loop for all panels simultaneously
-  // Uses 6 frames for enzyme panel's fitness landscape story
+  // Uses 12 frames for regulatory panel's bistable switch cycle (~8.4s total)
+  // Enzyme (6 frames) and Decision (4 frames) panels cycle within this
   useEffect(() => {
     const frameInterval = setInterval(() => {
-      setFrameIndex((prev) => (prev + 1) % 6);
-    }, 700); // Slightly slower for the narrative to read
+      setFrameIndex((prev) => (prev + 1) % 12);
+    }, 700); // 700ms per frame for readable narrative
 
     return () => clearInterval(frameInterval);
   }, []);
