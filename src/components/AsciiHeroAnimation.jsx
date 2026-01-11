@@ -1,68 +1,108 @@
 import { useState, useEffect } from 'react';
 
 // ============================================================================
-// PANEL 1: ENZYME ENGINEERING - Structure determines function and outcomes
+// PANEL 1: ENZYME ENGINEERING - Navigating sequence space to optimize function
 // ============================================================================
+// Animation tells the story of exploring a fitness landscape:
+// - Tracer moves across rugged landscape (sequence space)
+// - Allosteric sites pulse when big changes happen
+// - Metrics improve as tracer climbs toward global optimum
 const enzymeFrames = [
   {
+    // Frame 1: Starting position - tracer in low valley
     art: `
-    ┌─────────────────────────┐
-    │      ○─○    ●─●        │
-    │     ╱   ╲  ╱   ╲       │
-    │    ●     ○○     ●      │
-    │     ╲   ╱  ╲   ╱       │
-    │      ●─●    ○─○        │
-    │       ╲      ╱         │
-    │    ════╪════╪════      │
-    │         ACTIVE          │
-    │         SITE            │
-    └─────────────────────────┘`,
-    metrics: { kcat: '145', spec: '99.2', stab: '-12.3' }
+ ACTIVE SITE          FITNESS LANDSCAPE
+ ┌──────────────┐    ┌──────────────────┐
+ │    ○───○     │    │        ∧         │
+ │   ╱  ▼  ╲    │    │  ∧    ╱ ╲   ∧∧   │
+ │  ●   ◇   ●   │    │ ╱ ╲  ╱   ╲_╱╲ ╲  │
+ │   ╲     ╱    │    │╱   ╲╱•        ╲╱ │
+ │    ●───●     │    │  sequence space  │
+ │ ○         ○  │    └──────────────────┘
+ │allo     allo│
+ └──────────────┘`,
+    metrics: { kcat: '142', efficiency: '1.2', tm: '68' },
+    allosteric: [false, false]
   },
   {
+    // Frame 2: Climbing local peak - first allosteric pulses
     art: `
-    ┌─────────────────────────┐
-    │      ●─●    ○─○        │
-    │     ╱   ╲  ╱   ╲       │
-    │    ○     ●●     ○      │
-    │     ╲   ╱  ╲   ╱       │
-    │      ○─○    ●─●        │
-    │       ╲      ╱         │
-    │    ════╪════╪════      │
-    │         ACTIVE          │
-    │         SITE            │
-    └─────────────────────────┘`,
-    metrics: { kcat: '147', spec: '99.1', stab: '-12.4' }
+ ACTIVE SITE          FITNESS LANDSCAPE
+ ┌──────────────┐    ┌──────────────────┐
+ │    ○───○     │    │        ∧         │
+ │   ╱  ▼  ╲    │    │  ∧    ╱ ╲   ∧∧   │
+ │  ●   ◆   ●   │    │ ╱•╲  ╱   ╲_╱╲ ╲  │
+ │   ╲     ╱    │    │╱   ╲╱         ╲╱ │
+ │    ●───●     │    │  sequence space  │
+ │ ◉         ○  │    └──────────────────┘
+ │allo     allo│
+ └──────────────┘`,
+    metrics: { kcat: '148', efficiency: '1.3', tm: '70' },
+    allosteric: [true, false]
   },
   {
+    // Frame 3: At local peak - good but not optimal
     art: `
-    ┌─────────────────────────┐
-    │      ◎─○    ○─◎        │
-    │     ╱   ╲  ╱   ╲       │
-    │    ●     ◎◎     ●      │
-    │     ╲   ╱  ╲   ╱       │
-    │      ●─●    ●─●        │
-    │       ╲      ╱         │
-    │    ════╪════╪════      │
-    │         ACTIVE          │
-    │         SITE            │
-    └─────────────────────────┘`,
-    metrics: { kcat: '152', spec: '99.4', stab: '-12.1' }
+ ACTIVE SITE          FITNESS LANDSCAPE
+ ┌──────────────┐    ┌──────────────────┐
+ │    ●───●     │    │        ∧         │
+ │   ╱  ▼  ╲    │    │  •    ╱ ╲   ∧∧   │
+ │  ●   ◆   ●   │    │ ╱ ╲  ╱   ╲_╱╲ ╲  │
+ │   ╲     ╱    │    │╱   ╲╱         ╲╱ │
+ │    ●───●     │    │  sequence space  │
+ │ ◉         ◉  │    └──────────────────┘
+ │allo     allo│
+ └──────────────┘`,
+    metrics: { kcat: '151', efficiency: '1.4', tm: '71' },
+    allosteric: [true, true]
   },
   {
+    // Frame 4: Dropping into valley - exploring further
     art: `
-    ┌─────────────────────────┐
-    │      ●─◎    ◎─●        │
-    │     ╱   ╲  ╱   ╲       │
-    │    ◎     ○○     ◎      │
-    │     ╲   ╱  ╲   ╱       │
-    │      ○─○    ○─○        │
-    │       ╲      ╱         │
-    │    ════╪════╪════      │
-    │         ACTIVE          │
-    │         SITE            │
-    └─────────────────────────┘`,
-    metrics: { kcat: '148', spec: '99.3', stab: '-12.2' }
+ ACTIVE SITE          FITNESS LANDSCAPE
+ ┌──────────────┐    ┌──────────────────┐
+ │    ○───○     │    │        ∧         │
+ │   ╱  ▽  ╲    │    │  ∧    ╱ ╲   ∧∧   │
+ │  ○   ◇   ○   │    │ ╱ ╲  ╱•  ╲_╱╲ ╲  │
+ │   ╲     ╱    │    │╱   ╲╱         ╲╱ │
+ │    ○───○     │    │  sequence space  │
+ │ ○         ○  │    └──────────────────┘
+ │allo     allo│
+ └──────────────┘`,
+    metrics: { kcat: '144', efficiency: '1.2', tm: '69' },
+    allosteric: [false, false]
+  },
+  {
+    // Frame 5: Climbing toward global maximum
+    art: `
+ ACTIVE SITE          FITNESS LANDSCAPE
+ ┌──────────────┐    ┌──────────────────┐
+ │    ●───●     │    │        ∧         │
+ │   ╱  ▼  ╲    │    │  ∧    ╱•╲   ∧∧   │
+ │  ●   ◆   ●   │    │ ╱ ╲  ╱   ╲_╱╲ ╲  │
+ │   ╲     ╱    │    │╱   ╲╱         ╲╱ │
+ │    ●───●     │    │  sequence space  │
+ │ ◉         ○  │    └──────────────────┘
+ │allo     allo│
+ └──────────────┘`,
+    metrics: { kcat: '155', efficiency: '1.5', tm: '72' },
+    allosteric: [true, false]
+  },
+  {
+    // Frame 6: Near global optimum - best metrics
+    art: `
+ ACTIVE SITE          FITNESS LANDSCAPE
+ ┌──────────────┐    ┌──────────────────┐
+ │    ●═══●     │    │        •         │
+ │   ╱  ▼  ╲    │    │  ∧    ╱ ╲   ∧∧   │
+ │  ●   ★   ●   │    │ ╱ ╲  ╱   ╲_╱╲ ╲  │
+ │   ╲     ╱    │    │╱   ╲╱         ╲╱ │
+ │    ●═══●     │    │  sequence space  │
+ │ ◉         ◉  │    └──────────────────┘
+ │allo     allo│
+ └──────────────┘`,
+    metrics: { kcat: '162', efficiency: '1.6', tm: '74' },
+    allosteric: [true, true]
   },
 ];
 
@@ -167,7 +207,7 @@ const panels = [
   {
     id: 'enzyme',
     title: 'ENZYME ENGINEERING',
-    subtitle: 'structure → function → outcome',
+    subtitle: 'sequence → structure → function',
     color: 'text-accent',
     frames: enzymeFrames,
   },
@@ -197,16 +237,16 @@ function AsciiPanel({ panel, frameIndex }) {
       return (
         <div className="ascii-metrics">
           <div className="metric-row">
-            <span className="metric-label">Kcat:</span>
+            <span className="metric-label">kcat:</span>
             <span className="metric-value">{frame.metrics.kcat} s⁻¹</span>
           </div>
           <div className="metric-row">
-            <span className="metric-label">Specificity:</span>
-            <span className="metric-value">{frame.metrics.spec}%</span>
+            <span className="metric-label">kcat/Km:</span>
+            <span className="metric-value">{frame.metrics.efficiency} × 10⁶ M⁻¹s⁻¹</span>
           </div>
           <div className="metric-row">
-            <span className="metric-label">Stability:</span>
-            <span className="metric-value">ΔG {frame.metrics.stab}</span>
+            <span className="metric-label">Tm:</span>
+            <span className="metric-value">{frame.metrics.tm}°C</span>
           </div>
         </div>
       );
@@ -267,10 +307,11 @@ export default function AsciiHeroAnimation() {
   const [frameIndex, setFrameIndex] = useState(0);
 
   // Animation loop for all panels simultaneously
+  // Uses 6 frames for enzyme panel's fitness landscape story
   useEffect(() => {
     const frameInterval = setInterval(() => {
-      setFrameIndex((prev) => (prev + 1) % 4);
-    }, 600); // Slightly slower for readability
+      setFrameIndex((prev) => (prev + 1) % 6);
+    }, 700); // Slightly slower for the narrative to read
 
     return () => clearInterval(frameInterval);
   }, []);
