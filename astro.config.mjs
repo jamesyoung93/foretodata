@@ -3,7 +3,8 @@ import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
-  site: 'https://foretodata.com',
+  site: 'https://jamesyoung93.github.io',
+  base: '/foretodata',
   integrations: [react(), tailwind()],
   output: 'static',
 });
