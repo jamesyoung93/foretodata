@@ -79,14 +79,15 @@ const { title = "James Young | ML & AI Expert" } = Astro.props;
       /* Sidebar */
       .sidebar {
         width: 280px;
-        border-right: 1px solid var(--border);
-        background: rgba(17, 17, 17, 0.5);
+        border-right: 1px solid rgba(0, 255, 136, 0.2);
+        background: linear-gradient(180deg, rgba(10, 22, 12, 0.95) 0%, rgba(10, 12, 10, 0.9) 100%);
         padding: 1.5rem;
         display: flex;
         flex-direction: column;
         position: fixed;
         height: 100vh;
         overflow-y: auto;
+        box-shadow: inset 0 0 0 1px rgba(0, 255, 136, 0.06);
       }
 
       .sidebar-header { margin-bottom: 2rem; }
@@ -123,7 +124,7 @@ const { title = "James Young | ML & AI Expert" } = Astro.props;
       .nav-section { margin-bottom: 1.5rem; }
 
       .nav-section-title {
-        color: var(--dim);
+        color: rgba(0, 255, 136, 0.7);
         font-size: 0.7rem;
         text-transform: uppercase;
         letter-spacing: 0.1em;
@@ -165,19 +166,25 @@ const { title = "James Young | ML & AI Expert" } = Astro.props;
       }
 
       .nav-link:hover {
-        background: rgba(0, 255, 136, 0.08);
-        color: var(--accent);
+        background: rgba(0, 255, 136, 0.85);
+        color: #06140a;
+        box-shadow: 0 0 12px rgba(0, 255, 136, 0.35);
       }
 
       .nav-link:hover::before {
-        height: 60%;
+        height: 70%;
       }
 
       .nav-link .num { color: var(--accent); opacity: 0.5; }
 
+      .nav-link:hover .num {
+        color: #06140a;
+        opacity: 0.85;
+      }
+
       .nav-link.active {
         color: var(--text);
-        background: rgba(0, 255, 136, 0.05);
+        background: rgba(0, 255, 136, 0.12);
       }
 
       .nav-link.active::before {
@@ -309,6 +316,14 @@ const { title = "James Young | ML & AI Expert" } = Astro.props;
         align-items: center;
         gap: 0.75rem;
         margin: 3rem 0 2rem;
+      }
+
+      .section-title {
+        font-family: 'Space Grotesk', system-ui, sans-serif;
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--text);
+        margin: 0 0 0.75rem 0;
       }
 
       .section-path {
