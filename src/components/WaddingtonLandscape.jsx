@@ -3,30 +3,31 @@ import { useEffect, useRef, useState } from 'react';
 // ============================================================================
 // WADDINGTON EPIGENETIC LANDSCAPE VISUALIZATION
 // ============================================================================
-// 3D terrain visualization showing cell fate decisions as valleys (attractors)
+// 3D terrain visualization showing cell phenotype decisions as valleys (attractors)
 // in an epigenetic landscape. A ball (cell) rolls down the landscape, settling
 // into different valleys based on stochastic signals.
 //
 // Valley positions (in normalized terrain coordinates):
 // - STEM (center-back): pluripotent state
-// - PRODUCER (front-left): high productivity fate
-// - SURVIVAL (front-right): stress-adapted fate
-// - SENESCENT (far-right): aged/exhausted fate
+// - PRODUCER (front-left): high productivity phenotype
+// - SURVIVAL (front-right): stress-adapted phenotype
+// - SENESCENT (far-right): aged/exhausted phenotype
 
 // Valley definitions with positions and characteristics
+// Depths increased 3-4x for dramatic mountain range terrain
 const VALLEYS = [
-  { id: 'STEM', label: 'STEM', x: 0, z: -0.3, depth: 0.8, color: '#ffffff' },
-  { id: 'PRODUCER', label: 'PRODUCER', x: -0.5, z: 0.5, depth: 1.2, color: '#00ff88' },
-  { id: 'SURVIVAL', label: 'SURVIVAL', x: 0.5, z: 0.4, depth: 0.9, color: '#ff6b9d' },
-  { id: 'SENESCENT', label: 'SENESCENT', x: 0.8, z: 0.6, depth: 0.6, color: '#ffaa00' },
+  { id: 'STEM', label: 'STEM', x: 0, z: -0.3, depth: 2.8, color: '#ffffff' },
+  { id: 'PRODUCER', label: 'PRODUCER', x: -0.5, z: 0.5, depth: 4.0, color: '#00ff88' },
+  { id: 'SURVIVAL', label: 'SURVIVAL', x: 0.5, z: 0.4, depth: 3.2, color: '#ff6b9d' },
+  { id: 'SENESCENT', label: 'SENESCENT', x: 0.8, z: 0.6, depth: 2.2, color: '#ffaa00' },
 ];
 
-// Cell fate cycle matching the regulatory frames
-const FATE_CYCLE = [
-  { fate: 'PRODUCER', frames: [0, 1, 2] },      // Optimal/Producer state
-  { fate: 'STEM', frames: [3, 4, 5] },          // Transition through stem
-  { fate: 'SURVIVAL', frames: [6, 7, 8] },      // Survival state
-  { fate: 'PRODUCER', frames: [9, 10, 11] },    // Transition back to producer
+// Cell phenotype cycle matching the regulatory frames
+const PHENOTYPE_CYCLE = [
+  { phenotype: 'PRODUCER', frames: [0, 1, 2, 3] },      // Optimal/Producer state
+  { phenotype: 'STEM', frames: [4, 5, 6, 7] },          // Transition through stem
+  { phenotype: 'SURVIVAL', frames: [8, 9, 10, 11] },    // Survival state
+  { phenotype: 'PRODUCER', frames: [12, 13, 14, 15] },  // Transition back to producer
 ];
 
 // Simple noise function for organic terrain
@@ -54,24 +55,28 @@ function fractalNoise(x, z, octaves = 4) {
 
 // Calculate terrain height at a point
 function getTerrainHeight(x, z) {
-  // Base terrain with gentle hills
-  let height = 0.5 + fractalNoise(x * 2, z * 2, 3) * 0.3;
+  // Base terrain with dramatic hills - amplified for mountain range effect
+  let height = 1.2 + fractalNoise(x * 2, z * 2, 4) * 0.6;
 
-  // Add valleys (Gaussian wells)
+  // Add valleys (Gaussian wells) - deeper depressions for dramatic bowls
   VALLEYS.forEach(valley => {
     const dx = x - valley.x;
     const dz = z - valley.z;
     const dist = Math.sqrt(dx * dx + dz * dz);
-    const valleyRadius = 0.35;
+    const valleyRadius = 0.32; // Slightly tighter valleys for more defined basins
 
-    // Gaussian valley shape
+    // Gaussian valley shape with stronger depression
     const depression = valley.depth * Math.exp(-(dist * dist) / (2 * valleyRadius * valleyRadius));
-    height -= depression * 0.5;
+    height -= depression * 0.45;
   });
 
-  // Add ridges between valleys
-  const ridgeNoise = fractalNoise(x * 4 + 10, z * 4 + 10, 2);
-  height += Math.abs(ridgeNoise) * 0.15;
+  // Add pronounced ridges between valleys for mountain peaks
+  const ridgeNoise = fractalNoise(x * 4 + 10, z * 4 + 10, 3);
+  height += Math.abs(ridgeNoise) * 0.35;
+
+  // Add secondary ridge detail
+  const detailNoise = fractalNoise(x * 6, z * 6, 2);
+  height += Math.abs(detailNoise) * 0.15;
 
   return height;
 }
@@ -197,44 +202,51 @@ export default function WaddingtonLandscape({ frameIndex = 0 }) {
         scene.add(ball);
         ballRef.current = ball;
 
-        // Create trail geometry
+        // Create trail geometry - thicker, more visible trail
         const trailGeometry = new THREE.BufferGeometry();
         const trailMaterial = new THREE.LineBasicMaterial({
           color: 0x00d4ff,
           transparent: true,
-          opacity: 0.4,
+          opacity: 0.7, // Increased from 0.4 for better visibility
+          linewidth: 2, // Note: linewidth > 1 only works in some WebGL contexts
         });
         const trailLine = new THREE.Line(trailGeometry, trailMaterial);
         scene.add(trailLine);
         trailRef.current = { line: trailLine, points: [] };
 
-        // Add valley labels as sprites
+        // Add valley labels as sprites - larger, more readable
         VALLEYS.forEach(valley => {
           const canvas = document.createElement('canvas');
           const ctx = canvas.getContext('2d');
-          canvas.width = 128;
-          canvas.height = 32;
+          canvas.width = 256; // Doubled resolution
+          canvas.height = 64;
+
+          // Add subtle text shadow/glow for better readability
+          ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+          ctx.shadowBlur = 6;
+          ctx.shadowOffsetX = 0;
+          ctx.shadowOffsetY = 2;
 
           ctx.fillStyle = valley.color;
-          ctx.font = 'bold 14px JetBrains Mono, monospace';
+          ctx.font = 'bold 22px JetBrains Mono, monospace';
           ctx.textAlign = 'center';
-          ctx.fillText(valley.label, 64, 20);
+          ctx.fillText(valley.label, 128, 40);
 
           const texture = new THREE.CanvasTexture(canvas);
           const spriteMaterial = new THREE.SpriteMaterial({
             map: texture,
             transparent: true,
-            opacity: 0.7,
+            opacity: 0.9, // Increased from 0.7
           });
           const sprite = new THREE.Sprite(spriteMaterial);
 
-          const labelHeight = getTerrainHeight(valley.x, valley.z) - 0.15;
+          const labelHeight = getTerrainHeight(valley.x, valley.z) - 0.1;
           sprite.position.set(
             valley.x * (terrainSize / 2),
             labelHeight,
             valley.z * (terrainSize / 2)
           );
-          sprite.scale.set(0.5, 0.125, 1);
+          sprite.scale.set(0.7, 0.175, 1); // Larger labels
           scene.add(sprite);
         });
 
@@ -242,20 +254,22 @@ export default function WaddingtonLandscape({ frameIndex = 0 }) {
         sceneRef.current = { scene, camera, renderer, terrain, terrainSize };
         setIsLoading(false);
 
-        // Animation loop
+        // Animation loop - slow and contemplative
         let rotationAngle = 0;
+        let frameCount = 0;
         const animate = () => {
           if (!sceneRef.current) return;
+          frameCount++;
 
-          // Slow camera rotation
-          rotationAngle += 0.002;
-          const radius = 3.5;
+          // Very slow camera rotation (50% slower than before)
+          rotationAngle += 0.001;
+          const radius = 3.8;
           camera.position.x = Math.cos(rotationAngle) * radius;
           camera.position.z = Math.sin(rotationAngle) * radius;
-          camera.position.y = 2.8;
-          camera.lookAt(0, 0, 0);
+          camera.position.y = 3.2;
+          camera.lookAt(0, -0.2, 0);
 
-          // Update ball physics
+          // Update ball physics - slow and smooth like rolling through honey
           if (ballRef.current) {
             const ball = ballRef.current;
             const terrainSize = sceneRef.current.terrainSize;
@@ -273,23 +287,34 @@ export default function WaddingtonLandscape({ frameIndex = 0 }) {
             const dz = target.z - normZ;
             const dist = Math.sqrt(dx * dx + dz * dz);
 
-            // Apply force with some damping
-            const force = 0.002;
-            const damping = 0.92;
+            // SLOW physics: reduced force (20-30% of original), high damping
+            // Creates honey-like rolling motion
+            const force = 0.0004; // Reduced from 0.002 (80% slower)
+            const damping = 0.985; // Increased damping for smoother deceleration
 
-            if (dist > 0.05) {
-              velocity.x += (dx / dist) * force;
-              velocity.z += (dz / dist) * force;
+            if (dist > 0.03) {
+              // Ease-out force application: stronger when far, gentle when close
+              const distanceFactor = Math.min(1, dist / 0.5);
+              const easedForce = force * (0.3 + 0.7 * distanceFactor * distanceFactor);
+              velocity.x += (dx / dist) * easedForce;
+              velocity.z += (dz / dist) * easedForce;
             }
 
-            // Add terrain gradient influence
+            // Add terrain gradient influence (reduced for smoother rolling)
             const gradient = getTerrainGradient(normX, normZ);
-            velocity.x -= gradient.x * 0.001;
-            velocity.z -= gradient.z * 0.001;
+            velocity.x -= gradient.x * 0.0003;
+            velocity.z -= gradient.z * 0.0003;
 
-            // Apply damping
+            // Apply damping for smooth deceleration
             velocity.x *= damping;
             velocity.z *= damping;
+
+            // Gentle oscillation when settled in valley (subtle breathing)
+            if (dist < 0.1 && Math.abs(velocity.x) < 0.001 && Math.abs(velocity.z) < 0.001) {
+              const oscillation = Math.sin(frameCount * 0.02) * 0.002;
+              velocity.x += oscillation * (Math.random() - 0.5);
+              velocity.z += oscillation * (Math.random() - 0.5);
+            }
 
             // Update position
             const newNormX = normX + velocity.x;
@@ -303,12 +328,16 @@ export default function WaddingtonLandscape({ frameIndex = 0 }) {
 
             ball.position.x = clampedX * (terrainSize / 2);
             ball.position.z = clampedZ * (terrainSize / 2);
-            ball.position.y = newHeight + 0.1;
+            ball.position.y = newHeight + 0.12;
 
-            // Update trail
+            // Update trail - longer trail with slower fade (shows the journey)
             const trail = trailRef.current;
-            trail.points.push(ball.position.clone());
-            if (trail.points.length > 50) {
+            // Only add point every 3rd frame for cleaner trail
+            if (frameCount % 3 === 0) {
+              trail.points.push(ball.position.clone());
+            }
+            // Longer trail retention (was 50, now 100)
+            if (trail.points.length > 100) {
               trail.points.shift();
             }
 
@@ -354,26 +383,27 @@ export default function WaddingtonLandscape({ frameIndex = 0 }) {
 
   // Update target valley based on frame
   useEffect(() => {
-    // Determine current fate from frame index
-    let currentFate = 'STEM';
-    for (const cycle of FATE_CYCLE) {
-      if (cycle.frames.includes(frameIndex % 12)) {
-        currentFate = cycle.fate;
+    // Determine current phenotype from frame index (extended to 16 frames for slower cycle)
+    let currentPhenotype = 'STEM';
+    for (const cycle of PHENOTYPE_CYCLE) {
+      if (cycle.frames.includes(frameIndex % 16)) {
+        currentPhenotype = cycle.phenotype;
         break;
       }
     }
 
     // Find target valley
-    const targetValley = VALLEYS.find(v => v.id === currentFate) || VALLEYS[0];
+    const targetValley = VALLEYS.find(v => v.id === currentPhenotype) || VALLEYS[0];
 
     // Update target position
     targetPositionRef.current = { x: targetValley.x, z: targetValley.z };
-    setCurrentValley(currentFate);
+    setCurrentValley(currentPhenotype);
 
-    // Add some perturbation when switching states
+    // Add gentle perturbation when switching states (not a teleport)
     if (velocityRef.current) {
-      velocityRef.current.x += (Math.random() - 0.5) * 0.02;
-      velocityRef.current.z += (Math.random() - 0.5) * 0.02;
+      // Reduced perturbation for smooth transition
+      velocityRef.current.x += (Math.random() - 0.5) * 0.005;
+      velocityRef.current.z += (Math.random() - 0.5) * 0.005;
     }
   }, [frameIndex]);
 
@@ -424,7 +454,7 @@ export default function WaddingtonLandscape({ frameIndex = 0 }) {
       <div className="waddington-labels">
         <div className="waddington-fate-indicator">
           <span className={`fate-dot ${currentValley.toLowerCase()}`} />
-          <span className="fate-text">current fate</span>
+          <span className="fate-text">current phenotype</span>
         </div>
       </div>
     </div>
