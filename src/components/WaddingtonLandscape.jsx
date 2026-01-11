@@ -193,11 +193,12 @@ export default function WaddingtonLandscape({ frameIndex = 0 }) {
         ball.add(glow);
 
         // Position ball at starting valley - on top of terrain surface
+        // Note: terrain is rotated -PI/2 around X, so worldZ = -normalizedZ * scale
         const startX = 0;
         const startZ = -0.35;
         const startHeight = getTerrainHeight(startX, startZ);
         // Ball sits ON terrain: height + radius + small offset
-        ball.position.set(startX * (terrainSize / 2), startHeight + ballRadius + 0.02, startZ * (terrainSize / 2));
+        ball.position.set(startX * (terrainSize / 2), startHeight + ballRadius + 0.02, -startZ * (terrainSize / 2));
         scene.add(ball);
         ballRef.current = ball;
         ballRef.current.ballRadius = ballRadius; // Store radius for physics
@@ -244,7 +245,7 @@ export default function WaddingtonLandscape({ frameIndex = 0 }) {
           sprite.position.set(
             valley.x * (terrainSize / 2),
             labelHeight,
-            valley.z * (terrainSize / 2)
+            -valley.z * (terrainSize / 2)  // Negate for terrain rotation
           );
           sprite.scale.set(0.7, 0.175, 1); // Larger labels
           scene.add(sprite);
@@ -275,8 +276,9 @@ export default function WaddingtonLandscape({ frameIndex = 0 }) {
             const terrainSize = sceneRef.current.terrainSize;
 
             // Get current position in normalized coordinates
+            // Note: terrain is rotated -PI/2 around X, so normalizedZ = -worldZ / scale
             const normX = ball.position.x / (terrainSize / 2);
-            const normZ = ball.position.z / (terrainSize / 2);
+            const normZ = -ball.position.z / (terrainSize / 2);
 
             // Get target from ref
             const target = targetPositionRef.current;
@@ -329,7 +331,7 @@ export default function WaddingtonLandscape({ frameIndex = 0 }) {
             const ballRadius = ball.ballRadius || 0.08;
 
             ball.position.x = clampedX * (terrainSize / 2);
-            ball.position.z = clampedZ * (terrainSize / 2);
+            ball.position.z = -clampedZ * (terrainSize / 2);  // Negate for terrain rotation
             // Ball Y = terrain height + ball radius + small offset to sit ON TOP
             ball.position.y = terrainHeightAtBall + ballRadius + 0.02;
 
