@@ -4,103 +4,104 @@ import { useState, useEffect } from 'react';
 // PANEL 1: ENZYME ENGINEERING - Navigating sequence space to optimize function
 // ============================================================================
 // Animation tells the story of exploring a fitness landscape:
-// - Tracer moves across rugged landscape (sequence space)
+// - 3D wireframe mesh shows rugged landscape (sequence space)
+// - Tracer moves across surface (not just left-right but also depth)
 // - Allosteric sites pulse when big changes happen
 // - Metrics improve as tracer climbs toward global optimum
 const enzymeFrames = [
   {
     // Frame 1: Starting position - tracer in low valley
     art: `
- ACTIVE SITE          FITNESS LANDSCAPE
- ┌──────────────┐    ┌──────────────────┐
- │    ○───○     │    │        ∧         │
- │   ╱  ▼  ╲    │    │  ∧    ╱ ╲   ∧∧   │
- │  ●   ◇   ●   │    │ ╱ ╲  ╱   ╲_╱╲ ╲  │
- │   ╲     ╱    │    │╱   ╲╱•        ╲╱ │
- │    ●───●     │    │  sequence space  │
- │ ○         ○  │    └──────────────────┘
- │allo     allo│
- └──────────────┘`,
+ ACTIVE SITE         FITNESS LANDSCAPE
+ ┌─────────────┐    ┌───────────────────┐
+ │   ○───○     │    │ ╱─╲   ╱───╲  ╱─╲  │
+ │  ╱  ▼  ╲    │    │╱   ╲_╱     ╲╱   ╲ │
+ │ ●   ◇   ●   │    │─────•─────────────│
+ │  ╲     ╱    │    │╲   ╱ ╲     ╱╲   ╱ │
+ │   ●───●     │    │ ╲_╱   ╲___╱  ╲_╱  │
+ │○         ○  │    │    sequence space  │
+ │allo   allo  │    └───────────────────┘
+ └─────────────┘`,
     metrics: { kcat: '142', efficiency: '1.2', tm: '68' },
     allosteric: [false, false]
   },
   {
     // Frame 2: Climbing local peak - first allosteric pulses
     art: `
- ACTIVE SITE          FITNESS LANDSCAPE
- ┌──────────────┐    ┌──────────────────┐
- │    ○───○     │    │        ∧         │
- │   ╱  ▼  ╲    │    │  ∧    ╱ ╲   ∧∧   │
- │  ●   ◆   ●   │    │ ╱•╲  ╱   ╲_╱╲ ╲  │
- │   ╲     ╱    │    │╱   ╲╱         ╲╱ │
- │    ●───●     │    │  sequence space  │
- │ ◉         ○  │    └──────────────────┘
- │allo     allo│
- └──────────────┘`,
+ ACTIVE SITE         FITNESS LANDSCAPE
+ ┌─────────────┐    ┌───────────────────┐
+ │   ○───○     │    │ ╱─╲   ╱───╲  ╱─╲  │
+ │  ╱  ▼  ╲    │    │╱ • ╲_╱     ╲╱   ╲ │
+ │ ●   ◆   ●   │    │─────────────────── │
+ │  ╲     ╱    │    │╲   ╱ ╲     ╱╲   ╱ │
+ │   ●───●     │    │ ╲_╱   ╲___╱  ╲_╱  │
+ │◉         ○  │    │    sequence space  │
+ │allo   allo  │    └───────────────────┘
+ └─────────────┘`,
     metrics: { kcat: '148', efficiency: '1.3', tm: '70' },
     allosteric: [true, false]
   },
   {
     // Frame 3: At local peak - good but not optimal
     art: `
- ACTIVE SITE          FITNESS LANDSCAPE
- ┌──────────────┐    ┌──────────────────┐
- │    ●───●     │    │        ∧         │
- │   ╱  ▼  ╲    │    │  •    ╱ ╲   ∧∧   │
- │  ●   ◆   ●   │    │ ╱ ╲  ╱   ╲_╱╲ ╲  │
- │   ╲     ╱    │    │╱   ╲╱         ╲╱ │
- │    ●───●     │    │  sequence space  │
- │ ◉         ◉  │    └──────────────────┘
- │allo     allo│
- └──────────────┘`,
+ ACTIVE SITE         FITNESS LANDSCAPE
+ ┌─────────────┐    ┌───────────────────┐
+ │   ●───●     │    │ •─╲   ╱───╲  ╱─╲  │
+ │  ╱  ▼  ╲    │    │╱   ╲_╱     ╲╱   ╲ │
+ │ ●   ◆   ●   │    │─────────────────── │
+ │  ╲     ╱    │    │╲   ╱ ╲     ╱╲   ╱ │
+ │   ●───●     │    │ ╲_╱   ╲___╱  ╲_╱  │
+ │◉         ◉  │    │    sequence space  │
+ │allo   allo  │    └───────────────────┘
+ └─────────────┘`,
     metrics: { kcat: '151', efficiency: '1.4', tm: '71' },
     allosteric: [true, true]
   },
   {
     // Frame 4: Dropping into valley - exploring further
     art: `
- ACTIVE SITE          FITNESS LANDSCAPE
- ┌──────────────┐    ┌──────────────────┐
- │    ○───○     │    │        ∧         │
- │   ╱  ▽  ╲    │    │  ∧    ╱ ╲   ∧∧   │
- │  ○   ◇   ○   │    │ ╱ ╲  ╱•  ╲_╱╲ ╲  │
- │   ╲     ╱    │    │╱   ╲╱         ╲╱ │
- │    ○───○     │    │  sequence space  │
- │ ○         ○  │    └──────────────────┘
- │allo     allo│
- └──────────────┘`,
+ ACTIVE SITE         FITNESS LANDSCAPE
+ ┌─────────────┐    ┌───────────────────┐
+ │   ○───○     │    │ ╱─╲   ╱───╲  ╱─╲  │
+ │  ╱  ▽  ╲    │    │╱   ╲_╱  •  ╲╱   ╲ │
+ │ ○   ◇   ○   │    │─────────────────── │
+ │  ╲     ╱    │    │╲   ╱ ╲     ╱╲   ╱ │
+ │   ○───○     │    │ ╲_╱   ╲___╱  ╲_╱  │
+ │○         ○  │    │    sequence space  │
+ │allo   allo  │    └───────────────────┘
+ └─────────────┘`,
     metrics: { kcat: '144', efficiency: '1.2', tm: '69' },
     allosteric: [false, false]
   },
   {
     // Frame 5: Climbing toward global maximum
     art: `
- ACTIVE SITE          FITNESS LANDSCAPE
- ┌──────────────┐    ┌──────────────────┐
- │    ●───●     │    │        ∧         │
- │   ╱  ▼  ╲    │    │  ∧    ╱•╲   ∧∧   │
- │  ●   ◆   ●   │    │ ╱ ╲  ╱   ╲_╱╲ ╲  │
- │   ╲     ╱    │    │╱   ╲╱         ╲╱ │
- │    ●───●     │    │  sequence space  │
- │ ◉         ○  │    └──────────────────┘
- │allo     allo│
- └──────────────┘`,
+ ACTIVE SITE         FITNESS LANDSCAPE
+ ┌─────────────┐    ┌───────────────────┐
+ │   ●───●     │    │ ╱─╲   ╱─•─╲  ╱─╲  │
+ │  ╱  ▼  ╲    │    │╱   ╲_╱     ╲╱   ╲ │
+ │ ●   ◆   ●   │    │─────────────────── │
+ │  ╲     ╱    │    │╲   ╱ ╲     ╱╲   ╱ │
+ │   ●───●     │    │ ╲_╱   ╲___╱  ╲_╱  │
+ │◉         ○  │    │    sequence space  │
+ │allo   allo  │    └───────────────────┘
+ └─────────────┘`,
     metrics: { kcat: '155', efficiency: '1.5', tm: '72' },
     allosteric: [true, false]
   },
   {
     // Frame 6: Near global optimum - best metrics
     art: `
- ACTIVE SITE          FITNESS LANDSCAPE
- ┌──────────────┐    ┌──────────────────┐
- │    ●═══●     │    │        •         │
- │   ╱  ▼  ╲    │    │  ∧    ╱ ╲   ∧∧   │
- │  ●   ★   ●   │    │ ╱ ╲  ╱   ╲_╱╲ ╲  │
- │   ╲     ╱    │    │╱   ╲╱         ╲╱ │
- │    ●═══●     │    │  sequence space  │
- │ ◉         ◉  │    └──────────────────┘
- │allo     allo│
- └──────────────┘`,
+ ACTIVE SITE         FITNESS LANDSCAPE
+ ┌─────────────┐    ┌───────────────────┐
+ │   ●═══●     │    │ ╱─╲   ╱─╲ •  ╱─╲  │
+ │  ╱  ▼  ╲    │    │╱   ╲_╱   ╲ ╲╱   ╲ │
+ │ ●   ★   ●   │    │─────────────────── │
+ │  ╲     ╱    │    │╲   ╱ ╲     ╱╲   ╱ │
+ │   ●═══●     │    │ ╲_╱   ╲___╱  ╲_╱  │
+ │◉         ◉  │    │    sequence space  │
+ │allo   allo  │    └───────────────────┘
+ └─────────────┘`,
     metrics: { kcat: '162', efficiency: '1.6', tm: '74' },
     allosteric: [true, true]
   },
@@ -111,229 +112,233 @@ const enzymeFrames = [
 // ============================================================================
 // Animation tells the story of a bistable genetic switch:
 // - LEFT: Network state with TF1/TF2 mutual repression and expression bars
-// - RIGHT: 2D phenotype space showing cell fate as continuous position
+// - RIGHT: 2D phenotype space with VIABILITY (x) and PRODUCTIVITY (y) axes
 // - Signal triggers transitions between stable states
 // - Full cycle: 12 frames (~8-9 seconds at 700ms/frame)
+//
+// Biotech context: Classic tradeoff between cell health and production output
+// - OPTIMAL attractor: high viability + high productivity (sweet spot)
+// - SURVIVAL attractor: high viability but low productivity (lazy cells)
 const regulatoryFrames = [
-  // ========== GROWTH STATE (TF1 dominant) ==========
+  // ========== OPTIMAL STATE (TF1 dominant, high productivity) ==========
   {
-    // Frame 1: Stable growth state - TF1 high, TF2 low
+    // Frame 1: Stable optimal state - TF1 high, TF2 low
     art: `
  NETWORK STATE       PHENOTYPE SPACE
-┌──────────────┐   ┌────────────────┐
-│              │   │ S              │
-│  ┌─ TF1 ─┐   │   │ ↑  ○           │
-│  │███████│   │   │ │    ╲         │
-│  └───┬───┘   │   │ │     ╲        │
-│    ⊣─┼─⊣     │   │ │      ╲       │
-│  ┌───┴───┐   │   │ │       ●      │
-│  │░░░░░░░│   │   │ │        ╲  ○  │
-│  └─ TF2 ─┘   │   │ └─────────────→│
-│   ↓     ↓    │   │            G   │
-│ growth stress│   └────────────────┘
-└──────────────┘`,
-    state: 'GROWTH', stability: 94, g: 0.87, s: 0.12
+┌─────────────┐    ┌────────────────┐
+│             │    │ P              │
+│ ┌─ TF1 ─┐   │    │ ↑      ●       │
+│ │███████│   │    │ │       ╲      │
+│ └───┬───┘   │    │ │        ╲     │
+│   ⊣─┼─⊣     │    │ │         ╲    │
+│ ┌───┴───┐   │    │ │          ╲   │
+│ │░░░░░░░│   │    │ │           ○  │
+│ └─ TF2 ─┘   │    │ └────────────→ │
+│  ↓     ↓    │    │            V   │
+│prod  surv   │    └────────────────┘
+└─────────────┘`,
+    state: 'OPTIMAL', stability: 94, v: 0.87, p: 0.91
   },
   {
-    // Frame 2: Growth state with repression pulse from TF1
+    // Frame 2: Optimal state with repression pulse from TF1
     art: `
  NETWORK STATE       PHENOTYPE SPACE
-┌──────────────┐   ┌────────────────┐
-│              │   │ S              │
-│  ┌─ TF1 ─┐   │   │ ↑  ○           │
-│  │███████│   │   │ │    ╲         │
-│  └───┬───┘   │   │ │     ╲        │
-│    ⊣─●─⊣     │   │ │      ╲       │
-│  ┌───┴───┐   │   │ │       ●      │
-│  │░░░░░░░│   │   │ │        ╲  ○  │
-│  └─ TF2 ─┘   │   │ └─────────────→│
-│   ↓     ↓    │   │            G   │
-│ growth stress│   └────────────────┘
-└──────────────┘`,
-    state: 'GROWTH', stability: 92, g: 0.85, s: 0.14
+┌─────────────┐    ┌────────────────┐
+│             │    │ P              │
+│ ┌─ TF1 ─┐   │    │ ↑      ●       │
+│ │███████│   │    │ │       ╲      │
+│ └───┬───┘   │    │ │        ╲     │
+│   ⊣─●─⊣     │    │ │         ╲    │
+│ ┌───┴───┐   │    │ │          ╲   │
+│ │░░░░░░░│   │    │ │           ○  │
+│ └─ TF2 ─┘   │    │ └────────────→ │
+│  ↓     ↓    │    │            V   │
+│prod  surv   │    └────────────────┘
+└─────────────┘`,
+    state: 'OPTIMAL', stability: 92, v: 0.85, p: 0.89
   },
   {
     // Frame 3: Signal appears, about to trigger transition
     art: `
  NETWORK STATE       PHENOTYPE SPACE
-┌──────────────┐   ┌────────────────┐
-│    ⚡signal   │   │ S              │
-│      ↓       │   │ ↑  ○           │
-│  ┌─ TF1 ─┐   │   │ │    ╲         │
-│  │██████░│   │   │ │     ╲        │
-│  └───┬───┘   │   │ │      ╲       │
-│    ⊣─┼─⊣     │   │ │       ●      │
-│  ┌───┴───┐   │   │ │        ╲  ○  │
-│  │░░░░░░░│   │   │ └─────────────→│
-│  └─ TF2 ─┘   │   │            G   │
-│   ↓     ↓    │   │                │
-└──────────────┘   └────────────────┘`,
-    state: 'GROWTH', stability: 78, g: 0.79, s: 0.18
+┌─────────────┐    ┌────────────────┐
+│   ⚡signal   │    │ P              │
+│     ↓       │    │ ↑      ●       │
+│ ┌─ TF1 ─┐   │    │ │       ╲      │
+│ │██████░│   │    │ │        ╲     │
+│ └───┬───┘   │    │ │         ╲    │
+│   ⊣─┼─⊣     │    │ │          ╲   │
+│ ┌───┴───┐   │    │ │           ○  │
+│ │░░░░░░░│   │    │ └────────────→ │
+│ └─ TF2 ─┘   │    │            V   │
+│             │    └────────────────┘
+└─────────────┘`,
+    state: 'OPTIMAL', stability: 78, v: 0.79, p: 0.82
   },
-  // ========== TRANSITION: GROWTH → STRESS ==========
+  // ========== TRANSITION: OPTIMAL → SURVIVAL ==========
   {
     // Frame 4: Signal triggers, TF1 starts dropping
     art: `
  NETWORK STATE       PHENOTYPE SPACE
-┌──────────────┐   ┌────────────────┐
-│    ⚡⚡signal  │   │ S              │
-│      ↓↓      │   │ ↑  ○           │
-│  ┌─ TF1 ─┐   │   │ │    ╲   ·     │
-│  │████░░░│   │   │ │     ╲ ·      │
-│  └───┬───┘   │   │ │      ●       │
-│    ⊣─┼─⊣     │   │ │       ╲      │
-│  ┌───┴───┐   │   │ │        ╲  ○  │
-│  │██░░░░░│   │   │ └─────────────→│
-│  └─ TF2 ─┘   │   │            G   │
-│   ↓     ↓    │   │                │
-└──────────────┘   └────────────────┘`,
-    state: 'transition', stability: 34, g: 0.52, s: 0.48
+┌─────────────┐    ┌────────────────┐
+│   ⚡⚡signal  │    │ P              │
+│     ↓↓      │    │ ↑     ·        │
+│ ┌─ TF1 ─┐   │    │ │    ·  ╲      │
+│ │████░░░│   │    │ │   ●    ╲     │
+│ └───┬───┘   │    │ │         ╲    │
+│   ⊣─┼─⊣     │    │ │          ╲   │
+│ ┌───┴───┐   │    │ │           ○  │
+│ │██░░░░░│   │    │ └────────────→ │
+│ └─ TF2 ─┘   │    │            V   │
+│             │    └────────────────┘
+└─────────────┘`,
+    state: 'switching', stability: 34, v: 0.52, p: 0.48
   },
   {
     // Frame 5: Mid-transition, crossing the boundary
     art: `
  NETWORK STATE       PHENOTYPE SPACE
-┌──────────────┐   ┌────────────────┐
-│              │   │ S              │
-│  ┌─ TF1 ─┐   │   │ ↑  ○     ·     │
-│  │██░░░░░│   │   │ │    ╲  ·      │
-│  └───┬───┘   │   │ │     ●        │
-│    ⊣─○─⊣     │   │ │      ╲       │
-│  ┌───┴───┐   │   │ │       ╲      │
-│  │████░░░│   │   │ │        ╲  ○  │
-│  └─ TF2 ─┘   │   │ └─────────────→│
-│   ↓     ↓    │   │            G   │
-│ growth stress│   └────────────────┘
-└──────────────┘`,
-    state: 'transition', stability: 12, g: 0.38, s: 0.61
+┌─────────────┐    ┌────────────────┐
+│             │    │ P              │
+│ ┌─ TF1 ─┐   │    │ ↑    ·         │
+│ │██░░░░░│   │    │ │  ·    ╲      │
+│ └───┬───┘   │    │ │ ●      ╲     │
+│   ⊣─○─⊣     │    │ │         ╲    │
+│ ┌───┴───┐   │    │ │          ╲   │
+│ │████░░░│   │    │ │           ○  │
+│ └─ TF2 ─┘   │    │ └────────────→ │
+│  ↓     ↓    │    │            V   │
+│prod  surv   │    └────────────────┘
+└─────────────┘`,
+    state: 'switching', stability: 12, v: 0.38, p: 0.31
   },
   {
-    // Frame 6: Approaching stress state, TF2 rising
+    // Frame 6: Approaching survival state, TF2 rising
     art: `
  NETWORK STATE       PHENOTYPE SPACE
-┌──────────────┐   ┌────────────────┐
-│              │   │ S              │
-│  ┌─ TF1 ─┐   │   │ ↑  ○   ·       │
-│  │█░░░░░░│   │   │ │    ● ·       │
-│  └───┬───┘   │   │ │     ╲        │
-│    ⊣─┼─⊣     │   │ │      ╲       │
-│  ┌───┴───┐   │   │ │       ╲      │
-│  │█████░░│   │   │ │        ╲  ○  │
-│  └─ TF2 ─┘   │   │ └─────────────→│
-│   ↓     ↓    │   │            G   │
-│ growth stress│   └────────────────┘
-└──────────────┘`,
-    state: 'STRESS', stability: 58, g: 0.21, s: 0.78
+┌─────────────┐    ┌────────────────┐
+│             │    │ P              │
+│ ┌─ TF1 ─┐   │    │ ↑       ╲      │
+│ │█░░░░░░│   │    │ │ ·      ╲     │
+│ └───┬───┘   │    │ │·        ╲    │
+│   ⊣─┼─⊣     │    │ │          ╲   │
+│ ┌───┴───┐   │    │ │       ●   ○  │
+│ │█████░░│   │    │ └────────────→ │
+│ └─ TF2 ─┘   │    │            V   │
+│  ↓     ↓    │    │                │
+│prod  surv   │    └────────────────┘
+└─────────────┘`,
+    state: 'SURVIVAL', stability: 58, v: 0.78, p: 0.21
   },
-  // ========== STRESS STATE (TF2 dominant) ==========
+  // ========== SURVIVAL STATE (TF2 dominant, low productivity) ==========
   {
-    // Frame 7: Stable stress state - TF2 high, TF1 low
+    // Frame 7: Stable survival state - TF2 high, TF1 low
     art: `
  NETWORK STATE       PHENOTYPE SPACE
-┌──────────────┐   ┌────────────────┐
-│              │   │ S              │
-│  ┌─ TF1 ─┐   │   │ ↑  ●           │
-│  │░░░░░░░│   │   │ │    ╲ ·       │
-│  └───┬───┘   │   │ │     ╲        │
-│    ⊣─┼─⊣     │   │ │      ╲       │
-│  ┌───┴───┐   │   │ │       ╲      │
-│  │███████│   │   │ │        ╲  ○  │
-│  └─ TF2 ─┘   │   │ └─────────────→│
-│   ↓     ↓    │   │            G   │
-│ growth stress│   └────────────────┘
-└──────────────┘`,
-    state: 'STRESS', stability: 89, g: 0.11, s: 0.91
+┌─────────────┐    ┌────────────────┐
+│             │    │ P              │
+│ ┌─ TF1 ─┐   │    │ ↑       ╲      │
+│ │░░░░░░░│   │    │ │        ╲     │
+│ └───┬───┘   │    │ │         ╲    │
+│   ⊣─┼─⊣     │    │ │          ╲   │
+│ ┌───┴───┐   │    │ │           ●  │
+│ │███████│   │    │ └────────────→ │
+│ └─ TF2 ─┘   │    │            V   │
+│  ↓     ↓    │    │                │
+│prod  surv   │    └────────────────┘
+└─────────────┘`,
+    state: 'SURVIVAL', stability: 89, v: 0.91, p: 0.11
   },
   {
-    // Frame 8: Stress state with repression pulse from TF2
+    // Frame 8: Survival state with repression pulse from TF2
     art: `
  NETWORK STATE       PHENOTYPE SPACE
-┌──────────────┐   ┌────────────────┐
-│              │   │ S              │
-│  ┌─ TF1 ─┐   │   │ ↑  ●           │
-│  │░░░░░░░│   │   │ │    ╲         │
-│  └───┬───┘   │   │ │     ╲        │
-│    ⊣─●─⊣     │   │ │      ╲       │
-│  ┌───┴───┐   │   │ │       ╲      │
-│  │███████│   │   │ │        ╲  ○  │
-│  └─ TF2 ─┘   │   │ └─────────────→│
-│   ↓     ↓    │   │            G   │
-│ growth stress│   └────────────────┘
-└──────────────┘`,
-    state: 'STRESS', stability: 91, g: 0.13, s: 0.88
+┌─────────────┐    ┌────────────────┐
+│             │    │ P              │
+│ ┌─ TF1 ─┐   │    │ ↑       ╲      │
+│ │░░░░░░░│   │    │ │        ╲     │
+│ └───┬───┘   │    │ │         ╲    │
+│   ⊣─●─⊣     │    │ │          ╲   │
+│ ┌───┴───┐   │    │ │           ●  │
+│ │███████│   │    │ └────────────→ │
+│ └─ TF2 ─┘   │    │            V   │
+│  ↓     ↓    │    │                │
+│prod  surv   │    └────────────────┘
+└─────────────┘`,
+    state: 'SURVIVAL', stability: 91, v: 0.88, p: 0.13
   },
   {
     // Frame 9: Signal appears again, about to flip back
     art: `
  NETWORK STATE       PHENOTYPE SPACE
-┌──────────────┐   ┌────────────────┐
-│    ⚡signal   │   │ S              │
-│      ↓       │   │ ↑  ●           │
-│  ┌─ TF1 ─┐   │   │ │    ╲         │
-│  │░░░░░░░│   │   │ │     ╲        │
-│  └───┬───┘   │   │ │      ╲       │
-│    ⊣─┼─⊣     │   │ │       ╲      │
-│  ┌───┴───┐   │   │ │        ╲  ○  │
-│  │██████░│   │   │ └─────────────→│
-│  └─ TF2 ─┘   │   │            G   │
-│   ↓     ↓    │   │                │
-└──────────────┘   └────────────────┘`,
-    state: 'STRESS', stability: 76, g: 0.19, s: 0.82
+┌─────────────┐    ┌────────────────┐
+│   ⚡signal   │    │ P              │
+│     ↓       │    │ ↑       ╲      │
+│ ┌─ TF1 ─┐   │    │ │        ╲     │
+│ │░░░░░░░│   │    │ │         ╲    │
+│ └───┬───┘   │    │ │          ╲   │
+│   ⊣─┼─⊣     │    │ │           ●  │
+│ ┌───┴───┐   │    │ └────────────→ │
+│ │██████░│   │    │            V   │
+│ └─ TF2 ─┘   │    │                │
+│             │    └────────────────┘
+└─────────────┘`,
+    state: 'SURVIVAL', stability: 76, v: 0.82, p: 0.19
   },
-  // ========== TRANSITION: STRESS → GROWTH ==========
+  // ========== TRANSITION: SURVIVAL → OPTIMAL ==========
   {
     // Frame 10: Signal triggers, TF2 starts dropping
     art: `
  NETWORK STATE       PHENOTYPE SPACE
-┌──────────────┐   ┌────────────────┐
-│    ⚡⚡signal  │   │ S              │
-│      ↓↓      │   │ ↑  ○  ·        │
-│  ┌─ TF1 ─┐   │   │ │    ●         │
-│  │██░░░░░│   │   │ │     ╲        │
-│  └───┬───┘   │   │ │      ╲       │
-│    ⊣─┼─⊣     │   │ │       ╲      │
-│  ┌───┴───┐   │   │ │        ╲  ○  │
-│  │████░░░│   │   │ └─────────────→│
-│  └─ TF2 ─┘   │   │            G   │
-│   ↓     ↓    │   │                │
-└──────────────┘   └────────────────┘`,
-    state: 'transition', stability: 31, g: 0.45, s: 0.52
+┌─────────────┐    ┌────────────────┐
+│   ⚡⚡signal  │    │ P              │
+│     ↓↓      │    │ ↑       ╲      │
+│ ┌─ TF1 ─┐   │    │ │   ·    ╲     │
+│ │██░░░░░│   │    │ │  ●      ╲    │
+│ └───┬───┘   │    │ │          ╲   │
+│   ⊣─┼─⊣     │    │ │       ·   ○  │
+│ ┌───┴───┐   │    │ └────────────→ │
+│ │████░░░│   │    │            V   │
+│ └─ TF2 ─┘   │    │                │
+│             │    └────────────────┘
+└─────────────┘`,
+    state: 'switching', stability: 31, v: 0.52, p: 0.45
   },
   {
-    // Frame 11: Crossing back toward growth
+    // Frame 11: Crossing back toward optimal
     art: `
  NETWORK STATE       PHENOTYPE SPACE
-┌──────────────┐   ┌────────────────┐
-│              │   │ S              │
-│  ┌─ TF1 ─┐   │   │ ↑  ○           │
-│  │████░░░│   │   │ │    ╲  ·      │
-│  └───┬───┘   │   │ │     ╲ ·      │
-│    ⊣─○─⊣     │   │ │      ●       │
-│  ┌───┴───┐   │   │ │       ╲      │
-│  │██░░░░░│   │   │ │        ╲  ○  │
-│  └─ TF2 ─┘   │   │ └─────────────→│
-│   ↓     ↓    │   │            G   │
-│ growth stress│   └────────────────┘
-└──────────────┘`,
-    state: 'transition', stability: 18, g: 0.58, s: 0.41
+┌─────────────┐    ┌────────────────┐
+│             │    │ P              │
+│ ┌─ TF1 ─┐   │    │ ↑    ·         │
+│ │████░░░│   │    │ │   ●   ╲      │
+│ └───┬───┘   │    │ │        ╲     │
+│   ⊣─○─⊣     │    │ │     ·   ╲    │
+│ ┌───┴───┐   │    │ │          ╲   │
+│ │██░░░░░│   │    │ │           ○  │
+│ └─ TF2 ─┘   │    │ └────────────→ │
+│  ↓     ↓    │    │            V   │
+│prod  surv   │    └────────────────┘
+└─────────────┘`,
+    state: 'switching', stability: 18, v: 0.41, p: 0.58
   },
   {
-    // Frame 12: Approaching growth state again
+    // Frame 12: Approaching optimal state again
     art: `
  NETWORK STATE       PHENOTYPE SPACE
-┌──────────────┐   ┌────────────────┐
-│              │   │ S              │
-│  ┌─ TF1 ─┐   │   │ ↑  ○           │
-│  │█████░░│   │   │ │    ╲         │
-│  └───┬───┘   │   │ │     ╲  ·     │
-│    ⊣─┼─⊣     │   │ │      ╲ ·     │
-│  ┌───┴───┐   │   │ │       ●      │
-│  │█░░░░░░│   │   │ │        ╲  ○  │
-│  └─ TF2 ─┘   │   │ └─────────────→│
-│   ↓     ↓    │   │            G   │
-│ growth stress│   └────────────────┘
-└──────────────┘`,
-    state: 'GROWTH', stability: 62, g: 0.74, s: 0.25
+┌─────────────┐    ┌────────────────┐
+│             │    │ P              │
+│ ┌─ TF1 ─┐   │    │ ↑     ·        │
+│ │█████░░│   │    │ │     ●  ╲     │
+│ └───┬───┘   │    │ │   ·     ╲    │
+│   ⊣─┼─⊣     │    │ │          ╲   │
+│ ┌───┴───┐   │    │ │           ○  │
+│ │█░░░░░░│   │    │ └────────────→ │
+│ └─ TF2 ─┘   │    │            V   │
+│  ↓     ↓    │    │                │
+│prod  surv   │    └────────────────┘
+└─────────────┘`,
+    state: 'OPTIMAL', stability: 62, v: 0.74, p: 0.75
   },
 ];
 
@@ -347,8 +352,8 @@ const decisionFrames = [
    ▹▹▹│  ──▶    │ ◇◇◇ │   ──▶
    ▸▸▸│         │◇ M ◇│
    ▹▹▹│         │ ◇◇◇ │
-  INPUT         └─────┘`,
-    conv: '+23%', rev: '$2.4M', churn: '-18%', convDir: '▲', revDir: '▲', churnDir: '▼'
+  INPUT         └─────┘        `,
+    conv: '+23', rev: '2.4', churn: '-18', convDir: '▲', revDir: '▲', churnDir: '▼'
   },
   {
     art: `
@@ -356,8 +361,8 @@ const decisionFrames = [
    ▸▹▸│  ▶▶▶    │ ●○● │   ▶▶▶
    ▹▸▹│         │○ M ○│
    ▸▹▸│         │ ●○● │
-  INPUT         └─────┘`,
-    conv: '+25%', rev: '$2.5M', churn: '-19%', convDir: '▲', revDir: '▲', churnDir: '▼'
+  INPUT         └─────┘        `,
+    conv: '+25', rev: '2.5', churn: '-19', convDir: '▲', revDir: '▲', churnDir: '▼'
   },
   {
     art: `
@@ -365,8 +370,8 @@ const decisionFrames = [
    ▹▸▹│  >>>    │ ◆◇◆ │   >>>
    ▸▹▸│         │◇ M ◇│
    ▹▸▹│         │ ◆◇◆ │
-  INPUT         └─────┘`,
-    conv: '+27%', rev: '$2.6M', churn: '-21%', convDir: '▲', revDir: '▲', churnDir: '▼'
+  INPUT         └─────┘        `,
+    conv: '+27', rev: '2.6', churn: '-21', convDir: '▲', revDir: '▲', churnDir: '▼'
   },
   {
     art: `
@@ -374,8 +379,8 @@ const decisionFrames = [
    ▸▸▹│  ⟹     │ ★☆★ │   ⟹
    ▹▹▸│         │☆ M ☆│
    ▸▸▹│         │ ★☆★ │
-  INPUT         └─────┘`,
-    conv: '+29%', rev: '$2.7M', churn: '-22%', convDir: '▲', revDir: '▲', churnDir: '▼'
+  INPUT         └─────┘        `,
+    conv: '+29', rev: '2.7', churn: '-22', convDir: '▲', revDir: '▲', churnDir: '▼'
   },
 ];
 
@@ -404,49 +409,62 @@ const panels = [
   },
 ];
 
+// Fixed-width formatting utilities
+const padNumber = (num, width) => String(num).padStart(width, ' ');
+const padDecimal = (num, intWidth, decWidth) => {
+  const [intPart, decPart = ''] = String(num).split('.');
+  return intPart.padStart(intWidth, ' ') + '.' + decPart.padEnd(decWidth, '0');
+};
+
 // Individual panel component
 function AsciiPanel({ panel, frameIndex }) {
   const frame = panel.frames[frameIndex % panel.frames.length];
 
-  // Render metrics based on panel type
+  // Render metrics based on panel type with fixed-width formatting
   const renderMetrics = () => {
     if (panel.id === 'enzyme') {
       return (
         <div className="ascii-metrics">
           <div className="metric-row">
             <span className="metric-label">kcat:</span>
-            <span className="metric-value">{frame.metrics.kcat} s⁻¹</span>
+            <span className="metric-value metric-fixed">{padNumber(frame.metrics.kcat, 3)} s⁻¹</span>
           </div>
           <div className="metric-row">
             <span className="metric-label">kcat/Km:</span>
-            <span className="metric-value">{frame.metrics.efficiency} × 10⁶ M⁻¹s⁻¹</span>
+            <span className="metric-value metric-fixed">{padDecimal(frame.metrics.efficiency, 1, 1)} × 10⁶ M⁻¹s⁻¹</span>
           </div>
           <div className="metric-row">
             <span className="metric-label">Tm:</span>
-            <span className="metric-value">{frame.metrics.tm}°C</span>
+            <span className="metric-value metric-fixed">{padNumber(frame.metrics.tm, 2)}°C</span>
           </div>
         </div>
       );
     }
 
     if (panel.id === 'regulatory') {
-      const isTransition = frame.state === 'transition';
-      const stateClass = isTransition ? 'status-transition' : (frame.state === 'STRESS' ? 'status-stress' : 'status-growth');
+      const isTransition = frame.state === 'switching';
+      const stateClass = isTransition ? 'status-transition' : (frame.state === 'SURVIVAL' ? 'status-stress' : 'status-growth');
+      // Fixed-width state display: "OPTIMAL      " or "SURVIVAL     " or "switching... " (all 12 chars)
+      const stateDisplay = isTransition ? 'switching...' : frame.state.padEnd(12, ' ');
       return (
         <div className="ascii-metrics">
           <div className="metric-row">
             <span className="metric-label">STATE:</span>
-            <span className={`metric-value ${stateClass}`}>
-              {isTransition ? '◇ switching...' : frame.state}
+            <span className={`metric-value metric-fixed ${stateClass}`}>
+              {stateDisplay}
             </span>
           </div>
           <div className="metric-row">
             <span className="metric-label">stability:</span>
-            <span className="metric-value">{frame.stability}%</span>
+            <span className="metric-value metric-fixed">{padNumber(frame.stability, 2)}%</span>
           </div>
           <div className="metric-row">
             <span className="metric-label">position:</span>
-            <span className="metric-value">G:{frame.g.toFixed(2)} S:{frame.s.toFixed(2)}</span>
+            <span className="metric-value metric-fixed">V:{padDecimal(frame.v, 1, 2)} P:{padDecimal(frame.p, 1, 2)}</span>
+          </div>
+          <div className="metric-row">
+            <span className="metric-label">titer:</span>
+            <span className="metric-value metric-fixed">{padDecimal((frame.p * 3.2).toFixed(1), 1, 1)} g/L</span>
           </div>
         </div>
       );
@@ -457,15 +475,15 @@ function AsciiPanel({ panel, frameIndex }) {
         <div className="ascii-metrics">
           <div className="metric-row">
             <span className="metric-label">CONVERSION:</span>
-            <span className="metric-value metric-up">{frame.conv} {frame.convDir}</span>
+            <span className="metric-value metric-fixed metric-up">{frame.conv.padStart(3, ' ')}% {frame.convDir}</span>
           </div>
           <div className="metric-row">
             <span className="metric-label">REVENUE:</span>
-            <span className="metric-value metric-up">{frame.rev} {frame.revDir}</span>
+            <span className="metric-value metric-fixed metric-up">${frame.rev}M {frame.revDir}</span>
           </div>
           <div className="metric-row">
             <span className="metric-label">CHURN:</span>
-            <span className="metric-value metric-down">{frame.churn} {frame.churnDir}</span>
+            <span className="metric-value metric-fixed metric-down">{frame.churn.padStart(3, ' ')}% {frame.churnDir}</span>
           </div>
         </div>
       );

@@ -381,8 +381,9 @@ body {
 /* 3-column grid layout */
 .ascii-panels-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 350px));
   gap: 1rem;
+  justify-content: center;
 }
 
 /* Individual panel styling */
@@ -394,6 +395,9 @@ body {
   display: flex;
   flex-direction: column;
   min-width: 0;
+  width: 100%;
+  max-width: 350px;
+  overflow: hidden;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -435,7 +439,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 8rem;
+  min-height: 9rem;
+  height: 9rem;
+  overflow: hidden;
 }
 
 /* Panel metrics */
@@ -461,6 +467,15 @@ body {
 .metric-value {
   font-weight: 600;
   font-family: 'JetBrains Mono', monospace;
+}
+
+/* Fixed-width metric values for layout stability */
+.metric-fixed {
+  font-family: 'JetBrains Mono', monospace;
+  white-space: pre;
+  display: inline-block;
+  min-width: 12ch;
+  text-align: right;
 }
 
 .metric-up {
@@ -939,8 +954,9 @@ body {
 
   /* ASCII Hero panels - stack on mobile */
   .ascii-panels-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 350px);
     gap: 0.75rem;
+    justify-content: center;
   }
 
   .ascii-hero-wrapper {
@@ -977,11 +993,14 @@ body {
 /* Tablet breakpoint - 2 columns then 1 */
 @media (max-width: 1024px) and (min-width: 769px) {
   .ascii-panels-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 350px));
+    justify-content: center;
   }
 
   .ascii-panel:last-child {
     grid-column: span 2;
+    max-width: 350px;
+    justify-self: center;
   }
 
   .ascii-panel-art {
