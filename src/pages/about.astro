@@ -4,18 +4,37 @@ import Base from '../layouts/Base.astro';
 
 <Base title="About | James Young">
   <Fragment slot="sidebar">
-    <div class="space-y-6">
-      <div>
-        <h2 class="text-terminal-dim text-xs uppercase tracking-wider mb-3">Navigation</h2>
-        <ul class="space-y-1">
-          <li>
-            <a href="/" class="flex items-center gap-2 py-1.5 px-2 rounded text-sm text-terminal-dim hover:bg-terminal-accent/10 hover:text-terminal-accent transition-colors">
-              <span class="text-terminal-accent/50">←</span>
-              <span>Back to Home</span>
-            </a>
-          </li>
-        </ul>
-      </div>
+    <div class="nav-section">
+      <h2 class="nav-section-title">Navigation</h2>
+      <ul class="nav-list">
+        <li>
+          <a href="/foretodata/" class="nav-link">
+            <span class="num">←</span>
+            <span>Back to Home</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-section">
+      <h2 class="nav-section-title">On This Page</h2>
+      <ul class="nav-list">
+        <li>
+          <a href="#what-i-do" class="nav-link">
+            <span>What I Do</span>
+          </a>
+        </li>
+        <li>
+          <a href="#my-approach" class="nav-link">
+            <span>My Approach</span>
+          </a>
+        </li>
+        <li>
+          <a href="#contact" class="nav-link">
+            <span>Get in Touch</span>
+          </a>
+        </li>
+      </ul>
     </div>
   </Fragment>
 
@@ -29,62 +48,66 @@ import Base from '../layouts/Base.astro';
 
     <article class="prose prose-invert prose-terminal">
       <p class="text-terminal-text text-lg leading-relaxed mb-6">
-        I'm a machine learning and AI expert focused on turning complex ML capabilities 
+        I'm a machine learning and AI expert focused on turning complex ML capabilities
         into tangible business outcomes.
       </p>
 
-      <h2 class="font-display text-xl font-semibold text-terminal-text mt-8 mb-4 flex items-center gap-2">
+      <h2 id="what-i-do" class="font-display text-xl font-semibold text-terminal-text mt-8 mb-4 flex items-center gap-2">
         <span class="text-terminal-accent">▸</span> What I Do
       </h2>
-      
+
       <div class="space-y-4 text-terminal-dim">
         <p>
-          I specialize in the intersection of advanced ML techniques and real-world 
-          applications. This means taking methods like causal inference, interpretable 
-          ML, and large language models—and deploying them in ways that actually move 
+          I specialize in the intersection of advanced ML techniques and real-world
+          applications. This means taking methods like causal inference, interpretable
+          ML, and large language models—and deploying them in ways that actually move
           business metrics.
         </p>
         <p>
-          My work spans revenue optimization, operational automation, and strategic 
-          expansion analysis. I've helped companies reduce costs, increase conversion 
+          My work spans revenue optimization, operational automation, and strategic
+          expansion analysis. I've helped companies reduce costs, increase conversion
           rates, and make better decisions with data.
         </p>
       </div>
 
-      <h2 class="font-display text-xl font-semibold text-terminal-text mt-8 mb-4 flex items-center gap-2">
+      <h2 id="my-approach" class="font-display text-xl font-semibold text-terminal-text mt-8 mb-4 flex items-center gap-2">
         <span class="text-terminal-accent">▸</span> My Approach
       </h2>
-      
+
       <div class="space-y-4 text-terminal-dim">
         <p>
-          I believe in ML that you can explain. Black-box models have their place, 
-          but the most valuable insights come when you can tell stakeholders not just 
+          I believe in ML that you can explain. Black-box models have their place,
+          but the most valuable insights come when you can tell stakeholders not just
           <em>what</em> to do, but <em>why</em>.
         </p>
         <p>
-          I'm also obsessive about MLOps—because a model that can't be deployed, 
+          I'm also obsessive about MLOps—because a model that can't be deployed,
           monitored, and maintained isn't really a solution.
         </p>
       </div>
 
-      <h2 class="font-display text-xl font-semibold text-terminal-text mt-8 mb-4 flex items-center gap-2">
+      <h2 id="contact" class="font-display text-xl font-semibold text-terminal-text mt-8 mb-4 flex items-center gap-2">
         <span class="text-terminal-accent">▸</span> Get in Touch
       </h2>
-      
+
       <p class="text-terminal-dim mb-6">
-        I'm always interested in discussing interesting ML problems. Reach out on 
+        I'm always interested in discussing interesting ML problems. Reach out on
         LinkedIn or subscribe to my newsletter for regular insights.
       </p>
-      
+
       <div class="flex gap-4">
-        <a href="https://www.linkedin.com/in/jamesyoungsd/" 
-           target="_blank"
-           rel="noopener noreferrer"
-           class="inline-flex items-center gap-2 px-4 py-2 bg-terminal-accent text-terminal-bg font-medium text-sm rounded hover:shadow-glow transition-shadow">
+        <a
+          href="https://www.linkedin.com/in/jamesyoungsd/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-4 py-2 bg-terminal-accent text-terminal-bg font-medium text-sm rounded hover:shadow-glow transition-shadow hover-highlight"
+        >
           LinkedIn →
         </a>
-        <a href="/newsletter" 
-           class="inline-flex items-center gap-2 px-4 py-2 border border-terminal-accent text-terminal-accent font-medium text-sm rounded hover:bg-terminal-accent/10 transition-colors">
+        <a
+          href="/newsletter"
+          class="inline-flex items-center gap-2 px-4 py-2 border border-terminal-accent text-terminal-accent font-medium text-sm rounded hover:bg-terminal-accent/10 transition-colors hover-highlight"
+        >
           Newsletter
         </a>
       </div>

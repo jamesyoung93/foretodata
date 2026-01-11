@@ -101,168 +101,121 @@ export default function FilterToggle() {
     : grouped;
 
   return (
-    <div className="space-y-8">
-      {/* Toggle Switch */}
-      <div className="flex items-center justify-between mb-8">
-        <div className="flex items-center gap-4">
-          <span className="text-terminal-dim text-sm">View by:</span>
-          <div className="relative flex bg-terminal-surface border border-terminal-border rounded-lg p-1">
+    <div>
+      <div className="filter-bar">
+        <div className="filter-controls">
+          <span className="filter-label">View by:</span>
+          <div className="toggle-group">
             <button
               onClick={() => { setViewMode('method'); setSelectedCategory(null); }}
-              className={`px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
-                viewMode === 'method'
-                  ? 'bg-terminal-accent text-terminal-bg shadow-glow-sm'
-                  : 'text-terminal-dim hover:text-terminal-text'
-              }`}
+              className={`toggle-btn ${viewMode === 'method' ? 'active' : ''}`}
             >
               Method
             </button>
             <button
               onClick={() => { setViewMode('industry'); setSelectedCategory(null); }}
-              className={`px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
-                viewMode === 'industry'
-                  ? 'bg-terminal-accent text-terminal-bg shadow-glow-sm'
-                  : 'text-terminal-dim hover:text-terminal-text'
-              }`}
+              className={`toggle-btn ${viewMode === 'industry' ? 'active' : ''}`}
             >
               Industry
             </button>
           </div>
         </div>
-        
+
         {selectedCategory && (
           <button
             onClick={() => setSelectedCategory(null)}
-            className="text-terminal-dim hover:text-terminal-accent text-sm transition-colors"
+            className="filter-label hover-highlight"
           >
             ← Show all
           </button>
         )}
       </div>
 
-      {/* Category Pills (quick filter) */}
-      <div className="flex flex-wrap gap-2 mb-6">
+      <div className="category-pills">
         {Object.entries(categories).map(([key, { label, icon }]) => (
           <button
             key={key}
             onClick={() => setSelectedCategory(selectedCategory === key ? null : key)}
-            className={`px-3 py-1.5 text-xs font-medium rounded-full border transition-all duration-200 ${
-              selectedCategory === key
-                ? 'border-terminal-accent bg-terminal-accent/10 text-terminal-accent'
-                : 'border-terminal-border text-terminal-dim hover:border-terminal-muted hover:text-terminal-text'
-            }`}
+            className={`pill ${selectedCategory === key ? 'active' : ''}`}
           >
-            <span className="mr-1.5">{icon}</span>
+            <span className="count">{icon}</span>
             {label}
-            <span className="ml-1.5 text-terminal-dim">({grouped[key]?.length || 0})</span>
+            <span className="count">({grouped[key]?.length || 0})</span>
           </button>
         ))}
       </div>
 
-      {/* Grouped Accomplishments */}
-      <div className="space-y-8">
-        {Object.entries(displayGroups).map(([categoryId, items]) => {
-          if (items.length === 0) return null;
-          const category = categories[categoryId];
-          
-          return (
-            <section key={categoryId} className="space-y-4">
-              <header className="flex items-center gap-3 pb-2 border-b border-terminal-border">
-                <span className="text-xl">{category.icon}</span>
-                <div>
-                  <h2 className="font-display text-lg font-semibold text-terminal-text">
-                    {category.label}
-                  </h2>
-                  <p className="text-terminal-dim text-xs">{category.description}</p>
-                </div>
-              </header>
-              
-              <div className="grid gap-3">
-                {items.map((item) => (
-                  <article
-                    key={item.id}
-                    className={`group border rounded-lg transition-all duration-300 cursor-pointer ${
-                      expandedId === item.id
-                        ? 'border-terminal-accent bg-terminal-accent-glow'
-                        : 'border-terminal-border bg-terminal-surface/30 hover:border-terminal-muted hover:bg-terminal-surface/50'
-                    }`}
-                    onClick={() => setExpandedId(expandedId === item.id ? null : item.id)}
-                  >
-                    <div className="p-4">
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-1">
-                            <span className={`text-sm transition-transform duration-200 ${
-                              expandedId === item.id ? 'text-terminal-accent rotate-90' : 'text-terminal-dim'
-                            }`}>
-                              ▸
-                            </span>
-                            <h3 className="font-medium text-terminal-text group-hover:text-terminal-accent transition-colors truncate">
-                              {item.title}
-                            </h3>
-                          </div>
-                          <p className="text-terminal-dim text-sm pl-5 line-clamp-2">
-                            {item.summary}
-                          </p>
-                        </div>
-                        
-                        {/* Metrics preview */}
-                        <div className="hidden sm:flex flex-col items-end gap-1 text-xs shrink-0">
-                          {item.metrics.slice(0, 2).map((metric, i) => (
-                            <span key={i} className="text-terminal-accent font-medium">
-                              {metric}
-                            </span>
-                          ))}
-                        </div>
+      {Object.entries(displayGroups).map(([categoryId, items]) => {
+        if (items.length === 0) return null;
+        const category = categories[categoryId];
+
+        return (
+          <section key={categoryId} className="category-section">
+            <header className="category-header">
+              <span className="category-icon">{category.icon}</span>
+              <div>
+                <h2 className="category-title">{category.label}</h2>
+                <p className="category-desc">{category.description}</p>
+              </div>
+            </header>
+
+            {items.map((item) => (
+              <article
+                key={item.id}
+                className={`card ${expandedId === item.id ? 'expanded' : ''}`}
+                onClick={() => setExpandedId(expandedId === item.id ? null : item.id)}
+              >
+                <div className="card-content">
+                  <div className="card-main">
+                    <div className="card-body">
+                      <div className="card-title-row">
+                        <span className="card-arrow">▸</span>
+                        <h3 className="card-title">{item.title}</h3>
                       </div>
-                      
-                      {/* Expanded content */}
-                      {expandedId === item.id && (
-                        <div className="mt-4 pt-4 border-t border-terminal-border/50 pl-5 space-y-4 animate-in slide-in-from-top-2 duration-200">
-                          <p className="text-terminal-text/90 text-sm leading-relaxed">
-                            {item.details}
-                          </p>
-                          
-                          <div className="flex flex-wrap gap-4">
-                            <div>
-                              <span className="text-terminal-dim text-xs block mb-1">Methods</span>
-                              <div className="flex flex-wrap gap-1">
-                                {item.methods.map(m => (
-                                  <span key={m} className="px-2 py-0.5 text-xs bg-terminal-muted/50 text-terminal-cyan rounded">
-                                    {methodCategories[m]?.label || m}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-                            <div>
-                              <span className="text-terminal-dim text-xs block mb-1">Industries</span>
-                              <div className="flex flex-wrap gap-1">
-                                {item.industries.map(i => (
-                                  <span key={i} className="px-2 py-0.5 text-xs bg-terminal-muted/50 text-terminal-amber rounded">
-                                    {industryCategories[i]?.label || i}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-                          </div>
-                          
-                          <div className="flex flex-wrap gap-3 sm:hidden">
-                            {item.metrics.map((metric, i) => (
-                              <span key={i} className="text-terminal-accent text-sm font-medium">
-                                {metric}
+                      <p className="card-summary">{item.summary}</p>
+                    </div>
+                    <div className="card-metrics">
+                      {item.metrics.slice(0, 2).map((metric, i) => (
+                        <span key={i} className="metric">
+                          {metric}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {expandedId === item.id && (
+                    <div className="card-expanded-content">
+                      <p className="card-details">{item.details}</p>
+                      <div className="tags-group">
+                        <div>
+                          <span className="tags-label">Methods</span>
+                          <div className="tags">
+                            {item.methods.map((method) => (
+                              <span key={method} className="tag method">
+                                {methodCategories[method]?.label || method}
                               </span>
                             ))}
                           </div>
                         </div>
-                      )}
+                        <div>
+                          <span className="tags-label">Industries</span>
+                          <div className="tags">
+                            {item.industries.map((industry) => (
+                              <span key={industry} className="tag industry">
+                                {industryCategories[industry]?.label || industry}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </article>
-                ))}
-              </div>
-            </section>
-          );
-        })}
-      </div>
+                  )}
+                </div>
+              </article>
+            ))}
+          </section>
+        );
+      })}
     </div>
   );
 }

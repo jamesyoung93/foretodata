@@ -32,39 +32,37 @@ const posts = [
 
 <Base title="Posts | James Young">
   <Fragment slot="sidebar">
-    <div class="space-y-6">
-      <div>
-        <h2 class="text-terminal-dim text-xs uppercase tracking-wider mb-3">Navigation</h2>
-        <ul class="space-y-1">
-          <li>
-            <a href="/" class="flex items-center gap-2 py-1.5 px-2 rounded text-sm text-terminal-dim hover:bg-terminal-accent/10 hover:text-terminal-accent transition-colors">
-              <span class="text-terminal-accent/50">←</span>
-              <span>Back to Home</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-      
-      <div>
-        <h2 class="text-terminal-dim text-xs uppercase tracking-wider mb-3">Topics</h2>
-        <ul class="space-y-1 text-sm">
-          <li>
-            <a href="#" class="block py-1 px-2 text-terminal-dim hover:text-terminal-accent transition-colors">
-              # causal-inference
-            </a>
-          </li>
-          <li>
-            <a href="#" class="block py-1 px-2 text-terminal-dim hover:text-terminal-accent transition-colors">
-              # llms
-            </a>
-          </li>
-          <li>
-            <a href="#" class="block py-1 px-2 text-terminal-dim hover:text-terminal-accent transition-colors">
-              # mlops
-            </a>
-          </li>
-        </ul>
-      </div>
+    <div class="nav-section">
+      <h2 class="nav-section-title">Navigation</h2>
+      <ul class="nav-list">
+        <li>
+          <a href="/foretodata/" class="nav-link">
+            <span class="num">←</span>
+            <span>Back to Home</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-section">
+      <h2 class="nav-section-title">Topics</h2>
+      <ul class="nav-list">
+        <li>
+          <a href="#" class="nav-link">
+            <span># causal-inference</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link">
+            <span># llms</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link">
+            <span># mlops</span>
+          </a>
+        </li>
+      </ul>
     </div>
   </Fragment>
 
