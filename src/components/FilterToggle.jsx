@@ -6,7 +6,8 @@ const accomplishments = [
     title: "Revenue Optimization Model",
     summary: "Built ML model that lifted B2B conversion rates 23% by identifying high-intent prospects and optimal outreach timing.",
     methods: ["causal-inference", "interpretable-ml"],
-    industries: ["revenue", "b2b-sales"],
+    goals: ["revenue", "b2b-sales"],
+    industries: ["b2b-commercial-analytics"],
     details: "Used gradient boosting with SHAP explanations to surface the 12 features most predictive of deal closure. Integrated with CRM for real-time lead scoring.",
     metrics: ["23% conversion lift", "2.1x ROI on sales spend"],
   },
@@ -15,7 +16,8 @@ const accomplishments = [
     title: "Demand Forecasting Pipeline",
     summary: "Deployed hierarchical forecasting system reducing inventory costs by $2.4M annually through better demand prediction.",
     methods: ["mlops", "causal-inference"],
-    industries: ["operations", "supply-chain"],
+    goals: ["operations", "supply-chain"],
+    industries: ["pharma-commercial-analytics"],
     details: "Implemented Prophet + LightGBM ensemble with automated retraining via Airflow. Handles 50k SKUs across 200 locations.",
     metrics: ["$2.4M annual savings", "34% forecast accuracy improvement"],
   },
@@ -24,7 +26,8 @@ const accomplishments = [
     title: "Customer Support Chatbot",
     summary: "Fine-tuned LLM handling 40% of support tickets autonomously with 94% customer satisfaction.",
     methods: ["llms", "mlops"],
-    industries: ["operations", "customer-experience"],
+    goals: ["operations", "customer-experience"],
+    industries: ["independent-ai-research"],
     details: "RAG architecture with custom fine-tuning on 50k historical tickets. Seamless handoff to human agents for complex cases.",
     metrics: ["40% ticket deflection", "94% CSAT score"],
   },
@@ -33,7 +36,8 @@ const accomplishments = [
     title: "Dynamic Pricing Engine",
     summary: "Causal ML system for real-time price optimization, driving 18% margin improvement.",
     methods: ["causal-inference", "interpretable-ml"],
-    industries: ["revenue", "pricing"],
+    goals: ["revenue", "pricing"],
+    industries: ["b2b-commercial-analytics"],
     details: "Double ML for causal effect estimation combined with contextual bandits for exploration. Processes 1M pricing decisions daily.",
     metrics: ["18% margin improvement", "12% volume increase"],
   },
@@ -42,7 +46,8 @@ const accomplishments = [
     title: "Market Expansion Analysis",
     summary: "Location intelligence model identifying optimal retail expansion sites with 85% success rate.",
     methods: ["interpretable-ml", "causal-inference"],
-    industries: ["expansion", "retail"],
+    goals: ["expansion", "retail"],
+    industries: ["chem-r-and-d"],
     details: "Geospatial features + demographic clustering with explainable predictions. Board-ready visualizations for site selection.",
     metrics: ["85% site success rate", "14 new locations launched"],
   },
@@ -51,7 +56,8 @@ const accomplishments = [
     title: "Document Intelligence System",
     summary: "LLM-powered contract analysis reducing legal review time by 60%.",
     methods: ["llms", "mlops"],
-    industries: ["operations", "legal"],
+    goals: ["operations", "legal"],
+    industries: ["bio-r-and-d"],
     details: "Custom extraction pipeline with validation workflows. Handles NDAs, MSAs, and SOWs with clause-level precision.",
     metrics: ["60% time reduction", "99.2% extraction accuracy"],
   },
@@ -64,7 +70,7 @@ const methodCategories = {
   'mlops': { label: 'MLOps', icon: '⚙️', description: 'Production ML systems and pipelines' },
 };
 
-const industryCategories = {
+const goalCategories = {
   'revenue': { label: 'Grow Revenue', icon: '💰', description: 'Sales optimization, pricing, conversion' },
   'operations': { label: 'Streamline Ops', icon: '⚡', description: 'Automation, efficiency, cost reduction' },
   'expansion': { label: 'Expand Business', icon: '🚀', description: 'Market analysis, location intelligence' },
@@ -74,6 +80,14 @@ const industryCategories = {
   'customer-experience': { label: 'Customer Experience', icon: '💬', description: 'Support, satisfaction, engagement' },
   'retail': { label: 'Retail', icon: '🏪', description: 'Store operations and expansion' },
   'legal': { label: 'Legal', icon: '⚖️', description: 'Contract analysis and compliance' },
+};
+
+const industryCategories = {
+  'bio-r-and-d': { label: 'Bio R&D', icon: '🧬', description: 'Biology-driven research and discovery' },
+  'chem-r-and-d': { label: 'Chem R&D', icon: '🧪', description: 'Chemistry-focused research and testing' },
+  'b2b-commercial-analytics': { label: 'B2B Commercial Analytics', icon: '📈', description: 'Enterprise growth and commercial insights' },
+  'pharma-commercial-analytics': { label: 'Pharma Commercial Analytics', icon: '💊', description: 'Pharmaceutical market performance and planning' },
+  'independent-ai-research': { label: 'Independent AI research', icon: '🤖', description: 'AI experiments outside traditional orgs' },
 };
 
 const styles = {
@@ -263,12 +277,19 @@ const styles = {
     borderRadius: '0.25rem',
     color: '#00d4ff',
   },
-  tagIndustry: {
+  tagGoal: {
     padding: '0.125rem 0.5rem',
     fontSize: '0.75rem',
     background: 'rgba(42, 42, 42, 0.5)',
     borderRadius: '0.25rem',
     color: '#ffaa00',
+  },
+  tagIndustry: {
+    padding: '0.125rem 0.5rem',
+    fontSize: '0.75rem',
+    background: 'rgba(42, 42, 42, 0.5)',
+    borderRadius: '0.25rem',
+    color: '#00ff88',
   },
   backLink: {
     color: '#808080',
@@ -281,12 +302,16 @@ const styles = {
 };
 
 export default function FilterToggle() {
-  const [viewMode, setViewMode] = useState('method');
+  const [viewMode, setViewMode] = useState('goal');
   const [expandedId, setExpandedId] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
-  const categories = viewMode === 'method' ? methodCategories : industryCategories;
-  const categoryKey = viewMode === 'method' ? 'methods' : 'industries';
+  const categories = viewMode === 'method' 
+    ? methodCategories 
+    : viewMode === 'goal' 
+      ? goalCategories 
+      : industryCategories;
+  const categoryKey = viewMode === 'method' ? 'methods' : viewMode === 'goal' ? 'goals' : 'industries';
 
   const grouped = useMemo(() => {
     const groups = {};
@@ -294,7 +319,7 @@ export default function FilterToggle() {
       groups[cat] = accomplishments.filter(a => a[categoryKey].includes(cat));
     });
     return groups;
-  }, [viewMode]);
+  }, [categories, categoryKey]);
 
   const displayGroups = selectedCategory 
     ? { [selectedCategory]: grouped[selectedCategory] }
@@ -307,6 +332,16 @@ export default function FilterToggle() {
         <div style={styles.filterControls}>
           <span style={styles.filterLabel}>View by:</span>
           <div style={styles.toggleGroup}>
+            <button
+              onClick={() => { setViewMode('goal'); setSelectedCategory(null); }}
+              className="hover-highlight"
+              style={{
+                ...styles.toggleBtn,
+                ...(viewMode === 'goal' ? styles.toggleBtnActive : {}),
+              }}
+            >
+              Goal
+            </button>
             <button
               onClick={() => { setViewMode('method'); setSelectedCategory(null); }}
               className="hover-highlight"
@@ -423,6 +458,16 @@ export default function FilterToggle() {
                                 {item.methods.map(m => (
                                   <span key={m} style={styles.tagMethod}>
                                     {methodCategories[m]?.label || m}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                            <div>
+                              <span style={styles.tagsLabel}>Goals</span>
+                              <div style={styles.tags}>
+                                {item.goals.map(goal => (
+                                  <span key={goal} style={styles.tagGoal}>
+                                    {goalCategories[goal]?.label || goal}
                                   </span>
                                 ))}
                               </div>
