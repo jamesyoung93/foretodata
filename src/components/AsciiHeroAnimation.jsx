@@ -1,240 +1,293 @@
 import { useState, useEffect } from 'react';
 
 // ============================================================================
-// PROTEIN HELIX ANIMATION - Rotating double helix structure
+// PANEL 1: ENZYME ENGINEERING - Structure determines function and outcomes
 // ============================================================================
-const proteinFrames = [
-  `
-      .  *  .      *  .
-    .    ██══════██    .
-   *   ██          ██   *
-  .  ██    ○    ○    ██  .
-    ██  ○        ○  ██
-   ██ ○            ○ ██
-  ██○                ○██
-   ██ ○            ○ ██
-    ██  ○        ○  ██
-  .  ██    ○    ○    ██  .
-   *   ██          ██   *
-    .    ██══════██    .
-      .  *  .      *  .
-  `,
-  `
-      *  .  *  .      .
-    .   ██═══════██   .
-   .  ██    ○      ██  *
-  *  ██  ○          ██  .
-    ██ ○         ○  ██
-   ██○          ○   ██
-  ██          ○     ██
-   ██○          ○   ██
-    ██ ○         ○  ██
-  *  ██  ○          ██  .
-   .  ██    ○      ██  *
-    .   ██═══════██   .
-      *  .  *  .      .
-  `,
-  `
-      .      *  .  *  .
-    .  ██═══════██    .
-   *  ██      ○    ██  .
-  .  ██          ○  ██  *
-    ██  ○         ○ ██
-   ██   ○          ○██
-  ██     ○          ██
-   ██   ○          ○██
-    ██  ○         ○ ██
-  .  ██          ○  ██  *
-   *  ██      ○    ██  .
-    .  ██═══════██    .
-      .      *  .  *  .
-  `,
-  `
-      .  .      *  .  *
-    .    ██═══════██   .
-   .  ██    ○      ██  *
-  *  ██        ○    ██  .
-    ██ ○         ○  ██
-   ██  ○         ○  ██
-  ██    ○       ○   ██
-   ██  ○         ○  ██
-    ██ ○         ○  ██
-  *  ██        ○    ██  .
-   .  ██    ○      ██  *
-    .    ██═══════██   .
-      .  .      *  .  *
-  `,
+const enzymeFrames = [
+  {
+    art: `
+    ┌─────────────────────────┐
+    │      ○─○    ●─●        │
+    │     ╱   ╲  ╱   ╲       │
+    │    ●     ○○     ●      │
+    │     ╲   ╱  ╲   ╱       │
+    │      ●─●    ○─○        │
+    │       ╲      ╱         │
+    │    ════╪════╪════      │
+    │         ACTIVE          │
+    │         SITE            │
+    └─────────────────────────┘`,
+    metrics: { kcat: '145', spec: '99.2', stab: '-12.3' }
+  },
+  {
+    art: `
+    ┌─────────────────────────┐
+    │      ●─●    ○─○        │
+    │     ╱   ╲  ╱   ╲       │
+    │    ○     ●●     ○      │
+    │     ╲   ╱  ╲   ╱       │
+    │      ○─○    ●─●        │
+    │       ╲      ╱         │
+    │    ════╪════╪════      │
+    │         ACTIVE          │
+    │         SITE            │
+    └─────────────────────────┘`,
+    metrics: { kcat: '147', spec: '99.1', stab: '-12.4' }
+  },
+  {
+    art: `
+    ┌─────────────────────────┐
+    │      ◎─○    ○─◎        │
+    │     ╱   ╲  ╱   ╲       │
+    │    ●     ◎◎     ●      │
+    │     ╲   ╱  ╲   ╱       │
+    │      ●─●    ●─●        │
+    │       ╲      ╱         │
+    │    ════╪════╪════      │
+    │         ACTIVE          │
+    │         SITE            │
+    └─────────────────────────┘`,
+    metrics: { kcat: '152', spec: '99.4', stab: '-12.1' }
+  },
+  {
+    art: `
+    ┌─────────────────────────┐
+    │      ●─◎    ◎─●        │
+    │     ╱   ╲  ╱   ╲       │
+    │    ◎     ○○     ◎      │
+    │     ╲   ╱  ╲   ╱       │
+    │      ○─○    ○─○        │
+    │       ╲      ╱         │
+    │    ════╪════╪════      │
+    │         ACTIVE          │
+    │         SITE            │
+    └─────────────────────────┘`,
+    metrics: { kcat: '148', spec: '99.3', stab: '-12.2' }
+  },
 ];
 
 // ============================================================================
-// NEURAL NETWORK ANIMATION - Pulsing connections between nodes
+// PANEL 2: REGULATORY CIRCUITS - Network logic controls cellular outcomes
 // ============================================================================
-const networkFrames = [
-  `
-     [DNA]━━━━●━━━━[RNA]
-       ┃     ┃     ┃
-       ┃   ╔═╧═╗   ┃
-       ●━━║ ◉ ║━━●
-       ┃   ╚═╤═╝   ┃
-     ╭─┴─╮   ┃   ╭─┴─╮
-     │ ◎ │━━━●━━━│ ◎ │
-     ╰─┬─╯       ╰─┬─╯
-       ┗━━━━●━━━━━┛
-         PROTEIN
-  `,
-  `
-     [DNA]━━━━○━━━━[RNA]
-       ║     ║     ║
-       ║   ╔═╧═╗   ║
-       ○━━║ ◎ ║━━○
-       ║   ╚═╤═╝   ║
-     ╭─┴─╮   ║   ╭─┴─╮
-     │ ● │━━━○━━━│ ● │
-     ╰─┬─╯       ╰─┬─╯
-       ┗━━━━○━━━━━┛
-         PROTEIN
-  `,
-  `
-     [DNA]════●════[RNA]
-       ┃     ┃     ┃
-       ┃   ╔═╧═╗   ┃
-       ●══║ ● ║══●
-       ┃   ╚═╤═╝   ┃
-     ╭─┴─╮   ┃   ╭─┴─╮
-     │ ◉ │═══●═══│ ◉ │
-     ╰─┬─╯       ╰─┬─╯
-       ┗════●═════┛
-         PROTEIN
-  `,
-  `
-     [DNA]────◉────[RNA]
-       │     │     │
-       │   ╔═╧═╗   │
-       ◉──║ ○ ║──◉
-       │   ╚═╤═╝   │
-     ╭─┴─╮   │   ╭─┴─╮
-     │ ○ │───◉───│ ○ │
-     ╰─┬─╯       ╰─┬─╯
-       └────◉─────┘
-         PROTEIN
-  `,
+const regulatoryFrames = [
+  {
+    art: `
+       ┌───┐  ──▶  ┌───┐
+       │ A │━━━━━▶│ B │
+       └───┘       └───┘
+         │    ╭────╮ ↑
+         ▼    │ FB │─┘
+       ┌───┐  ╰────╯
+       │ C │──┤├──○
+       └───┘  REPR`,
+    growth: '67', stress: 'ACTIVE', bars: '████░░'
+  },
+  {
+    art: `
+       ┌───┐  ══▶  ┌───┐
+       │ A │══════▶│ B │
+       └───┘       └───┘
+         ║    ╭────╮ ║
+         ▼    │ FB │─╯
+       ┌───┐  ╰────╯
+       │ C │──┤├──●
+       └───┘  REPR`,
+    growth: '71', stress: 'ACTIVE', bars: '█████░'
+  },
+  {
+    art: `
+       ┌───┐  ──▶  ┌───┐
+       │ A │━━━━━▶│ B │
+       └───┘       └───┘
+         │    ╭────╮ │
+         ▼    │ FB │◀┘
+       ┌───┐  ╰────╯
+       │ C │──┤├──○
+       └───┘  REPR`,
+    growth: '64', stress: 'MODERATE', bars: '████░░'
+  },
+  {
+    art: `
+       ┌───┐  ━━▶  ┌───┐
+       │ A │──────▶│ B │
+       └───┘       └───┘
+         │    ╭────╮ ↑
+         ▼    │ FB │─┤
+       ┌───┐  ╰────╯
+       │ C │──┤├──●
+       └───┘  REPR`,
+    growth: '69', stress: 'ACTIVE', bars: '████░░'
+  },
 ];
 
 // ============================================================================
-// ML/ROI ANIMATION - Data flowing through ML to produce ROI
+// PANEL 3: DECISION SYSTEMS - ML finds levers in business systems
 // ============================================================================
-const mlRoiFrames = [
-  `
-  ┌─────────┐      ╔═══════╗      ┌─────────┐
-  │ █ █ █ █ │  ──▶ ║  ◇◇◇  ║  ──▶ │    ╱──  │
-  │ █ █ █ █ │      ║ ◇◇◇◇◇ ║      │   ╱     │
-  │ █ █ █ █ │      ║  ◇◇◇  ║      │  ╱      │
-  └─────────┘      ╚═══════╝      └─────────┘
-     DATA             ML            GROWTH
-
-       ┌──────────────────────────────┐
-       │  $$$  REVENUE  ▲▲▲  +23%    │
-       └──────────────────────────────┘
-  `,
-  `
-  ┌─────────┐      ╔═══════╗      ┌─────────┐
-  │ ▪ █ █ █ │  ▶▶▶ ║  ●○●  ║  ▶▶▶ │     ╱─  │
-  │ █ ▪ █ █ │      ║ ○●○●○ ║      │    ╱    │
-  │ █ █ ▪ █ │      ║  ●○●  ║      │  ─╱     │
-  └─────────┘      ╚═══════╝      └─────────┘
-     DATA             ML            GROWTH
-
-       ┌──────────────────────────────┐
-       │  $$$  REVENUE  ▲▲▲  +47%    │
-       └──────────────────────────────┘
-  `,
-  `
-  ┌─────────┐      ╔═══════╗      ┌─────────┐
-  │ ▫ ▪ █ █ │  >>>║  ◆◇◆  ║>>>   │      ╱  │
-  │ █ ▫ ▪ █ │      ║ ◇◆◇◆◇ ║      │     ╱   │
-  │ █ █ ▫ ▪ │      ║  ◆◇◆  ║      │   ╱╱    │
-  └─────────┘      ╚═══════╝      └─────────┘
-     DATA             ML            GROWTH
-
-       ┌──────────────────────────────┐
-       │  $$$  REVENUE  ▲▲▲  +89%    │
-       └──────────────────────────────┘
-  `,
-  `
-  ┌─────────┐      ╔═══════╗      ┌─────────┐
-  │ · ▫ ▪ █ │  ⟹  ║  ★☆★  ║  ⟹  │       ╱ │
-  │ █ · ▫ ▪ │      ║ ☆★☆★☆ ║      │     ╱╱  │
-  │ ▪ █ · ▫ │      ║  ★☆★  ║      │   ╱╱    │
-  └─────────┘      ╚═══════╝      └─────────┘
-     DATA             ML            GROWTH
-
-       ┌──────────────────────────────┐
-       │  $$$  REVENUE  ▲▲▲  +156%   │
-       └──────────────────────────────┘
-  `,
+const decisionFrames = [
+  {
+    art: `
+   ▸▸▸│         ┌─────┐
+   ▹▹▹│  ──▶    │ ◇◇◇ │   ──▶
+   ▸▸▸│         │◇ M ◇│
+   ▹▹▹│         │ ◇◇◇ │
+  INPUT         └─────┘`,
+    conv: '+23%', rev: '$2.4M', churn: '-18%', convDir: '▲', revDir: '▲', churnDir: '▼'
+  },
+  {
+    art: `
+   ▹▸▸│         ┌─────┐
+   ▸▹▸│  ▶▶▶    │ ●○● │   ▶▶▶
+   ▹▸▹│         │○ M ○│
+   ▸▹▸│         │ ●○● │
+  INPUT         └─────┘`,
+    conv: '+25%', rev: '$2.5M', churn: '-19%', convDir: '▲', revDir: '▲', churnDir: '▼'
+  },
+  {
+    art: `
+   ▸▹▸│         ┌─────┐
+   ▹▸▹│  >>>    │ ◆◇◆ │   >>>
+   ▸▹▸│         │◇ M ◇│
+   ▹▸▹│         │ ◆◇◆ │
+  INPUT         └─────┘`,
+    conv: '+27%', rev: '$2.6M', churn: '-21%', convDir: '▲', revDir: '▲', churnDir: '▼'
+  },
+  {
+    art: `
+   ▹▹▸│         ┌─────┐
+   ▸▸▹│  ⟹     │ ★☆★ │   ⟹
+   ▹▹▸│         │☆ M ☆│
+   ▸▸▹│         │ ★☆★ │
+  INPUT         └─────┘`,
+    conv: '+29%', rev: '$2.7M', churn: '-22%', convDir: '▲', revDir: '▲', churnDir: '▼'
+  },
 ];
 
-// Animation titles/labels
-const titles = [
-  { main: 'MOLECULAR DYNAMICS', sub: 'protein folding simulation' },
-  { main: 'GENE REGULATORY NETWORK', sub: 'pathway analysis' },
-  { main: 'ML PIPELINE', sub: 'data → intelligence → results' },
+// Panel configuration
+const panels = [
+  {
+    id: 'enzyme',
+    title: 'ENZYME ENGINEERING',
+    subtitle: 'structure → function → outcome',
+    color: 'text-accent',
+    frames: enzymeFrames,
+  },
+  {
+    id: 'regulatory',
+    title: 'REGULATORY CIRCUITS',
+    subtitle: 'network → expression → phenotype',
+    color: 'text-cyan',
+    frames: regulatoryFrames,
+  },
+  {
+    id: 'decision',
+    title: 'DECISION SYSTEMS',
+    subtitle: 'signal → model → action → outcome',
+    color: 'text-amber',
+    frames: decisionFrames,
+  },
 ];
 
-export default function AsciiHeroAnimation() {
-  const [currentScene, setCurrentScene] = useState(0);
-  const [frameIndex, setFrameIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
+// Individual panel component
+function AsciiPanel({ panel, frameIndex }) {
+  const frame = panel.frames[frameIndex % panel.frames.length];
 
-  const scenes = [proteinFrames, networkFrames, mlRoiFrames];
+  // Render metrics based on panel type
+  const renderMetrics = () => {
+    if (panel.id === 'enzyme') {
+      return (
+        <div className="ascii-metrics">
+          <div className="metric-row">
+            <span className="metric-label">Kcat:</span>
+            <span className="metric-value">{frame.metrics.kcat} s⁻¹</span>
+          </div>
+          <div className="metric-row">
+            <span className="metric-label">Specificity:</span>
+            <span className="metric-value">{frame.metrics.spec}%</span>
+          </div>
+          <div className="metric-row">
+            <span className="metric-label">Stability:</span>
+            <span className="metric-value">ΔG {frame.metrics.stab}</span>
+          </div>
+        </div>
+      );
+    }
 
-  // Animation loop for frames within a scene
-  useEffect(() => {
-    const frameInterval = setInterval(() => {
-      setFrameIndex((prev) => (prev + 1) % scenes[currentScene].length);
-    }, 400); // Frame rate for animation
+    if (panel.id === 'regulatory') {
+      return (
+        <div className="ascii-metrics">
+          <div className="metric-row">
+            <span className="metric-label">GROWTH:</span>
+            <span className="metric-value">{frame.bars} {frame.growth}%</span>
+          </div>
+          <div className="metric-row">
+            <span className="metric-label">STRESS:</span>
+            <span className="metric-value status-active">{frame.stress}</span>
+          </div>
+        </div>
+      );
+    }
 
-    return () => clearInterval(frameInterval);
-  }, [currentScene]);
+    if (panel.id === 'decision') {
+      return (
+        <div className="ascii-metrics">
+          <div className="metric-row">
+            <span className="metric-label">CONVERSION:</span>
+            <span className="metric-value metric-up">{frame.conv} {frame.convDir}</span>
+          </div>
+          <div className="metric-row">
+            <span className="metric-label">REVENUE:</span>
+            <span className="metric-value metric-up">{frame.rev} {frame.revDir}</span>
+          </div>
+          <div className="metric-row">
+            <span className="metric-label">CHURN:</span>
+            <span className="metric-value metric-down">{frame.churn} {frame.churnDir}</span>
+          </div>
+        </div>
+      );
+    }
 
-  // Scene transition loop
-  useEffect(() => {
-    const sceneInterval = setInterval(() => {
-      setIsTransitioning(true);
-      setTimeout(() => {
-        setCurrentScene((prev) => (prev + 1) % scenes.length);
-        setFrameIndex(0);
-        setIsTransitioning(false);
-      }, 300); // Transition duration
-    }, 6000); // Time per scene
-
-    return () => clearInterval(sceneInterval);
-  }, []);
-
-  const currentFrame = scenes[currentScene][frameIndex];
-  const currentTitle = titles[currentScene];
-
-  // Color classes based on scene
-  const sceneColors = ['text-accent', 'text-cyan', 'text-amber'];
-  const colorClass = sceneColors[currentScene];
+    return null;
+  };
 
   return (
-    <div className="ascii-hero-container">
-      <div className={`ascii-hero-label ${colorClass}`}>
-        <span className="ascii-hero-main">{currentTitle.main}</span>
-        <span className="ascii-hero-sub">{currentTitle.sub}</span>
+    <div className={`ascii-panel ${panel.color}`}>
+      <div className="ascii-panel-header">
+        <span className="ascii-panel-title">{panel.title}</span>
+        <span className="ascii-panel-subtitle">{panel.subtitle}</span>
       </div>
-      <pre
-        className={`ascii-hero ${colorClass} ${isTransitioning ? 'transitioning' : ''}`}
-        aria-hidden="true"
-      >
-        {currentFrame}
+      <pre className="ascii-panel-art" aria-hidden="true">
+        {frame.art}
       </pre>
-      <div className="ascii-scene-indicators">
-        {scenes.map((_, idx) => (
-          <span
-            key={idx}
-            className={`scene-dot ${idx === currentScene ? 'active' : ''}`}
+      {renderMetrics()}
+    </div>
+  );
+}
+
+export default function AsciiHeroAnimation() {
+  const [frameIndex, setFrameIndex] = useState(0);
+
+  // Animation loop for all panels simultaneously
+  useEffect(() => {
+    const frameInterval = setInterval(() => {
+      setFrameIndex((prev) => (prev + 1) % 4);
+    }, 600); // Slightly slower for readability
+
+    return () => clearInterval(frameInterval);
+  }, []);
+
+  return (
+    <div className="ascii-hero-wrapper">
+      <div className="ascii-hero-header">
+        <span className="ascii-hero-tagline">
+          COMPLEX SYSTEMS — finding the levers that change outcomes
+        </span>
+      </div>
+      <div className="ascii-panels-grid">
+        {panels.map((panel) => (
+          <AsciiPanel
+            key={panel.id}
+            panel={panel}
+            frameIndex={frameIndex}
           />
         ))}
       </div>
