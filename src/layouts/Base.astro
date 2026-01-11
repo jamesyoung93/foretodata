@@ -79,15 +79,15 @@ const { title = "James Young | ML & AI Expert" } = Astro.props;
       /* Sidebar */
       .sidebar {
         width: 280px;
-        border-right: 1px solid rgba(0, 255, 136, 0.2);
-        background: linear-gradient(180deg, rgba(10, 22, 12, 0.95) 0%, rgba(10, 12, 10, 0.9) 100%);
+        border-right: 1px solid rgba(0, 255, 136, 0.35);
+        background: linear-gradient(180deg, rgba(14, 30, 18, 0.98) 0%, rgba(10, 18, 12, 0.95) 100%);
         padding: 1.5rem;
         display: flex;
         flex-direction: column;
         position: fixed;
         height: 100vh;
         overflow-y: auto;
-        box-shadow: inset 0 0 0 1px rgba(0, 255, 136, 0.06);
+        box-shadow: inset 0 0 0 1px rgba(0, 255, 136, 0.1), 0 0 24px rgba(0, 255, 136, 0.08);
       }
 
       .sidebar-header { margin-bottom: 2rem; }
@@ -117,7 +117,7 @@ const { title = "James Young | ML & AI Expert" } = Astro.props;
       }
 
       .site-subtitle {
-        color: rgba(0, 255, 136, 0.55);
+        color: rgba(0, 255, 136, 0.75);
         font-size: 0.875rem;
         margin: 0;
         padding-left: 1.25rem;
@@ -128,7 +128,7 @@ const { title = "James Young | ML & AI Expert" } = Astro.props;
       .nav-section { margin-bottom: 1.5rem; }
 
       .nav-section-title {
-        color: rgba(0, 255, 136, 0.7);
+        color: rgba(0, 255, 136, 0.85);
         font-size: 0.7rem;
         text-transform: uppercase;
         letter-spacing: 0.1em;
@@ -153,7 +153,7 @@ const { title = "James Young | ML & AI Expert" } = Astro.props;
         border-radius: 0.375rem;
         text-decoration: none;
         font-size: 0.875rem;
-        color: rgba(0, 255, 136, 0.75);
+        color: rgba(0, 255, 136, 0.9);
         transition: all 0.2s;
         position: relative;
         margin-left: 0.25rem;
@@ -175,9 +175,9 @@ const { title = "James Young | ML & AI Expert" } = Astro.props;
       }
 
       .nav-link:hover {
-        background: rgba(0, 255, 136, 0.2);
+        background: rgba(0, 255, 136, 0.3);
         color: var(--accent);
-        box-shadow: 0 0 14px rgba(0, 255, 136, 0.35);
+        box-shadow: 0 0 18px rgba(0, 255, 136, 0.45);
       }
 
       .nav-link:hover::before {
@@ -193,7 +193,7 @@ const { title = "James Young | ML & AI Expert" } = Astro.props;
 
       .nav-link.active {
         color: var(--accent);
-        background: rgba(0, 255, 136, 0.16);
+        background: rgba(0, 255, 136, 0.22);
       }
 
       .nav-link.active::before {
