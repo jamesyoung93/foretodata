@@ -31,8 +31,8 @@ const { title = "James Young | ML & AI Expert" } = Astro.props;
         --surface: #111111;
         --border: #1a1a1a;
         --muted: #2a2a2a;
-        --text: #e0e0e0;
-        --dim: #808080;
+        --text: #b9f5cf;
+        --dim: rgba(0, 255, 136, 0.55);
         --accent: #00ff88;
         --accent-dim: #00cc6a;
         --accent-glow: rgba(0, 255, 136, 0.15);
@@ -93,6 +93,10 @@ const { title = "James Young | ML & AI Expert" } = Astro.props;
       .sidebar-header { margin-bottom: 2rem; }
       .sidebar-header a { text-decoration: none; display: block; }
       .sidebar-header a:hover .site-title { color: var(--accent); }
+      .sidebar-header a:hover .site-subtitle {
+        color: var(--accent);
+        text-shadow: 0 0 10px rgba(0, 255, 136, 0.4);
+      }
 
       .site-title-row {
         display: flex;
@@ -113,7 +117,7 @@ const { title = "James Young | ML & AI Expert" } = Astro.props;
       }
 
       .site-subtitle {
-        color: var(--dim);
+        color: rgba(0, 255, 136, 0.55);
         font-size: 0.875rem;
         margin: 0;
         padding-left: 1.25rem;
@@ -131,6 +135,11 @@ const { title = "James Young | ML & AI Expert" } = Astro.props;
         margin-bottom: 0.75rem;
       }
 
+      .nav-section:hover .nav-section-title {
+        color: var(--accent);
+        text-shadow: 0 0 12px rgba(0, 255, 136, 0.45);
+      }
+
       .nav-list { list-style: none; padding: 0; margin: 0; }
 
       .nav-list li { margin-bottom: 0.25rem; }
@@ -144,7 +153,7 @@ const { title = "James Young | ML & AI Expert" } = Astro.props;
         border-radius: 0.375rem;
         text-decoration: none;
         font-size: 0.875rem;
-        color: var(--dim);
+        color: rgba(0, 255, 136, 0.75);
         transition: all 0.2s;
         position: relative;
         margin-left: 0.25rem;
@@ -166,9 +175,9 @@ const { title = "James Young | ML & AI Expert" } = Astro.props;
       }
 
       .nav-link:hover {
-        background: rgba(0, 255, 136, 0.85);
-        color: #06140a;
-        box-shadow: 0 0 12px rgba(0, 255, 136, 0.35);
+        background: rgba(0, 255, 136, 0.2);
+        color: var(--accent);
+        box-shadow: 0 0 14px rgba(0, 255, 136, 0.35);
       }
 
       .nav-link:hover::before {
@@ -178,13 +187,13 @@ const { title = "James Young | ML & AI Expert" } = Astro.props;
       .nav-link .num { color: var(--accent); opacity: 0.5; }
 
       .nav-link:hover .num {
-        color: #06140a;
-        opacity: 0.85;
+        color: var(--accent);
+        opacity: 0.9;
       }
 
       .nav-link.active {
-        color: var(--text);
-        background: rgba(0, 255, 136, 0.12);
+        color: var(--accent);
+        background: rgba(0, 255, 136, 0.16);
       }
 
       .nav-link.active::before {
@@ -295,7 +304,7 @@ const { title = "James Young | ML & AI Expert" } = Astro.props;
         font-family: 'Space Grotesk', system-ui, sans-serif;
         font-size: 2.5rem;
         font-weight: 700;
-        color: var(--text);
+        color: var(--accent);
         margin: 0 0 1rem 0;
         line-height: 1.2;
       }
@@ -303,11 +312,21 @@ const { title = "James Young | ML & AI Expert" } = Astro.props;
       .hero-title .accent { color: var(--accent); }
 
       .hero-description {
-        color: var(--dim);
+        color: rgba(0, 255, 136, 0.85);
         font-size: 1.1rem;
         max-width: 42rem;
         line-height: 1.6;
         margin: 0;
+      }
+
+      .ascii-art {
+        margin: 1.5rem 0 0;
+        color: var(--accent);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.85rem;
+        line-height: 1.1;
+        white-space: pre;
+        text-shadow: 0 0 12px rgba(0, 255, 136, 0.4);
       }
 
       /* Section header */
