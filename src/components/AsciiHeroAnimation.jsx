@@ -398,8 +398,8 @@ const panels = [
   },
   {
     id: 'regulatory',
-    title: 'REGULATORY CIRCUITS',
-    subtitle: 'network → dynamics → cell fate',
+    title: 'CELL PHENOTYPE LANDSCAPE',
+    subtitle: 'network → dynamics → phenotype',
     color: 'text-cyan',
     frames: regulatoryFrames,
   },
@@ -571,12 +571,13 @@ export default function AsciiHeroAnimation() {
   const [frameIndex, setFrameIndex] = useState(0);
 
   // Animation loop for all panels simultaneously
-  // Uses 12 frames for regulatory panel's bistable switch cycle (~8.4s total)
+  // Extended to 20 frames with slower timing for contemplative pace
+  // Total cycle: ~30 seconds (was ~8.4 seconds)
   // Enzyme (6 frames) and Decision (4 frames) panels cycle within this
   useEffect(() => {
     const frameInterval = setInterval(() => {
-      setFrameIndex((prev) => (prev + 1) % 12);
-    }, 700); // 700ms per frame for readable narrative
+      setFrameIndex((prev) => (prev + 1) % 20);
+    }, 1500); // 1500ms per frame for meditative, contemplative pace
 
     return () => clearInterval(frameInterval);
   }, []);
