@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 // ============================================================================
 // CAUSAL NETWORK VISUALIZATION
@@ -6,92 +6,83 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 // Dynamic visualization showing causal relationships between business levers
 // and outcomes. Features:
 // - SVG-based network structure with nodes and edges
-// - Animated pulse propagation showing influence flow
+// - Edge pulse animations (brightness waves along paths)
+// - Node glow pulses when signals arrive
 // - Intervention notation (do() operator)
-// - Particle effects for continuous flow visualization
-// - Responsive design with terminal aesthetic
+// - Clean 3-tier layout with feedback loops around perimeter
 
-// Network node definitions - positions adjusted for larger nodes and feedback loops
+// Network node definitions - clean 3-tier layout with more spacing
 const nodes = {
   // External factors (top tier - uncontrollable)
-  MARKET: { id: 'MARKET', label: 'MARKET', tier: 0, x: 260, y: 18, controllable: false },
+  MARKET: { id: 'MARKET', label: 'MARKET', tier: 0, x: 280, y: 20, controllable: false },
 
-  // Levers (middle tier - controllable)
-  PRICE: { id: 'PRICE', label: 'PRICE', tier: 1, x: 45, y: 60, controllable: true },
-  PROMO: { id: 'PROMO', label: 'PROMO', tier: 1, x: 120, y: 60, controllable: true },
-  CHANNEL: { id: 'CHANNEL', label: 'CHANNEL', tier: 1, x: 195, y: 60, controllable: true },
-  OPS: { id: 'OPS', label: 'OPS', tier: 1, x: 270, y: 60, controllable: true },
+  // Levers (middle tier - controllable) - more horizontal spread
+  PRICE: { id: 'PRICE', label: 'PRICE', tier: 1, x: 50, y: 70, controllable: true },
+  PROMO: { id: 'PROMO', label: 'PROMO', tier: 1, x: 130, y: 70, controllable: true },
+  CHANNEL: { id: 'CHANNEL', label: 'CHANNEL', tier: 1, x: 210, y: 70, controllable: true },
+  OPS: { id: 'OPS', label: 'OPS', tier: 1, x: 290, y: 70, controllable: true },
 
-  // Outcomes (bottom tier) - spread out more for feedback loop clarity
-  DEMAND: { id: 'DEMAND', label: 'DEMAND', tier: 2, x: 85, y: 115, controllable: false },
-  CONVERSION: { id: 'CONVERSION', label: 'CONV', tier: 2, x: 180, y: 115, controllable: false },
-  REVENUE: { id: 'REVENUE', label: 'REVENUE', tier: 2, x: 280, y: 115, controllable: false },
-
-  // Hidden node for feedback tracking (CHURN affects demand through reputation)
-  CHURN: { id: 'CHURN', label: 'CHURN', tier: 2, x: 330, y: 75, controllable: false, hidden: true },
+  // Outcomes (bottom tier) - spread for clear flow
+  DEMAND: { id: 'DEMAND', label: 'DEMAND', tier: 2, x: 90, y: 135, controllable: false },
+  CONVERSION: { id: 'CONVERSION', label: 'CONV', tier: 2, x: 190, y: 135, controllable: false },
+  REVENUE: { id: 'REVENUE', label: 'REVENUE', tier: 2, x: 290, y: 135, controllable: false },
 };
 
-// Edge definitions with causal coefficients
+// Edge definitions (coefficients kept for logic but not displayed)
 const edges = [
   // Levers → Demand
-  { from: 'PRICE', to: 'DEMAND', beta: -0.41, label: 'β=-0.41' },
-  { from: 'PROMO', to: 'DEMAND', beta: 0.33, label: 'β=+0.33' },
-  { from: 'CHANNEL', to: 'DEMAND', beta: 0.27, label: 'β=+0.27' },
-  { from: 'MARKET', to: 'DEMAND', beta: 0.52, label: 'β=+0.52' },
+  { from: 'PRICE', to: 'DEMAND', beta: -0.41 },
+  { from: 'PROMO', to: 'DEMAND', beta: 0.33 },
+  { from: 'CHANNEL', to: 'DEMAND', beta: 0.27 },
+  { from: 'MARKET', to: 'DEMAND', beta: 0.52 },
 
   // Levers → Conversion
-  { from: 'OPS', to: 'CONVERSION', beta: 0.19, label: 'β=+0.19' },
-  { from: 'CHANNEL', to: 'CONVERSION', beta: 0.22, label: 'β=+0.22' },
+  { from: 'OPS', to: 'CONVERSION', beta: 0.19 },
+  { from: 'CHANNEL', to: 'CONVERSION', beta: 0.22 },
 
   // Demand → Conversion → Revenue chain
-  { from: 'DEMAND', to: 'CONVERSION', beta: 0.45, label: 'β=+0.45' },
-  { from: 'CONVERSION', to: 'REVENUE', beta: 0.89, label: 'β=+0.89' },
+  { from: 'DEMAND', to: 'CONVERSION', beta: 0.45 },
+  { from: 'CONVERSION', to: 'REVENUE', beta: 0.89 },
 
   // FEEDBACK LOOPS - showing circularity in the system
-  // Revenue feeds back to Promo (profits fund marketing spend)
-  { from: 'REVENUE', to: 'PROMO', beta: 0.25, label: 'reinvest', feedback: true },
-  // Conversion affects Demand through reputation/churn effects
-  { from: 'CONVERSION', to: 'DEMAND', beta: 0.18, label: 'reputation', feedback: true },
+  { from: 'REVENUE', to: 'PROMO', beta: 0.25, feedback: true },
+  { from: 'CONVERSION', to: 'DEMAND', beta: 0.18, feedback: true },
 ];
 
 // Intervention cycle - which levers activate in sequence
 const interventionCycle = ['PRICE', 'PROMO', 'CHANNEL', 'OPS'];
 
-// Calculate edge path with curve - handles feedback loops with arced paths
+// Calculate edge path with curve - handles feedback loops with large perimeter arcs
 function getEdgePath(from, to, isFeedback = false) {
   const fromNode = nodes[from];
   const toNode = nodes[to];
 
   const dx = toNode.x - fromNode.x;
-  const dy = toNode.y - fromNode.y;
 
   if (isFeedback) {
-    // Feedback loops use pronounced arcs that go around the outside
-    // REVENUE → PROMO: arc above the network
+    // REVENUE → PROMO: large arc above the network
     if (from === 'REVENUE' && to === 'PROMO') {
-      // Large arc going above, from right to left
-      const arcHeight = -60; // Above the nodes
+      const arcHeight = -20;
       const midX = (fromNode.x + toNode.x) / 2;
-      return `M ${fromNode.x} ${fromNode.y - 10} Q ${midX} ${arcHeight} ${toNode.x} ${toNode.y + 10}`;
+      return `M ${fromNode.x} ${fromNode.y - 12} Q ${midX} ${arcHeight} ${toNode.x} ${toNode.y - 12}`;
     }
-    // CONVERSION → DEMAND: arc below the network
+    // CONVERSION → DEMAND: large arc below the network
     if (from === 'CONVERSION' && to === 'DEMAND') {
-      // Arc going below and to the left
-      const arcDepth = 155; // Below the nodes
+      const arcDepth = 175;
       const midX = (fromNode.x + toNode.x) / 2;
-      return `M ${fromNode.x} ${fromNode.y + 10} Q ${midX} ${arcDepth} ${toNode.x} ${toNode.y + 10}`;
+      return `M ${fromNode.x} ${fromNode.y + 12} Q ${midX} ${arcDepth} ${toNode.x} ${toNode.y + 12}`;
     }
   }
 
-  // Regular edges: simple curved path
+  // Regular edges: gentle curved path
   const midX = fromNode.x + dx * 0.5;
-  const midY = fromNode.y + dy * 0.5;
-  const curveOffset = Math.abs(dx) * 0.12;
+  const midY = fromNode.y + (nodes[to].y - fromNode.y) * 0.5;
+  const curveOffset = Math.min(Math.abs(dx) * 0.08, 15);
 
-  return `M ${fromNode.x} ${fromNode.y + 10} Q ${midX} ${midY + curveOffset} ${toNode.x} ${toNode.y - 10}`;
+  return `M ${fromNode.x} ${fromNode.y + 12} Q ${midX} ${midY + curveOffset} ${toNode.x} ${nodes[to].y - 12}`;
 }
 
-// Get downstream nodes for cascade animation - slowed down for contemplative pace
+// Get downstream nodes for cascade animation
 function getDownstreamPath(startNode) {
   const visited = new Set();
   const path = [];
@@ -103,8 +94,7 @@ function getDownstreamPath(startNode) {
 
     edges.forEach(edge => {
       if (edge.from === nodeId && !edge.feedback) {
-        // 1200ms between node activations (was 400ms) - slow enough to track
-        traverse(edge.to, delay + 1200);
+        traverse(edge.to, delay + 1500); // 1.5s between node activations
       }
     });
   }
@@ -113,257 +103,190 @@ function getDownstreamPath(startNode) {
   return path;
 }
 
-// Particle class for canvas animation - slower, more trackable particles
-class Particle {
-  constructor(edge, progress = 0) {
-    this.edge = edge;
-    this.progress = progress;
-    // Slowed down: 30-40% of original speed for trackable movement
-    this.speed = 0.003 + Math.random() * 0.002;
-    this.size = 2.5 + Math.random() * 2; // Slightly larger
-    this.alpha = 0.7 + Math.random() * 0.3;
-    this.isFeedback = edge.feedback || false;
-  }
-
-  update() {
-    this.progress += this.speed;
-    return this.progress < 1;
-  }
-
-  getPosition() {
-    const from = nodes[this.edge.from];
-    const to = nodes[this.edge.to];
-    const t = this.progress;
-
-    // Handle feedback loop paths differently
-    if (this.isFeedback) {
-      if (this.edge.from === 'REVENUE' && this.edge.to === 'PROMO') {
-        // Arc above the network
-        const arcHeight = -60;
-        const midX = (from.x + to.x) / 2;
-        const startY = from.y - 10;
-        const endY = to.y + 10;
-        // Quadratic bezier for arc
-        const x = (1-t)*(1-t)*from.x + 2*(1-t)*t*midX + t*t*to.x;
-        const y = (1-t)*(1-t)*startY + 2*(1-t)*t*arcHeight + t*t*endY;
-        return { x, y };
-      }
-      if (this.edge.from === 'CONVERSION' && this.edge.to === 'DEMAND') {
-        // Arc below the network
-        const arcDepth = 155;
-        const midX = (from.x + to.x) / 2;
-        const startY = from.y + 10;
-        const endY = to.y + 10;
-        const x = (1-t)*(1-t)*from.x + 2*(1-t)*t*midX + t*t*to.x;
-        const y = (1-t)*(1-t)*startY + 2*(1-t)*t*arcDepth + t*t*endY;
-        return { x, y };
-      }
-    }
-
-    // Regular edge quadratic bezier interpolation
-    const dx = to.x - from.x;
-    const curveOffset = Math.abs(dx) * 0.12;
-
-    const midX = from.x + dx * 0.5;
-    const midY = from.y + (to.y - from.y) * 0.5 + curveOffset;
-
-    // Bezier formula
-    const x = (1-t)*(1-t)*from.x + 2*(1-t)*t*midX + t*t*to.x;
-    const y = (1-t)*(1-t)*(from.y + 10) + 2*(1-t)*t*midY + t*t*(to.y - 10);
-
-    return { x, y };
-  }
+// Get edges from a node for pulse animation timing
+function getEdgesFrom(nodeId) {
+  return edges.filter(e => e.from === nodeId && !e.feedback);
 }
 
 export default function CausalNetworkVisualization({ frameIndex = 0 }) {
-  const canvasRef = useRef(null);
-  const particlesRef = useRef([]);
-  const animationRef = useRef(null);
   const [activeNode, setActiveNode] = useState(null);
   const [activatedNodes, setActivatedNodes] = useState(new Set());
-  const [pulsingEdges, setPulsingEdges] = useState(new Set());
+  const [pulsingEdges, setPulsingEdges] = useState(new Map()); // edge key -> pulse progress (0-1)
   const [intervention, setIntervention] = useState(null);
-  const [breathPhase, setBreathPhase] = useState(0); // For node breathing animation
+  const [breathPhase, setBreathPhase] = useState(0);
+  const [nodeGlows, setNodeGlows] = useState(new Map()); // node id -> glow intensity (0-1)
+  const pulseTimersRef = useRef([]);
 
-  // Breathing animation - slow oscillation for "living system" feel
+  // Breathing animation for subtle "living system" feel
   useEffect(() => {
     const breathInterval = setInterval(() => {
       setBreathPhase(p => (p + 1) % 100);
-    }, 40); // ~25fps for smooth breathing
+    }, 40);
     return () => clearInterval(breathInterval);
   }, []);
 
   // Determine which lever is currently being intervened on
-  // Slowed down: each intervention lasts longer (was /3, now /5)
+  // Each intervention lasts 5 frames (~7.5 seconds at 1.5s/frame)
   const currentIntervention = interventionCycle[Math.floor(frameIndex / 5) % interventionCycle.length];
 
-  // Handle intervention cycle - slowed down for contemplative pace
+  // Handle intervention cycle with edge pulses and node glows
   useEffect(() => {
+    // Clear any existing timers
+    pulseTimersRef.current.forEach(timer => clearTimeout(timer));
+    pulseTimersRef.current = [];
+
     const newActiveNode = currentIntervention;
     const downstreamPath = getDownstreamPath(newActiveNode);
 
     // Reset states
     setActiveNode(newActiveNode);
     setActivatedNodes(new Set([newActiveNode]));
-    setPulsingEdges(new Set());
+    setPulsingEdges(new Map());
+    setNodeGlows(new Map([[newActiveNode, 1]])); // Source node starts glowing
 
-    // Determine intervention direction based on coefficient
+    // Determine intervention direction
     const firstEdge = edges.find(e => e.from === newActiveNode && !e.feedback);
     const direction = firstEdge && firstEdge.beta < 0 ? '↓' : '↑';
     setIntervention(`do(${newActiveNode}${direction})`);
 
-    // Cascade activation through network - slower delays for trackable propagation
+    // Animate cascade: source glows → edges pulse → destination glows → repeat
     downstreamPath.forEach(({ nodeId, delay }) => {
       if (delay > 0) {
-        setTimeout(() => {
+        // Start node glow when signal arrives
+        const glowTimer = setTimeout(() => {
           setActivatedNodes(prev => new Set([...prev, nodeId]));
+          setNodeGlows(prev => new Map([...prev, [nodeId, 1]]));
 
-          // Find and pulse the edges leading to this node (including feedback)
-          edges.forEach(edge => {
-            if (edge.to === nodeId) {
-              setPulsingEdges(prev => new Set([...prev, `${edge.from}-${edge.to}`]));
-            }
-          });
+          // Fade out glow after 0.5s
+          setTimeout(() => {
+            setNodeGlows(prev => {
+              const newMap = new Map(prev);
+              newMap.set(nodeId, 0.3);
+              return newMap;
+            });
+          }, 500);
         }, delay);
+        pulseTimersRef.current.push(glowTimer);
       }
     });
 
-    // Pulse feedback edges with additional delay to show cyclical nature
-    const maxDelay = Math.max(...downstreamPath.map(p => p.delay), 0);
-    edges.filter(e => e.feedback).forEach((edge, i) => {
-      setTimeout(() => {
-        setPulsingEdges(prev => new Set([...prev, `${edge.from}-${edge.to}`]));
-      }, maxDelay + 800 + i * 600);
+    // Animate edges: pulse travels along each edge
+    downstreamPath.forEach(({ nodeId, delay }) => {
+      const outgoingEdges = getEdgesFrom(nodeId);
+      outgoingEdges.forEach(edge => {
+        const edgeKey = `${edge.from}-${edge.to}`;
+        const edgePulseDuration = 1200; // 1.2s for pulse to travel edge
+
+        // Start edge pulse
+        const startTimer = setTimeout(() => {
+          // Animate pulse progress from 0 to 1
+          const startTime = Date.now();
+          const animateEdge = () => {
+            const elapsed = Date.now() - startTime;
+            const progress = Math.min(1, elapsed / edgePulseDuration);
+
+            setPulsingEdges(prev => {
+              const newMap = new Map(prev);
+              newMap.set(edgeKey, progress);
+              return newMap;
+            });
+
+            if (progress < 1) {
+              requestAnimationFrame(animateEdge);
+            }
+          };
+          animateEdge();
+        }, delay);
+        pulseTimersRef.current.push(startTimer);
+      });
     });
 
-    // Clear intervention text after longer animation (was 1800ms)
+    // Pulse feedback edges after main cascade completes
+    const maxDelay = Math.max(...downstreamPath.map(p => p.delay), 0);
+    const feedbackEdges = edges.filter(e => e.feedback);
+    feedbackEdges.forEach((edge, i) => {
+      const edgeKey = `${edge.from}-${edge.to}`;
+      const feedbackDelay = maxDelay + 1000 + i * 800;
+      const edgePulseDuration = 1500;
+
+      const feedbackTimer = setTimeout(() => {
+        const startTime = Date.now();
+        const animateFeedback = () => {
+          const elapsed = Date.now() - startTime;
+          const progress = Math.min(1, elapsed / edgePulseDuration);
+
+          setPulsingEdges(prev => {
+            const newMap = new Map(prev);
+            newMap.set(edgeKey, progress);
+            return newMap;
+          });
+
+          if (progress < 1) {
+            requestAnimationFrame(animateFeedback);
+          }
+        };
+        animateFeedback();
+      }, feedbackDelay);
+      pulseTimersRef.current.push(feedbackTimer);
+    });
+
+    // Clear intervention text after brief display (2s)
     const clearTimer = setTimeout(() => {
       setIntervention(null);
-    }, 4000);
+    }, 2000);
+    pulseTimersRef.current.push(clearTimer);
 
-    return () => clearTimeout(clearTimer);
+    return () => {
+      pulseTimersRef.current.forEach(timer => clearTimeout(timer));
+    };
   }, [currentIntervention, frameIndex]);
 
-  // Particle animation loop - fewer particles, more trackable
-  const animateParticles = useCallback(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    const width = canvas.width;
-    const height = canvas.height;
-
-    // Clear canvas
-    ctx.clearRect(0, 0, width, height);
-
-    // Spawn new particles less frequently (was 0.15, now 0.04)
-    // Quality over quantity - each particle should be trackable
-    if (Math.random() < 0.04 && particlesRef.current.length < 15) {
-      const randomEdge = edges[Math.floor(Math.random() * edges.length)];
-      particlesRef.current.push(new Particle(randomEdge));
-    }
-
-    // Update and draw particles
-    particlesRef.current = particlesRef.current.filter(particle => {
-      const alive = particle.update();
-      if (alive) {
-        const pos = particle.getPosition();
-        const isNegative = particle.edge.beta < 0;
-        const isFeedback = particle.isFeedback;
-
-        ctx.beginPath();
-        ctx.arc(pos.x, pos.y, particle.size, 0, Math.PI * 2);
-
-        // Color based on edge type - feedback edges use dimmer amber
-        if (isNegative) {
-          ctx.fillStyle = `rgba(255, 107, 107, ${particle.alpha * 0.8})`;
-        } else if (isFeedback) {
-          ctx.fillStyle = `rgba(200, 140, 0, ${particle.alpha * 0.7})`; // Dimmer amber for feedback
-        } else {
-          ctx.fillStyle = `rgba(255, 170, 0, ${particle.alpha})`;
-        }
-        ctx.fill();
-
-        // Glow effect
-        if (isFeedback) {
-          ctx.shadowColor = 'rgba(200, 140, 0, 0.5)';
-        } else if (isNegative) {
-          ctx.shadowColor = 'rgba(255, 107, 107, 0.6)';
-        } else {
-          ctx.shadowColor = 'rgba(255, 170, 0, 0.6)';
-        }
-        ctx.shadowBlur = 5;
-        ctx.fill();
-        ctx.shadowBlur = 0;
-      }
-      return alive;
-    });
-
-    animationRef.current = requestAnimationFrame(animateParticles);
-  }, []);
-
-  // Start particle animation
-  useEffect(() => {
-    animateParticles();
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-    };
-  }, [animateParticles]);
-
-  // Calculate edge thickness based on coefficient magnitude - increased for readability
+  // Calculate edge thickness - thinner for feedback edges
   const getEdgeThickness = (beta, isFeedback = false) => {
-    const base = isFeedback ? 1.5 : 2; // Feedback edges slightly thinner
-    return base + Math.abs(beta) * 3; // Increased multiplier for thicker edges
+    if (isFeedback) return 1.2;
+    return 1.5 + Math.abs(beta) * 2;
   };
 
-  // Calculate breathing scale for nodes (subtle 5% variation over 3-4 second cycle)
+  // Calculate breathing scale for nodes
   const getBreathingScale = (nodeId) => {
-    // Different nodes breathe at slightly different rates for organic feel
     const offset = nodeId.charCodeAt(0) * 7;
     const phase = (breathPhase + offset) % 100;
     const breathCycle = Math.sin((phase / 100) * Math.PI * 2);
-    return 1 + breathCycle * 0.025; // 2.5% scale variation each way = 5% total
+    return 1 + breathCycle * 0.025;
+  };
+
+  // Calculate edge path length for stroke-dashoffset animation
+  const getPathLength = (from, to, isFeedback) => {
+    // Approximate path length for dash animation
+    const fromNode = nodes[from];
+    const toNode = nodes[to];
+    const dx = toNode.x - fromNode.x;
+    const dy = toNode.y - fromNode.y;
+    const straightDist = Math.sqrt(dx * dx + dy * dy);
+    // Curved paths are ~1.2-1.5x longer
+    return isFeedback ? straightDist * 1.8 : straightDist * 1.3;
   };
 
   return (
     <div className="causal-network-container">
-      {/* Intervention notation */}
+      {/* Intervention notation - smaller, appears briefly */}
       {intervention && (
-        <div className="intervention-label">
+        <div className="intervention-label" style={{
+          fontSize: '10px',
+          opacity: 0.8,
+          transition: 'opacity 0.3s ease-out'
+        }}>
           {intervention}
         </div>
       )}
 
-      {/* SVG Network Layer - expanded viewBox for feedback loops */}
+      {/* SVG Network Layer */}
       <svg
         className="causal-network-svg"
-        viewBox="-10 -70 370 240"
+        viewBox="-10 -40 360 230"
         preserveAspectRatio="xMidYMid meet"
       >
         <defs>
-          {/* Gradient for positive edges */}
-          <linearGradient id="edge-positive" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#ffaa00" stopOpacity="0.3" />
-            <stop offset="50%" stopColor="#ffaa00" stopOpacity="0.8" />
-            <stop offset="100%" stopColor="#ffaa00" stopOpacity="0.3" />
-          </linearGradient>
-
-          {/* Gradient for negative edges */}
-          <linearGradient id="edge-negative" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#ff6b6b" stopOpacity="0.3" />
-            <stop offset="50%" stopColor="#ff6b6b" stopOpacity="0.8" />
-            <stop offset="100%" stopColor="#ff6b6b" stopOpacity="0.3" />
-          </linearGradient>
-
-          {/* Gradient for feedback edges - dimmer amber */}
-          <linearGradient id="edge-feedback" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#c88c00" stopOpacity="0.2" />
-            <stop offset="50%" stopColor="#c88c00" stopOpacity="0.6" />
-            <stop offset="100%" stopColor="#c88c00" stopOpacity="0.2" />
-          </linearGradient>
-
           {/* Glow filter for active nodes */}
           <filter id="glow-amber" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
@@ -374,67 +297,85 @@ export default function CausalNetworkVisualization({ frameIndex = 0 }) {
           </filter>
 
           <filter id="glow-strong" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+            <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
             <feMerge>
               <feMergeNode in="coloredBlur"/>
               <feMergeNode in="SourceGraphic"/>
             </feMerge>
           </filter>
+
+          {/* Edge glow filter for pulses */}
+          <filter id="edge-glow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="2" result="blur"/>
+            <feMerge>
+              <feMergeNode in="blur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
         </defs>
 
-        {/* Edges */}
+        {/* Edges - with pulse animation */}
         <g className="causal-edges">
           {edges.map((edge, i) => {
             const isFeedback = edge.feedback || false;
             const path = getEdgePath(edge.from, edge.to, isFeedback);
             const isNegative = edge.beta < 0;
-            const isPulsing = pulsingEdges.has(`${edge.from}-${edge.to}`);
+            const edgeKey = `${edge.from}-${edge.to}`;
+            const pulseProgress = pulsingEdges.get(edgeKey) || 0;
+            const isPulsing = pulseProgress > 0 && pulseProgress < 1;
             const thickness = getEdgeThickness(edge.beta, isFeedback);
+            const pathLength = getPathLength(edge.from, edge.to, isFeedback);
 
-            // Determine edge color
-            let strokeColor = '#ffaa00';
-            if (isNegative) strokeColor = '#ff6b6b';
-            if (isFeedback) strokeColor = '#c88c00'; // Dimmer amber for feedback
+            // Base colors - feedback edges are more transparent
+            let baseColor = '#ffaa00';
+            if (isNegative) baseColor = '#ff6b6b';
+            if (isFeedback) baseColor = '#c88c00';
 
-            // Calculate label position - different for feedback loops
-            let labelX, labelY;
-            if (isFeedback && edge.from === 'REVENUE') {
-              labelX = (nodes[edge.from].x + nodes[edge.to].x) / 2;
-              labelY = -35; // Above the arc
-            } else if (isFeedback && edge.from === 'CONVERSION') {
-              labelX = (nodes[edge.from].x + nodes[edge.to].x) / 2;
-              labelY = 145; // Below the arc
-            } else {
-              labelX = nodes[edge.from].x + (nodes[edge.to].x - nodes[edge.from].x) * 0.5;
-              labelY = nodes[edge.from].y + (nodes[edge.to].y - nodes[edge.from].y) * 0.4;
-            }
+            // Edge opacity - lower for feedback, higher when pulsing
+            const baseOpacity = isFeedback ? 0.25 : 0.4;
+            const activeOpacity = isFeedback ? 0.6 : 0.85;
 
             return (
               <g key={i} className="causal-edge-group">
-                {/* Edge path */}
+                {/* Base edge path (dim) */}
                 <path
                   d={path}
                   fill="none"
-                  stroke={strokeColor}
+                  stroke={baseColor}
                   strokeWidth={thickness}
-                  strokeOpacity={isPulsing ? 0.9 : (isFeedback ? 0.35 : 0.5)}
-                  className={`causal-edge ${isPulsing ? 'pulsing' : ''} ${isFeedback ? 'feedback' : ''}`}
-                  strokeDasharray={isFeedback ? '6,4' : (isNegative ? '5,3' : 'none')}
+                  strokeOpacity={baseOpacity}
+                  strokeDasharray={isFeedback ? '8,6' : (isNegative ? '6,4' : 'none')}
                 />
 
-                {/* Coefficient label - larger font */}
-                <text
-                  x={labelX}
-                  y={labelY}
-                  className="edge-coefficient"
-                  fill={strokeColor}
-                  opacity={isPulsing ? 1 : 0.6}
-                  fontSize="8"
-                  fontWeight="500"
-                  textAnchor="middle"
-                >
-                  {edge.label}
-                </text>
+                {/* Pulse overlay - animated brightness wave */}
+                {isPulsing && (
+                  <path
+                    d={path}
+                    fill="none"
+                    stroke={isNegative ? '#ff9999' : '#ffcc44'}
+                    strokeWidth={thickness + 1}
+                    strokeOpacity={activeOpacity}
+                    strokeDasharray={`${pathLength * 0.15} ${pathLength * 0.85}`}
+                    strokeDashoffset={pathLength * (1 - pulseProgress)}
+                    filter="url(#edge-glow)"
+                    style={{ transition: 'none' }}
+                  />
+                )}
+
+                {/* Completed pulse glow (brief) */}
+                {pulseProgress >= 1 && (
+                  <path
+                    d={path}
+                    fill="none"
+                    stroke={baseColor}
+                    strokeWidth={thickness}
+                    strokeOpacity={0.7}
+                    strokeDasharray={isFeedback ? '8,6' : (isNegative ? '6,4' : 'none')}
+                    style={{
+                      animation: 'fadeEdge 0.5s ease-out forwards',
+                    }}
+                  />
+                )}
               </g>
             );
           })}
@@ -442,21 +383,26 @@ export default function CausalNetworkVisualization({ frameIndex = 0 }) {
 
         {/* Nodes */}
         <g className="causal-nodes">
-          {Object.values(nodes).filter(n => !n.hidden).map((node) => {
+          {Object.values(nodes).map((node) => {
             const isActive = activatedNodes.has(node.id);
             const isLever = node.controllable;
             const isSource = node.id === activeNode;
             const breathScale = getBreathingScale(node.id);
+            const glowIntensity = nodeGlows.get(node.id) || 0;
+
+            // Node glow effect
+            const nodeFilter = isSource ? 'url(#glow-strong)' :
+                              (glowIntensity > 0.5 ? 'url(#glow-amber)' : 'none');
 
             return (
               <g
                 key={node.id}
                 className={`causal-node ${isActive ? 'active' : ''} ${isSource ? 'source' : ''}`}
-                transform={`translate(${node.x}, ${node.y}) scale(${breathScale})`}
-                filter={isSource ? 'url(#glow-strong)' : isActive ? 'url(#glow-amber)' : 'none'}
-                style={{ transformOrigin: 'center', transition: 'transform 0.1s ease-out' }}
+                transform={`translate(${node.x}, ${node.y}) scale(${breathScale * (1 + glowIntensity * 0.1)})`}
+                filter={nodeFilter}
+                style={{ transformOrigin: 'center', transition: 'transform 0.15s ease-out' }}
               >
-                {/* Node background - 50-75% larger */}
+                {/* Node background */}
                 <rect
                   x="-32"
                   y="-12"
@@ -464,12 +410,12 @@ export default function CausalNetworkVisualization({ frameIndex = 0 }) {
                   height="24"
                   rx="4"
                   className={`node-bg ${isLever ? 'lever' : ''} ${isActive ? 'active' : ''}`}
-                  fill={isActive ? 'rgba(255, 170, 0, 0.2)' : 'rgba(0, 0, 0, 0.5)'}
+                  fill={isActive ? `rgba(255, 170, 0, ${0.15 + glowIntensity * 0.15})` : 'rgba(0, 0, 0, 0.5)'}
                   stroke={isActive ? '#ffaa00' : '#666'}
                   strokeWidth={isSource ? 2 : 1.5}
                 />
 
-                {/* Lever indicator - larger */}
+                {/* Lever indicator */}
                 {isLever && (
                   <rect
                     x="-28"
@@ -482,7 +428,7 @@ export default function CausalNetworkVisualization({ frameIndex = 0 }) {
                   />
                 )}
 
-                {/* Node label - larger font */}
+                {/* Node label */}
                 <text
                   className="node-label"
                   fill={isActive ? '#ffaa00' : '#aaa'}
@@ -499,14 +445,13 @@ export default function CausalNetworkVisualization({ frameIndex = 0 }) {
         </g>
       </svg>
 
-      {/* Canvas for particle effects - expanded to match viewBox */}
-      <canvas
-        ref={canvasRef}
-        className="causal-particles-canvas"
-        width="370"
-        height="240"
-        style={{ marginTop: '-70px', marginLeft: '-10px' }}
-      />
+      {/* CSS for edge fade animation */}
+      <style>{`
+        @keyframes fadeEdge {
+          from { stroke-opacity: 0.7; }
+          to { stroke-opacity: 0.4; }
+        }
+      `}</style>
     </div>
   );
 }
