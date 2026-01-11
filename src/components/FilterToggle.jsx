@@ -309,6 +309,7 @@ export default function FilterToggle() {
           <div style={styles.toggleGroup}>
             <button
               onClick={() => { setViewMode('method'); setSelectedCategory(null); }}
+              className="hover-highlight"
               style={{
                 ...styles.toggleBtn,
                 ...(viewMode === 'method' ? styles.toggleBtnActive : {}),
@@ -318,6 +319,7 @@ export default function FilterToggle() {
             </button>
             <button
               onClick={() => { setViewMode('industry'); setSelectedCategory(null); }}
+              className="hover-highlight"
               style={{
                 ...styles.toggleBtn,
                 ...(viewMode === 'industry' ? styles.toggleBtnActive : {}),
@@ -331,6 +333,7 @@ export default function FilterToggle() {
         {selectedCategory && (
           <button
             onClick={() => setSelectedCategory(null)}
+            className="hover-highlight"
             style={styles.backLink}
           >
             ← Show all
@@ -344,6 +347,7 @@ export default function FilterToggle() {
           <button
             key={key}
             onClick={() => setSelectedCategory(selectedCategory === key ? null : key)}
+            className="hover-highlight"
             style={{
               ...styles.pill,
               ...(selectedCategory === key ? styles.pillActive : {}),
@@ -378,6 +382,7 @@ export default function FilterToggle() {
                 {items.map((item) => (
                   <article
                     key={item.id}
+                    className="hover-highlight"
                     style={{
                       ...styles.card,
                       ...(expandedId === item.id ? styles.cardExpanded : {}),
