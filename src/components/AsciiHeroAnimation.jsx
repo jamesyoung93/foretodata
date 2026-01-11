@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import MolecularViewer from './MolecularViewer';
+import CausalNetworkVisualization from './CausalNetworkVisualization';
 
 // ============================================================================
 // PANEL 1: ENZYME ENGINEERING - Navigating sequence space to optimize function
@@ -404,7 +405,7 @@ const panels = [
   {
     id: 'decision',
     title: 'DECISION SYSTEMS',
-    subtitle: 'signal → model → action → outcome',
+    subtitle: 'intervention → propagation → impact',
     color: 'text-amber',
     frames: decisionFrames,
   },
@@ -472,19 +473,44 @@ function AsciiPanel({ panel, frameIndex }) {
     }
 
     if (panel.id === 'decision') {
+      // Calculate bar widths based on frame values
+      const convValue = parseInt(frame.conv.replace('+', ''));
+      const churnValue = Math.abs(parseInt(frame.churn));
+
       return (
-        <div className="ascii-metrics">
-          <div className="metric-row">
+        <div className="ascii-metrics decision-metrics-enhanced">
+          <div className="metric-row metric-bar-row">
             <span className="metric-label">CONVERSION:</span>
+            <div className="metric-bar">
+              <div
+                className="metric-bar-fill positive"
+                style={{ width: `${(convValue / 35) * 100}%` }}
+              />
+            </div>
             <span className="metric-value metric-fixed metric-up">{frame.conv.padStart(3, ' ')}% {frame.convDir}</span>
           </div>
-          <div className="metric-row">
+          <div className="metric-row metric-bar-row">
             <span className="metric-label">REVENUE:</span>
+            <div className="metric-bar">
+              <div
+                className="metric-bar-fill positive"
+                style={{ width: `${(parseFloat(frame.rev) / 3.0) * 100}%` }}
+              />
+            </div>
             <span className="metric-value metric-fixed metric-up">${frame.rev}M {frame.revDir}</span>
           </div>
-          <div className="metric-row">
+          <div className="metric-row metric-bar-row">
             <span className="metric-label">CHURN:</span>
+            <div className="metric-bar">
+              <div
+                className="metric-bar-fill negative"
+                style={{ width: `${(churnValue / 30) * 100}%` }}
+              />
+            </div>
             <span className="metric-value metric-fixed metric-down">{frame.churn.padStart(3, ' ')}% {frame.churnDir}</span>
+          </div>
+          <div className="lift-indicator">
+            LIFT: +$420K incremental
           </div>
         </div>
       );
@@ -494,6 +520,7 @@ function AsciiPanel({ panel, frameIndex }) {
   };
 
   // For enzyme panel, use 3D molecular viewer instead of ASCII art
+  // For decision panel, use causal network visualization
   const renderVisualization = () => {
     if (panel.id === 'enzyme') {
       return (
@@ -502,6 +529,13 @@ function AsciiPanel({ panel, frameIndex }) {
             allostericPulse={frame.allosteric || [false, false]}
             frameIndex={frameIndex}
           />
+        </div>
+      );
+    }
+    if (panel.id === 'decision') {
+      return (
+        <div className="causal-network-wrapper">
+          <CausalNetworkVisualization frameIndex={frameIndex} />
         </div>
       );
     }
