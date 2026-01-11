@@ -1,6 +1,5 @@
 import { useState, useMemo } from 'react';
 
-// Accomplishment data - you'll populate this from your content
 const accomplishments = [
   {
     id: 1,
@@ -8,7 +7,7 @@ const accomplishments = [
     summary: "Built ML model that lifted B2B conversion rates 23% by identifying high-intent prospects and optimal outreach timing.",
     methods: ["causal-inference", "interpretable-ml"],
     industries: ["revenue", "b2b-sales"],
-    details: "Used gradient boosting with SHAP explanations to surface the 12 features most predictive of deal closure...",
+    details: "Used gradient boosting with SHAP explanations to surface the 12 features most predictive of deal closure. Integrated with CRM for real-time lead scoring.",
     metrics: ["23% conversion lift", "2.1x ROI on sales spend"],
   },
   {
@@ -17,7 +16,7 @@ const accomplishments = [
     summary: "Deployed hierarchical forecasting system reducing inventory costs by $2.4M annually through better demand prediction.",
     methods: ["mlops", "causal-inference"],
     industries: ["operations", "supply-chain"],
-    details: "Implemented Prophet + LightGBM ensemble with automated retraining via Airflow...",
+    details: "Implemented Prophet + LightGBM ensemble with automated retraining via Airflow. Handles 50k SKUs across 200 locations.",
     metrics: ["$2.4M annual savings", "34% forecast accuracy improvement"],
   },
   {
@@ -26,7 +25,7 @@ const accomplishments = [
     summary: "Fine-tuned LLM handling 40% of support tickets autonomously with 94% customer satisfaction.",
     methods: ["llms", "mlops"],
     industries: ["operations", "customer-experience"],
-    details: "RAG architecture with custom fine-tuning on 50k historical tickets...",
+    details: "RAG architecture with custom fine-tuning on 50k historical tickets. Seamless handoff to human agents for complex cases.",
     metrics: ["40% ticket deflection", "94% CSAT score"],
   },
   {
@@ -35,7 +34,7 @@ const accomplishments = [
     summary: "Causal ML system for real-time price optimization, driving 18% margin improvement.",
     methods: ["causal-inference", "interpretable-ml"],
     industries: ["revenue", "pricing"],
-    details: "Double ML for causal effect estimation combined with contextual bandits...",
+    details: "Double ML for causal effect estimation combined with contextual bandits for exploration. Processes 1M pricing decisions daily.",
     metrics: ["18% margin improvement", "12% volume increase"],
   },
   {
@@ -44,7 +43,7 @@ const accomplishments = [
     summary: "Location intelligence model identifying optimal retail expansion sites with 85% success rate.",
     methods: ["interpretable-ml", "causal-inference"],
     industries: ["expansion", "retail"],
-    details: "Geospatial features + demographic clustering with explainable predictions...",
+    details: "Geospatial features + demographic clustering with explainable predictions. Board-ready visualizations for site selection.",
     metrics: ["85% site success rate", "14 new locations launched"],
   },
   {
@@ -53,12 +52,11 @@ const accomplishments = [
     summary: "LLM-powered contract analysis reducing legal review time by 60%.",
     methods: ["llms", "mlops"],
     industries: ["operations", "legal"],
-    details: "Custom extraction pipeline with validation workflows...",
+    details: "Custom extraction pipeline with validation workflows. Handles NDAs, MSAs, and SOWs with clause-level precision.",
     metrics: ["60% time reduction", "99.2% extraction accuracy"],
   },
 ];
 
-// Category definitions
 const methodCategories = {
   'llms': { label: 'LLMs & GenAI', icon: '🔮', description: 'Large language models and generative AI' },
   'interpretable-ml': { label: 'Interpretable ML', icon: '💡', description: 'Transparent models with explainable insights' },
@@ -78,15 +76,218 @@ const industryCategories = {
   'legal': { label: 'Legal', icon: '⚖️', description: 'Contract analysis and compliance' },
 };
 
+const styles = {
+  filterBar: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: '2rem',
+  },
+  filterControls: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '1rem',
+  },
+  filterLabel: {
+    color: '#808080',
+    fontSize: '0.875rem',
+  },
+  toggleGroup: {
+    display: 'flex',
+    background: '#111111',
+    border: '1px solid #1a1a1a',
+    borderRadius: '0.5rem',
+    padding: '0.25rem',
+  },
+  toggleBtn: {
+    padding: '0.5rem 1rem',
+    fontSize: '0.875rem',
+    fontWeight: '500',
+    fontFamily: 'inherit',
+    border: 'none',
+    borderRadius: '0.375rem',
+    cursor: 'pointer',
+    transition: 'all 0.2s',
+    background: 'transparent',
+    color: '#808080',
+  },
+  toggleBtnActive: {
+    background: '#00ff88',
+    color: '#0a0a0a',
+    boxShadow: '0 0 10px rgba(0, 255, 136, 0.2)',
+  },
+  pills: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '0.5rem',
+    marginBottom: '1.5rem',
+  },
+  pill: {
+    padding: '0.375rem 0.75rem',
+    fontSize: '0.75rem',
+    fontWeight: '500',
+    fontFamily: 'inherit',
+    borderRadius: '9999px',
+    border: '1px solid #1a1a1a',
+    background: 'transparent',
+    color: '#808080',
+    cursor: 'pointer',
+    transition: 'all 0.2s',
+  },
+  pillActive: {
+    borderColor: '#00ff88',
+    background: 'rgba(0, 255, 136, 0.1)',
+    color: '#00ff88',
+  },
+  section: {
+    marginBottom: '2rem',
+  },
+  sectionHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '0.75rem',
+    paddingBottom: '0.5rem',
+    borderBottom: '1px solid #1a1a1a',
+    marginBottom: '1rem',
+  },
+  sectionIcon: {
+    fontSize: '1.25rem',
+  },
+  sectionTitle: {
+    fontFamily: "'Space Grotesk', system-ui, sans-serif",
+    fontSize: '1.1rem',
+    fontWeight: '600',
+    color: '#e0e0e0',
+    margin: 0,
+  },
+  sectionDesc: {
+    color: '#808080',
+    fontSize: '0.75rem',
+    margin: 0,
+  },
+  card: {
+    border: '1px solid #1a1a1a',
+    borderRadius: '0.5rem',
+    background: 'rgba(17, 17, 17, 0.3)',
+    marginBottom: '0.75rem',
+    cursor: 'pointer',
+    transition: 'all 0.2s',
+  },
+  cardExpanded: {
+    borderColor: '#00ff88',
+    background: 'rgba(0, 255, 136, 0.15)',
+  },
+  cardContent: {
+    padding: '1rem',
+  },
+  cardMain: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    gap: '1rem',
+  },
+  cardBody: {
+    flex: 1,
+    minWidth: 0,
+  },
+  cardTitleRow: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '0.5rem',
+    marginBottom: '0.25rem',
+  },
+  cardArrow: {
+    color: '#808080',
+    fontSize: '0.875rem',
+    transition: 'transform 0.2s',
+  },
+  cardArrowExpanded: {
+    color: '#00ff88',
+    transform: 'rotate(90deg)',
+  },
+  cardTitle: {
+    fontWeight: '500',
+    color: '#e0e0e0',
+    margin: 0,
+    fontSize: '1rem',
+  },
+  cardSummary: {
+    color: '#808080',
+    fontSize: '0.875rem',
+    margin: 0,
+    paddingLeft: '1.25rem',
+  },
+  cardMetrics: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+    gap: '0.25rem',
+    flexShrink: 0,
+  },
+  metric: {
+    color: '#00ff88',
+    fontSize: '0.75rem',
+    fontWeight: '500',
+  },
+  expandedContent: {
+    marginTop: '1rem',
+    paddingTop: '1rem',
+    borderTop: '1px solid rgba(26, 26, 26, 0.5)',
+    paddingLeft: '1.25rem',
+  },
+  details: {
+    color: 'rgba(224, 224, 224, 0.9)',
+    fontSize: '0.875rem',
+    lineHeight: '1.6',
+    marginBottom: '1rem',
+  },
+  tagsGroup: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '1rem',
+  },
+  tagsLabel: {
+    color: '#808080',
+    fontSize: '0.75rem',
+    display: 'block',
+    marginBottom: '0.25rem',
+  },
+  tags: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '0.25rem',
+  },
+  tagMethod: {
+    padding: '0.125rem 0.5rem',
+    fontSize: '0.75rem',
+    background: 'rgba(42, 42, 42, 0.5)',
+    borderRadius: '0.25rem',
+    color: '#00d4ff',
+  },
+  tagIndustry: {
+    padding: '0.125rem 0.5rem',
+    fontSize: '0.75rem',
+    background: 'rgba(42, 42, 42, 0.5)',
+    borderRadius: '0.25rem',
+    color: '#ffaa00',
+  },
+  backLink: {
+    color: '#808080',
+    fontSize: '0.875rem',
+    background: 'none',
+    border: 'none',
+    cursor: 'pointer',
+    fontFamily: 'inherit',
+  },
+};
+
 export default function FilterToggle() {
-  const [viewMode, setViewMode] = useState('method'); // 'method' or 'industry'
+  const [viewMode, setViewMode] = useState('method');
   const [expandedId, setExpandedId] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   const categories = viewMode === 'method' ? methodCategories : industryCategories;
   const categoryKey = viewMode === 'method' ? 'methods' : 'industries';
 
-  // Group accomplishments by selected category type
   const grouped = useMemo(() => {
     const groups = {};
     Object.keys(categories).forEach(cat => {
@@ -95,35 +296,32 @@ export default function FilterToggle() {
     return groups;
   }, [viewMode]);
 
-  // Filter to show only selected category or all
   const displayGroups = selectedCategory 
     ? { [selectedCategory]: grouped[selectedCategory] }
     : grouped;
 
   return (
-    <div className="space-y-8">
+    <div>
       {/* Toggle Switch */}
-      <div className="flex items-center justify-between mb-8">
-        <div className="flex items-center gap-4">
-          <span className="text-terminal-dim text-sm">View by:</span>
-          <div className="relative flex bg-terminal-surface border border-terminal-border rounded-lg p-1">
+      <div style={styles.filterBar}>
+        <div style={styles.filterControls}>
+          <span style={styles.filterLabel}>View by:</span>
+          <div style={styles.toggleGroup}>
             <button
               onClick={() => { setViewMode('method'); setSelectedCategory(null); }}
-              className={`px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
-                viewMode === 'method'
-                  ? 'bg-terminal-accent text-terminal-bg shadow-glow-sm'
-                  : 'text-terminal-dim hover:text-terminal-text'
-              }`}
+              style={{
+                ...styles.toggleBtn,
+                ...(viewMode === 'method' ? styles.toggleBtnActive : {}),
+              }}
             >
               Method
             </button>
             <button
               onClick={() => { setViewMode('industry'); setSelectedCategory(null); }}
-              className={`px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
-                viewMode === 'industry'
-                  ? 'bg-terminal-accent text-terminal-bg shadow-glow-sm'
-                  : 'text-terminal-dim hover:text-terminal-text'
-              }`}
+              style={{
+                ...styles.toggleBtn,
+                ...(viewMode === 'industry' ? styles.toggleBtnActive : {}),
+              }}
             >
               Industry
             </button>
@@ -133,125 +331,107 @@ export default function FilterToggle() {
         {selectedCategory && (
           <button
             onClick={() => setSelectedCategory(null)}
-            className="text-terminal-dim hover:text-terminal-accent text-sm transition-colors"
+            style={styles.backLink}
           >
             ← Show all
           </button>
         )}
       </div>
 
-      {/* Category Pills (quick filter) */}
-      <div className="flex flex-wrap gap-2 mb-6">
+      {/* Category Pills */}
+      <div style={styles.pills}>
         {Object.entries(categories).map(([key, { label, icon }]) => (
           <button
             key={key}
             onClick={() => setSelectedCategory(selectedCategory === key ? null : key)}
-            className={`px-3 py-1.5 text-xs font-medium rounded-full border transition-all duration-200 ${
-              selectedCategory === key
-                ? 'border-terminal-accent bg-terminal-accent/10 text-terminal-accent'
-                : 'border-terminal-border text-terminal-dim hover:border-terminal-muted hover:text-terminal-text'
-            }`}
+            style={{
+              ...styles.pill,
+              ...(selectedCategory === key ? styles.pillActive : {}),
+            }}
           >
-            <span className="mr-1.5">{icon}</span>
+            <span style={{ marginRight: '0.375rem' }}>{icon}</span>
             {label}
-            <span className="ml-1.5 text-terminal-dim">({grouped[key]?.length || 0})</span>
+            <span style={{ marginLeft: '0.375rem', color: '#808080' }}>
+              ({grouped[key]?.length || 0})
+            </span>
           </button>
         ))}
       </div>
 
       {/* Grouped Accomplishments */}
-      <div className="space-y-8">
+      <div>
         {Object.entries(displayGroups).map(([categoryId, items]) => {
           if (items.length === 0) return null;
           const category = categories[categoryId];
           
           return (
-            <section key={categoryId} className="space-y-4">
-              <header className="flex items-center gap-3 pb-2 border-b border-terminal-border">
-                <span className="text-xl">{category.icon}</span>
+            <section key={categoryId} style={styles.section}>
+              <header style={styles.sectionHeader}>
+                <span style={styles.sectionIcon}>{category.icon}</span>
                 <div>
-                  <h2 className="font-display text-lg font-semibold text-terminal-text">
-                    {category.label}
-                  </h2>
-                  <p className="text-terminal-dim text-xs">{category.description}</p>
+                  <h2 style={styles.sectionTitle}>{category.label}</h2>
+                  <p style={styles.sectionDesc}>{category.description}</p>
                 </div>
               </header>
               
-              <div className="grid gap-3">
+              <div>
                 {items.map((item) => (
                   <article
                     key={item.id}
-                    className={`group border rounded-lg transition-all duration-300 cursor-pointer ${
-                      expandedId === item.id
-                        ? 'border-terminal-accent bg-terminal-accent-glow'
-                        : 'border-terminal-border bg-terminal-surface/30 hover:border-terminal-muted hover:bg-terminal-surface/50'
-                    }`}
+                    style={{
+                      ...styles.card,
+                      ...(expandedId === item.id ? styles.cardExpanded : {}),
+                    }}
                     onClick={() => setExpandedId(expandedId === item.id ? null : item.id)}
                   >
-                    <div className="p-4">
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-1">
-                            <span className={`text-sm transition-transform duration-200 ${
-                              expandedId === item.id ? 'text-terminal-accent rotate-90' : 'text-terminal-dim'
-                            }`}>
+                    <div style={styles.cardContent}>
+                      <div style={styles.cardMain}>
+                        <div style={styles.cardBody}>
+                          <div style={styles.cardTitleRow}>
+                            <span style={{
+                              ...styles.cardArrow,
+                              ...(expandedId === item.id ? styles.cardArrowExpanded : {}),
+                            }}>
                               ▸
                             </span>
-                            <h3 className="font-medium text-terminal-text group-hover:text-terminal-accent transition-colors truncate">
-                              {item.title}
-                            </h3>
+                            <h3 style={styles.cardTitle}>{item.title}</h3>
                           </div>
-                          <p className="text-terminal-dim text-sm pl-5 line-clamp-2">
-                            {item.summary}
-                          </p>
+                          <p style={styles.cardSummary}>{item.summary}</p>
                         </div>
                         
-                        {/* Metrics preview */}
-                        <div className="hidden sm:flex flex-col items-end gap-1 text-xs shrink-0">
+                        <div style={styles.cardMetrics}>
                           {item.metrics.slice(0, 2).map((metric, i) => (
-                            <span key={i} className="text-terminal-accent font-medium">
-                              {metric}
-                            </span>
+                            <span key={i} style={styles.metric}>{metric}</span>
                           ))}
                         </div>
                       </div>
                       
                       {/* Expanded content */}
                       {expandedId === item.id && (
-                        <div className="mt-4 pt-4 border-t border-terminal-border/50 pl-5 space-y-4 animate-in slide-in-from-top-2 duration-200">
-                          <p className="text-terminal-text/90 text-sm leading-relaxed">
-                            {item.details}
-                          </p>
+                        <div style={styles.expandedContent}>
+                          <p style={styles.details}>{item.details}</p>
                           
-                          <div className="flex flex-wrap gap-4">
+                          <div style={styles.tagsGroup}>
                             <div>
-                              <span className="text-terminal-dim text-xs block mb-1">Methods</span>
-                              <div className="flex flex-wrap gap-1">
+                              <span style={styles.tagsLabel}>Methods</span>
+                              <div style={styles.tags}>
                                 {item.methods.map(m => (
-                                  <span key={m} className="px-2 py-0.5 text-xs bg-terminal-muted/50 text-terminal-cyan rounded">
+                                  <span key={m} style={styles.tagMethod}>
                                     {methodCategories[m]?.label || m}
                                   </span>
                                 ))}
                               </div>
                             </div>
                             <div>
-                              <span className="text-terminal-dim text-xs block mb-1">Industries</span>
-                              <div className="flex flex-wrap gap-1">
+                              <span style={styles.tagsLabel}>Industries</span>
+                              <div style={styles.tags}>
                                 {item.industries.map(i => (
-                                  <span key={i} className="px-2 py-0.5 text-xs bg-terminal-muted/50 text-terminal-amber rounded">
+                                  <span key={i} style={styles.tagIndustry}>
                                     {industryCategories[i]?.label || i}
                                   </span>
                                 ))}
                               </div>
                             </div>
-                          </div>
-                          
-                          <div className="flex flex-wrap gap-3 sm:hidden">
-                            {item.metrics.map((metric, i) => (
-                              <span key={i} className="text-terminal-accent text-sm font-medium">
-                                {metric}
-                              </span>
-                            ))}
                           </div>
                         </div>
                       )}
