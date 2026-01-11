@@ -1007,3 +1007,192 @@ body {
     font-size: 0.55rem;
   }
 }
+
+/* ============================================================================
+   3D MOLECULAR VIEWER STYLES
+   ============================================================================ */
+
+/* Container for the 3D enzyme viewer */
+.enzyme-3d-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 9rem;
+  height: 9rem;
+  padding: 0.25rem;
+}
+
+.molecular-viewer-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The 3Dmol.js canvas container */
+.molecular-viewer-canvas {
+  width: 180px;
+  height: 120px;
+  border-radius: 0.375rem;
+  overflow: hidden;
+  transition: opacity 0.5s ease-in-out;
+  box-shadow:
+    0 0 20px rgba(0, 255, 136, 0.2),
+    0 0 40px rgba(0, 255, 136, 0.1),
+    inset 0 0 20px rgba(0, 255, 136, 0.05);
+  border: 1px solid rgba(0, 255, 136, 0.2);
+}
+
+.molecular-viewer-canvas canvas {
+  border-radius: 0.375rem;
+}
+
+/* Loading state */
+.molecular-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: var(--accent);
+  font-size: 0.5rem;
+  opacity: 0.7;
+}
+
+.loading-spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid rgba(0, 255, 136, 0.2);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Labels for active site and allosteric markers */
+.molecular-labels {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.35rem;
+  font-size: 0.45rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.8;
+}
+
+.label-active-site,
+.label-allosteric {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.label-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.label-dot.active {
+  background: #ffffff;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+}
+
+.label-dot.allosteric {
+  background: var(--accent);
+  opacity: 0.6;
+  transition: opacity 0.3s, box-shadow 0.3s;
+}
+
+.label-dot.allosteric.pulse {
+  opacity: 1;
+  box-shadow: 0 0 8px rgba(0, 255, 136, 0.8);
+  animation: allosteric-pulse 0.7s ease-in-out infinite;
+}
+
+@keyframes allosteric-pulse {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 8px rgba(0, 255, 136, 0.8);
+  }
+  50% {
+    opacity: 0.5;
+    box-shadow: 0 0 4px rgba(0, 255, 136, 0.4);
+  }
+}
+
+.label-text {
+  color: var(--dim);
+}
+
+/* Fallback visualization when 3Dmol fails */
+.molecular-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.molecular-fallback-svg {
+  width: 120px;
+  height: 100px;
+  filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.4));
+}
+
+.molecular-fallback-svg .allo-pulse {
+  animation: allosteric-pulse 1.5s ease-in-out infinite;
+}
+
+.fallback-label {
+  font-size: 0.45rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--dim);
+  margin-top: 0.5rem;
+  opacity: 0.6;
+}
+
+/* Responsive adjustments for molecular viewer */
+@media (max-width: 768px) {
+  .enzyme-3d-container {
+    min-height: 7rem;
+    height: 7rem;
+  }
+
+  .molecular-viewer-canvas {
+    width: 140px;
+    height: 90px;
+  }
+
+  .molecular-labels {
+    gap: 0.5rem;
+    font-size: 0.4rem;
+  }
+
+  .label-dot {
+    width: 5px;
+    height: 5px;
+  }
+
+  .molecular-fallback-svg {
+    width: 100px;
+    height: 80px;
+  }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  .molecular-viewer-canvas {
+    width: 160px;
+    height: 105px;
+  }
+}
