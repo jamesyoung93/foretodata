@@ -4,18 +4,37 @@ import Base from '../layouts/Base.astro';
 
 <Base title="About | James Young">
   <Fragment slot="sidebar">
-    <div class="space-y-6">
-      <div>
-        <h2 class="text-terminal-dim text-xs uppercase tracking-wider mb-3">Navigation</h2>
-        <ul class="space-y-1">
-          <li>
-            <a href="/" class="flex items-center gap-2 py-1.5 px-2 rounded text-sm text-terminal-dim hover:bg-terminal-accent/10 hover:text-terminal-accent transition-colors">
-              <span class="text-terminal-accent/50">←</span>
-              <span>Back to Home</span>
-            </a>
-          </li>
-        </ul>
-      </div>
+    <div class="nav-section">
+      <h2 class="nav-section-title">Navigation</h2>
+      <ul class="nav-list">
+        <li>
+          <a href="/foretodata/" class="nav-link">
+            <span class="num">←</span>
+            <span>Back to Home</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-section">
+      <h2 class="nav-section-title">On This Page</h2>
+      <ul class="nav-list">
+        <li>
+          <a href="#what-i-do" class="nav-link">
+            <span>What I Do</span>
+          </a>
+        </li>
+        <li>
+          <a href="#my-approach" class="nav-link">
+            <span>My Approach</span>
+          </a>
+        </li>
+        <li>
+          <a href="#contact" class="nav-link">
+            <span>Get in Touch</span>
+          </a>
+        </li>
+      </ul>
     </div>
   </Fragment>
 
@@ -33,7 +52,7 @@ import Base from '../layouts/Base.astro';
         into tangible business outcomes.
       </p>
 
-      <h2 class="font-display text-xl font-semibold text-terminal-text mt-8 mb-4 flex items-center gap-2">
+      <h2 id="what-i-do" class="font-display text-xl font-semibold text-terminal-text mt-8 mb-4 flex items-center gap-2">
         <span class="text-terminal-accent">▸</span> What I Do
       </h2>
       
@@ -51,7 +70,7 @@ import Base from '../layouts/Base.astro';
         </p>
       </div>
 
-      <h2 class="font-display text-xl font-semibold text-terminal-text mt-8 mb-4 flex items-center gap-2">
+      <h2 id="my-approach" class="font-display text-xl font-semibold text-terminal-text mt-8 mb-4 flex items-center gap-2">
         <span class="text-terminal-accent">▸</span> My Approach
       </h2>
       
@@ -67,7 +86,7 @@ import Base from '../layouts/Base.astro';
         </p>
       </div>
 
-      <h2 class="font-display text-xl font-semibold text-terminal-text mt-8 mb-4 flex items-center gap-2">
+      <h2 id="contact" class="font-display text-xl font-semibold text-terminal-text mt-8 mb-4 flex items-center gap-2">
         <span class="text-terminal-accent">▸</span> Get in Touch
       </h2>
       

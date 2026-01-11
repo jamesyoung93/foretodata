@@ -139,21 +139,57 @@ const { title = "James Young | ML & AI Expert" } = Astro.props;
         align-items: center;
         gap: 0.5rem;
         padding: 0.375rem 0.5rem;
+        padding-left: 0.75rem;
         border-radius: 0.375rem;
         text-decoration: none;
         font-size: 0.875rem;
         color: var(--dim);
         transition: all 0.2s;
+        position: relative;
+        margin-left: 0.25rem;
+      }
+
+      /* Modal-style left border indicator */
+      .nav-link::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 2px;
+        height: 0;
+        background: var(--accent);
+        border-radius: 1px;
+        transition: height 0.2s ease-out;
+        box-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
       }
 
       .nav-link:hover {
-        background: rgba(0, 255, 136, 0.1);
+        background: rgba(0, 255, 136, 0.08);
         color: var(--accent);
       }
 
+      .nav-link:hover::before {
+        height: 60%;
+      }
+
       .nav-link .num { color: var(--accent); opacity: 0.5; }
-      .nav-link.active { color: var(--text); }
+
+      .nav-link.active {
+        color: var(--text);
+        background: rgba(0, 255, 136, 0.05);
+      }
+
+      .nav-link.active::before {
+        height: 70%;
+        background: var(--accent);
+      }
+
       .nav-link.active .num { opacity: 1; }
+
+      .nav-link.active:hover {
+        color: var(--accent);
+      }
 
       .sidebar-footer {
         margin-top: 2rem;
@@ -170,10 +206,29 @@ const { title = "James Young | ML & AI Expert" } = Astro.props;
       .footer-links a {
         color: var(--dim);
         text-decoration: none;
-        transition: color 0.2s;
+        transition: all 0.2s;
+        position: relative;
       }
 
-      .footer-links a:hover { color: var(--accent); }
+      .footer-links a::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        width: 0;
+        height: 1px;
+        background: var(--accent);
+        transition: width 0.2s ease-out;
+        box-shadow: 0 0 4px rgba(0, 255, 136, 0.5);
+      }
+
+      .footer-links a:hover {
+        color: var(--accent);
+      }
+
+      .footer-links a:hover::after {
+        width: 100%;
+      }
 
       .terminal-prompt {
         margin-top: 1rem;
