@@ -1,85 +1,117 @@
 import { useState, useEffect, useRef } from 'react';
 
 // ============================================================================
-// CAUSAL NETWORK VISUALIZATION
+// CAUSAL NETWORK VISUALIZATION - Accurate DAG Structure
 // ============================================================================
 // Dynamic visualization showing causal relationships between business levers
-// and outcomes. Features:
-// - SVG-based network structure with nodes and edges
-// - Edge pulse animations (brightness waves along paths)
-// - Node glow pulses when signals arrive
-// - Intervention notation (do() operator)
-// - Clean 3-tier layout with feedback loops around perimeter
+// and outcomes with proper 4-tier hierarchy:
+//   TIER 1: MARKET (exogenous)
+//   TIER 2: PRICE, PROMO, CHANNEL, OPS (levers)
+//   TIER 3: AWARENESS, DEMAND, CONVERSION (mediators)
+//   TIER 4: SATISFACTION, RETENTION, REVENUE (outcomes)
 
-// Network node definitions - clean 3-tier layout with more spacing
+// Network node definitions - 4-tier layout
 const nodes = {
-  // External factors (top tier - uncontrollable)
-  MARKET: { id: 'MARKET', label: 'MARKET', tier: 0, x: 280, y: 20, controllable: false },
+  // TIER 1 - Exogenous (top, centered)
+  MARKET: { id: 'MARKET', label: 'MARKET', tier: 0, x: 170, y: 15, type: 'exogenous' },
 
-  // Levers (middle tier - controllable) - more horizontal spread
-  PRICE: { id: 'PRICE', label: 'PRICE', tier: 1, x: 50, y: 70, controllable: true },
-  PROMO: { id: 'PROMO', label: 'PROMO', tier: 1, x: 130, y: 70, controllable: true },
-  CHANNEL: { id: 'CHANNEL', label: 'CHANNEL', tier: 1, x: 210, y: 70, controllable: true },
-  OPS: { id: 'OPS', label: 'OPS', tier: 1, x: 290, y: 70, controllable: true },
+  // TIER 2 - Levers (row of 4)
+  PRICE: { id: 'PRICE', label: 'PRICE', tier: 1, x: 45, y: 60, type: 'lever' },
+  PROMO: { id: 'PROMO', label: 'PROMO', tier: 1, x: 120, y: 60, type: 'lever' },
+  CHANNEL: { id: 'CHANNEL', label: 'CHANNEL', tier: 1, x: 205, y: 60, type: 'lever' },
+  OPS: { id: 'OPS', label: 'OPS', tier: 1, x: 290, y: 60, type: 'lever' },
 
-  // Outcomes (bottom tier) - spread for clear flow
-  DEMAND: { id: 'DEMAND', label: 'DEMAND', tier: 2, x: 90, y: 135, controllable: false },
-  CONVERSION: { id: 'CONVERSION', label: 'CONV', tier: 2, x: 190, y: 135, controllable: false },
-  REVENUE: { id: 'REVENUE', label: 'REVENUE', tier: 2, x: 290, y: 135, controllable: false },
+  // TIER 3 - Mediators (row of 3)
+  AWARENESS: { id: 'AWARENESS', label: 'AWARE', tier: 2, x: 75, y: 115, type: 'mediator' },
+  DEMAND: { id: 'DEMAND', label: 'DEMAND', tier: 2, x: 170, y: 115, type: 'mediator' },
+  CONVERSION: { id: 'CONVERSION', label: 'CONV', tier: 2, x: 265, y: 115, type: 'mediator' },
+
+  // TIER 4 - Outcomes (row of 3)
+  SATISFACTION: { id: 'SATISFACTION', label: 'SATIS', tier: 3, x: 75, y: 170, type: 'outcome' },
+  RETENTION: { id: 'RETENTION', label: 'RETAIN', tier: 3, x: 170, y: 170, type: 'outcome' },
+  REVENUE: { id: 'REVENUE', label: 'REVENUE', tier: 3, x: 265, y: 170, type: 'outcome' },
 };
 
-// Edge definitions (coefficients kept for logic but not displayed)
+// Edge definitions with causal direction
 const edges = [
-  // Levers → Demand
-  { from: 'PRICE', to: 'DEMAND', beta: -0.41 },
-  { from: 'PROMO', to: 'DEMAND', beta: 0.33 },
-  { from: 'CHANNEL', to: 'DEMAND', beta: 0.27 },
-  { from: 'MARKET', to: 'DEMAND', beta: 0.52 },
+  // From MARKET
+  { from: 'MARKET', to: 'DEMAND', positive: true },
 
-  // Levers → Conversion
-  { from: 'OPS', to: 'CONVERSION', beta: 0.19 },
-  { from: 'CHANNEL', to: 'CONVERSION', beta: 0.22 },
+  // From PRICE (all negative effects)
+  { from: 'PRICE', to: 'DEMAND', positive: false },
+  { from: 'PRICE', to: 'CONVERSION', positive: false },
+  { from: 'PRICE', to: 'SATISFACTION', positive: false },
 
-  // Demand → Conversion → Revenue chain
-  { from: 'DEMAND', to: 'CONVERSION', beta: 0.45 },
-  { from: 'CONVERSION', to: 'REVENUE', beta: 0.89 },
+  // From PROMO
+  { from: 'PROMO', to: 'AWARENESS', positive: true },
 
-  // FEEDBACK LOOPS - showing circularity in the system
-  { from: 'REVENUE', to: 'PROMO', beta: 0.25, feedback: true },
-  { from: 'CONVERSION', to: 'DEMAND', beta: 0.18, feedback: true },
+  // From CHANNEL
+  { from: 'CHANNEL', to: 'AWARENESS', positive: true },
+  { from: 'CHANNEL', to: 'CONVERSION', positive: true },
+
+  // From OPS
+  { from: 'OPS', to: 'CONVERSION', positive: true },
+  { from: 'OPS', to: 'SATISFACTION', positive: true },
+
+  // From AWARENESS
+  { from: 'AWARENESS', to: 'DEMAND', positive: true },
+
+  // From DEMAND
+  { from: 'DEMAND', to: 'CONVERSION', positive: true },
+
+  // From CONVERSION
+  { from: 'CONVERSION', to: 'REVENUE', positive: true },
+
+  // From SATISFACTION
+  { from: 'SATISFACTION', to: 'RETENTION', positive: true },
+
+  // FEEDBACK LOOPS
+  { from: 'RETENTION', to: 'DEMAND', positive: true, feedback: true, side: 'left' },
+  { from: 'REVENUE', to: 'PROMO', positive: true, feedback: true, side: 'right' },
 ];
 
 // Intervention cycle - which levers activate in sequence
 const interventionCycle = ['PRICE', 'PROMO', 'CHANNEL', 'OPS'];
 
-// Calculate edge path with curve - handles feedback loops with large perimeter arcs
-function getEdgePath(from, to, isFeedback = false) {
+// Calculate edge path with proper curves
+function getEdgePath(from, to, isFeedback = false, feedbackSide = null) {
   const fromNode = nodes[from];
   const toNode = nodes[to];
 
-  const dx = toNode.x - fromNode.x;
-
   if (isFeedback) {
-    // REVENUE → PROMO: large arc above the network
-    if (from === 'REVENUE' && to === 'PROMO') {
-      const arcHeight = -20;
-      const midX = (fromNode.x + toNode.x) / 2;
-      return `M ${fromNode.x} ${fromNode.y - 12} Q ${midX} ${arcHeight} ${toNode.x} ${toNode.y - 12}`;
+    // RETENTION → DEMAND: curve around left side
+    if (feedbackSide === 'left') {
+      const leftX = -15;
+      const midY = (fromNode.y + toNode.y) / 2;
+      return `M ${fromNode.x - 25} ${fromNode.y} ` +
+             `C ${leftX} ${fromNode.y}, ${leftX} ${toNode.y}, ${toNode.x - 25} ${toNode.y}`;
     }
-    // CONVERSION → DEMAND: large arc below the network
-    if (from === 'CONVERSION' && to === 'DEMAND') {
-      const arcDepth = 175;
-      const midX = (fromNode.x + toNode.x) / 2;
-      return `M ${fromNode.x} ${fromNode.y + 12} Q ${midX} ${arcDepth} ${toNode.x} ${toNode.y + 12}`;
+    // REVENUE → PROMO: curve around right side
+    if (feedbackSide === 'right') {
+      const rightX = 355;
+      const midY = (fromNode.y + toNode.y) / 2;
+      return `M ${fromNode.x + 25} ${fromNode.y} ` +
+             `C ${rightX} ${fromNode.y}, ${rightX} ${toNode.y}, ${toNode.x + 25} ${toNode.y}`;
     }
   }
 
-  // Regular edges: gentle curved path
-  const midX = fromNode.x + dx * 0.5;
-  const midY = fromNode.y + (nodes[to].y - fromNode.y) * 0.5;
-  const curveOffset = Math.min(Math.abs(dx) * 0.08, 15);
+  // Determine connection points based on relative positions
+  const dy = toNode.y - fromNode.y;
+  const dx = toNode.x - fromNode.x;
 
-  return `M ${fromNode.x} ${fromNode.y + 12} Q ${midX} ${midY + curveOffset} ${toNode.x} ${nodes[to].y - 12}`;
+  // From node: exit from bottom if going down a tier
+  const fromY = fromNode.y + 10;
+  const fromX = fromNode.x;
+
+  // To node: enter from top
+  const toY = toNode.y - 10;
+  const toX = toNode.x;
+
+  // Gentle curve for regular edges
+  const midY = (fromY + toY) / 2;
+  const curveOffset = Math.abs(dx) * 0.15;
+
+  return `M ${fromX} ${fromY} Q ${fromX + dx * 0.5} ${midY + curveOffset} ${toX} ${toY}`;
 }
 
 // Get downstream nodes for cascade animation
@@ -94,7 +126,7 @@ function getDownstreamPath(startNode) {
 
     edges.forEach(edge => {
       if (edge.from === nodeId && !edge.feedback) {
-        traverse(edge.to, delay + 1500); // 1.5s between node activations
+        traverse(edge.to, delay + 1200);
       }
     });
   }
@@ -111,10 +143,10 @@ function getEdgesFrom(nodeId) {
 export default function CausalNetworkVisualization({ frameIndex = 0 }) {
   const [activeNode, setActiveNode] = useState(null);
   const [activatedNodes, setActivatedNodes] = useState(new Set());
-  const [pulsingEdges, setPulsingEdges] = useState(new Map()); // edge key -> pulse progress (0-1)
+  const [pulsingEdges, setPulsingEdges] = useState(new Map());
   const [intervention, setIntervention] = useState(null);
   const [breathPhase, setBreathPhase] = useState(0);
-  const [nodeGlows, setNodeGlows] = useState(new Map()); // node id -> glow intensity (0-1)
+  const [nodeGlows, setNodeGlows] = useState(new Map());
   const pulseTimersRef = useRef([]);
 
   // Breathing animation for subtle "living system" feel
@@ -126,38 +158,33 @@ export default function CausalNetworkVisualization({ frameIndex = 0 }) {
   }, []);
 
   // Determine which lever is currently being intervened on
-  // Each intervention lasts 5 frames (~7.5 seconds at 1.5s/frame)
   const currentIntervention = interventionCycle[Math.floor(frameIndex / 5) % interventionCycle.length];
 
   // Handle intervention cycle with edge pulses and node glows
   useEffect(() => {
-    // Clear any existing timers
     pulseTimersRef.current.forEach(timer => clearTimeout(timer));
     pulseTimersRef.current = [];
 
     const newActiveNode = currentIntervention;
     const downstreamPath = getDownstreamPath(newActiveNode);
 
-    // Reset states
     setActiveNode(newActiveNode);
     setActivatedNodes(new Set([newActiveNode]));
     setPulsingEdges(new Map());
-    setNodeGlows(new Map([[newActiveNode, 1]])); // Source node starts glowing
+    setNodeGlows(new Map([[newActiveNode, 1]]));
 
-    // Determine intervention direction
+    // Determine intervention direction based on first edge
     const firstEdge = edges.find(e => e.from === newActiveNode && !e.feedback);
-    const direction = firstEdge && firstEdge.beta < 0 ? '↓' : '↑';
+    const direction = firstEdge && !firstEdge.positive ? '↓' : '↑';
     setIntervention(`do(${newActiveNode}${direction})`);
 
-    // Animate cascade: source glows → edges pulse → destination glows → repeat
+    // Animate cascade
     downstreamPath.forEach(({ nodeId, delay }) => {
       if (delay > 0) {
-        // Start node glow when signal arrives
         const glowTimer = setTimeout(() => {
           setActivatedNodes(prev => new Set([...prev, nodeId]));
           setNodeGlows(prev => new Map([...prev, [nodeId, 1]]));
 
-          // Fade out glow after 0.5s
           setTimeout(() => {
             setNodeGlows(prev => {
               const newMap = new Map(prev);
@@ -170,16 +197,14 @@ export default function CausalNetworkVisualization({ frameIndex = 0 }) {
       }
     });
 
-    // Animate edges: pulse travels along each edge
+    // Animate edges
     downstreamPath.forEach(({ nodeId, delay }) => {
       const outgoingEdges = getEdgesFrom(nodeId);
       outgoingEdges.forEach(edge => {
         const edgeKey = `${edge.from}-${edge.to}`;
-        const edgePulseDuration = 1200; // 1.2s for pulse to travel edge
+        const edgePulseDuration = 1000;
 
-        // Start edge pulse
         const startTimer = setTimeout(() => {
-          // Animate pulse progress from 0 to 1
           const startTime = Date.now();
           const animateEdge = () => {
             const elapsed = Date.now() - startTime;
@@ -201,13 +226,13 @@ export default function CausalNetworkVisualization({ frameIndex = 0 }) {
       });
     });
 
-    // Pulse feedback edges after main cascade completes
+    // Pulse feedback edges after main cascade (slower, subtler)
     const maxDelay = Math.max(...downstreamPath.map(p => p.delay), 0);
     const feedbackEdges = edges.filter(e => e.feedback);
     feedbackEdges.forEach((edge, i) => {
       const edgeKey = `${edge.from}-${edge.to}`;
-      const feedbackDelay = maxDelay + 1000 + i * 800;
-      const edgePulseDuration = 1500;
+      const feedbackDelay = maxDelay + 1500 + i * 1000;
+      const edgePulseDuration = 2000; // Slower for feedback
 
       const feedbackTimer = setTimeout(() => {
         const startTime = Date.now();
@@ -230,7 +255,7 @@ export default function CausalNetworkVisualization({ frameIndex = 0 }) {
       pulseTimersRef.current.push(feedbackTimer);
     });
 
-    // Clear intervention text after brief display (2s)
+    // Clear intervention text after brief display
     const clearTimer = setTimeout(() => {
       setIntervention(null);
     }, 2000);
@@ -241,35 +266,28 @@ export default function CausalNetworkVisualization({ frameIndex = 0 }) {
     };
   }, [currentIntervention, frameIndex]);
 
-  // Calculate edge thickness - thinner for feedback edges
-  const getEdgeThickness = (beta, isFeedback = false) => {
-    if (isFeedback) return 1.2;
-    return 1.5 + Math.abs(beta) * 2;
-  };
-
   // Calculate breathing scale for nodes
   const getBreathingScale = (nodeId) => {
     const offset = nodeId.charCodeAt(0) * 7;
     const phase = (breathPhase + offset) % 100;
     const breathCycle = Math.sin((phase / 100) * Math.PI * 2);
-    return 1 + breathCycle * 0.025;
+    return 1 + breathCycle * 0.02;
   };
 
-  // Calculate edge path length for stroke-dashoffset animation
-  const getPathLength = (from, to, isFeedback) => {
-    // Approximate path length for dash animation
+  // Approximate path length for dash animation
+  const getPathLength = (from, to, isFeedback, feedbackSide) => {
     const fromNode = nodes[from];
     const toNode = nodes[to];
     const dx = toNode.x - fromNode.x;
     const dy = toNode.y - fromNode.y;
     const straightDist = Math.sqrt(dx * dx + dy * dy);
-    // Curved paths are ~1.2-1.5x longer
-    return isFeedback ? straightDist * 1.8 : straightDist * 1.3;
+    if (isFeedback) return straightDist * 2.5;
+    return straightDist * 1.3;
   };
 
   return (
     <div className="causal-network-container">
-      {/* Intervention notation - smaller, appears briefly */}
+      {/* Intervention notation */}
       {intervention && (
         <div className="intervention-label" style={{
           fontSize: '10px',
@@ -280,10 +298,29 @@ export default function CausalNetworkVisualization({ frameIndex = 0 }) {
         </div>
       )}
 
+      {/* Metrics display */}
+      <div className="causal-metrics" style={{
+        position: 'absolute',
+        bottom: '4px',
+        left: '8px',
+        right: '8px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        fontSize: '8px',
+        fontFamily: 'JetBrains Mono, monospace',
+        color: '#888',
+        gap: '4px'
+      }}>
+        <span style={{ color: '#00ff88' }}>CONV +23%</span>
+        <span style={{ color: '#ffaa00' }}>REV $2.4M</span>
+        <span style={{ color: '#ff6b9d' }}>CHURN -18%</span>
+        <span style={{ color: '#00d4ff' }}>LIFT +$420K</span>
+      </div>
+
       {/* SVG Network Layer */}
       <svg
         className="causal-network-svg"
-        viewBox="-10 -40 360 230"
+        viewBox="-20 -10 380 210"
         preserveAspectRatio="xMidYMid meet"
       >
         <defs>
@@ -312,65 +349,90 @@ export default function CausalNetworkVisualization({ frameIndex = 0 }) {
               <feMergeNode in="SourceGraphic"/>
             </feMerge>
           </filter>
+
+          {/* Arrowhead marker */}
+          <marker
+            id="arrowhead-amber"
+            markerWidth="6"
+            markerHeight="4"
+            refX="5"
+            refY="2"
+            orient="auto"
+          >
+            <polygon points="0 0, 6 2, 0 4" fill="#ffaa00" opacity="0.6" />
+          </marker>
+          <marker
+            id="arrowhead-red"
+            markerWidth="6"
+            markerHeight="4"
+            refX="5"
+            refY="2"
+            orient="auto"
+          >
+            <polygon points="0 0, 6 2, 0 4" fill="#ff7b6b" opacity="0.6" />
+          </marker>
         </defs>
 
-        {/* Edges - with pulse animation */}
+        {/* Edges */}
         <g className="causal-edges">
           {edges.map((edge, i) => {
             const isFeedback = edge.feedback || false;
-            const path = getEdgePath(edge.from, edge.to, isFeedback);
-            const isNegative = edge.beta < 0;
+            const feedbackSide = edge.side || null;
+            const path = getEdgePath(edge.from, edge.to, isFeedback, feedbackSide);
+            const isNegative = !edge.positive;
             const edgeKey = `${edge.from}-${edge.to}`;
             const pulseProgress = pulsingEdges.get(edgeKey) || 0;
             const isPulsing = pulseProgress > 0 && pulseProgress < 1;
-            const thickness = getEdgeThickness(edge.beta, isFeedback);
-            const pathLength = getPathLength(edge.from, edge.to, isFeedback);
+            const pathLength = getPathLength(edge.from, edge.to, isFeedback, feedbackSide);
 
-            // Base colors - feedback edges are more transparent
-            let baseColor = '#ffaa00';
-            if (isNegative) baseColor = '#ff6b6b';
-            if (isFeedback) baseColor = '#c88c00';
+            // Colors: amber for positive, coral/red for negative
+            const baseColor = isNegative ? '#ff7b6b' : '#ffaa00';
+            const pulseColor = isNegative ? '#ff9999' : '#ffcc44';
 
-            // Edge opacity - lower for feedback, higher when pulsing
-            const baseOpacity = isFeedback ? 0.25 : 0.4;
-            const activeOpacity = isFeedback ? 0.6 : 0.85;
+            // Thickness: thinner for feedback
+            const thickness = isFeedback ? 1 : 1.5;
+
+            // Opacity: lower for feedback
+            const baseOpacity = isFeedback ? 0.2 : 0.35;
+            const activeOpacity = isFeedback ? 0.5 : 0.8;
 
             return (
               <g key={i} className="causal-edge-group">
-                {/* Base edge path (dim) */}
+                {/* Base edge path */}
                 <path
                   d={path}
                   fill="none"
                   stroke={baseColor}
                   strokeWidth={thickness}
                   strokeOpacity={baseOpacity}
-                  strokeDasharray={isFeedback ? '8,6' : (isNegative ? '6,4' : 'none')}
+                  strokeDasharray={isFeedback ? '6,4' : 'none'}
+                  markerEnd={isNegative ? 'url(#arrowhead-red)' : 'url(#arrowhead-amber)'}
                 />
 
-                {/* Pulse overlay - animated brightness wave */}
+                {/* Pulse overlay */}
                 {isPulsing && (
                   <path
                     d={path}
                     fill="none"
-                    stroke={isNegative ? '#ff9999' : '#ffcc44'}
+                    stroke={pulseColor}
                     strokeWidth={thickness + 1}
                     strokeOpacity={activeOpacity}
-                    strokeDasharray={`${pathLength * 0.15} ${pathLength * 0.85}`}
+                    strokeDasharray={`${pathLength * 0.12} ${pathLength * 0.88}`}
                     strokeDashoffset={pathLength * (1 - pulseProgress)}
                     filter="url(#edge-glow)"
                     style={{ transition: 'none' }}
                   />
                 )}
 
-                {/* Completed pulse glow (brief) */}
+                {/* Completed pulse glow */}
                 {pulseProgress >= 1 && (
                   <path
                     d={path}
                     fill="none"
                     stroke={baseColor}
                     strokeWidth={thickness}
-                    strokeOpacity={0.7}
-                    strokeDasharray={isFeedback ? '8,6' : (isNegative ? '6,4' : 'none')}
+                    strokeOpacity={0.6}
+                    strokeDasharray={isFeedback ? '6,4' : 'none'}
                     style={{
                       animation: 'fadeEdge 0.5s ease-out forwards',
                     }}
@@ -385,54 +447,108 @@ export default function CausalNetworkVisualization({ frameIndex = 0 }) {
         <g className="causal-nodes">
           {Object.values(nodes).map((node) => {
             const isActive = activatedNodes.has(node.id);
-            const isLever = node.controllable;
             const isSource = node.id === activeNode;
             const breathScale = getBreathingScale(node.id);
             const glowIntensity = nodeGlows.get(node.id) || 0;
 
-            // Node glow effect
+            // Node styling by type
+            const isLever = node.type === 'lever';
+            const isExogenous = node.type === 'exogenous';
+            const isMediatorType = node.type === 'mediator';
+            const isOutcome = node.type === 'outcome';
+
+            // Glow filter
             const nodeFilter = isSource ? 'url(#glow-strong)' :
                               (glowIntensity > 0.5 ? 'url(#glow-amber)' : 'none');
+
+            // Fill and stroke based on type
+            let fill = 'rgba(0, 0, 0, 0.5)';
+            let stroke = '#666';
+            let strokeWidth = 1;
+
+            if (isExogenous) {
+              stroke = '#888';
+              strokeWidth = 1.5;
+            } else if (isLever) {
+              fill = isActive ? 'rgba(255, 170, 0, 0.2)' : 'rgba(255, 170, 0, 0.08)';
+              stroke = isActive ? '#ffaa00' : '#996600';
+              strokeWidth = 1.5;
+            } else if (isMediatorType) {
+              fill = isActive ? 'rgba(0, 212, 255, 0.1)' : 'rgba(0, 0, 0, 0.3)';
+              stroke = isActive ? '#00d4ff' : '#555';
+            } else if (isOutcome) {
+              fill = isActive ? 'rgba(0, 255, 136, 0.15)' : 'rgba(0, 255, 136, 0.05)';
+              stroke = isActive ? '#00ff88' : '#448866';
+              strokeWidth = 1.5;
+            }
+
+            if (isActive) {
+              fill = node.type === 'lever' ? `rgba(255, 170, 0, ${0.15 + glowIntensity * 0.15})` :
+                     node.type === 'outcome' ? `rgba(0, 255, 136, ${0.1 + glowIntensity * 0.1})` :
+                     `rgba(0, 212, 255, ${0.1 + glowIntensity * 0.1})`;
+            }
+
+            // Label color
+            let labelColor = '#888';
+            if (isActive) {
+              labelColor = isLever ? '#ffaa00' : isOutcome ? '#00ff88' : '#00d4ff';
+            } else if (isLever) {
+              labelColor = '#aa8844';
+            } else if (isOutcome) {
+              labelColor = '#55aa77';
+            }
 
             return (
               <g
                 key={node.id}
-                className={`causal-node ${isActive ? 'active' : ''} ${isSource ? 'source' : ''}`}
-                transform={`translate(${node.x}, ${node.y}) scale(${breathScale * (1 + glowIntensity * 0.1)})`}
+                className={`causal-node ${isActive ? 'active' : ''}`}
+                transform={`translate(${node.x}, ${node.y}) scale(${breathScale * (1 + glowIntensity * 0.08)})`}
                 filter={nodeFilter}
                 style={{ transformOrigin: 'center', transition: 'transform 0.15s ease-out' }}
               >
                 {/* Node background */}
                 <rect
-                  x="-32"
-                  y="-12"
-                  width="64"
-                  height="24"
-                  rx="4"
-                  className={`node-bg ${isLever ? 'lever' : ''} ${isActive ? 'active' : ''}`}
-                  fill={isActive ? `rgba(255, 170, 0, ${0.15 + glowIntensity * 0.15})` : 'rgba(0, 0, 0, 0.5)'}
-                  stroke={isActive ? '#ffaa00' : '#666'}
-                  strokeWidth={isSource ? 2 : 1.5}
+                  x="-26"
+                  y="-10"
+                  width="52"
+                  height="20"
+                  rx="3"
+                  fill={fill}
+                  stroke={stroke}
+                  strokeWidth={isSource ? 2 : strokeWidth}
                 />
 
-                {/* Lever indicator */}
+                {/* Lever indicator bar */}
                 {isLever && (
                   <rect
-                    x="-28"
-                    y="8"
-                    width="14"
+                    x="-22"
+                    y="6"
+                    width="10"
                     height="2"
                     rx="1"
                     fill={isActive ? '#ffaa00' : '#666'}
-                    opacity={0.6}
+                    opacity={0.5}
+                  />
+                )}
+
+                {/* Exogenous indicator (small dot) */}
+                {isExogenous && (
+                  <circle
+                    cx="-20"
+                    cy="0"
+                    r="2"
+                    fill="none"
+                    stroke="#888"
+                    strokeWidth="1"
+                    opacity="0.6"
                   />
                 )}
 
                 {/* Node label */}
                 <text
                   className="node-label"
-                  fill={isActive ? '#ffaa00' : '#aaa'}
-                  fontSize="9"
+                  fill={labelColor}
+                  fontSize="8"
                   fontWeight="600"
                   textAnchor="middle"
                   dominantBaseline="middle"
@@ -445,11 +561,11 @@ export default function CausalNetworkVisualization({ frameIndex = 0 }) {
         </g>
       </svg>
 
-      {/* CSS for edge fade animation */}
+      {/* CSS for animations */}
       <style>{`
         @keyframes fadeEdge {
-          from { stroke-opacity: 0.7; }
-          to { stroke-opacity: 0.4; }
+          from { stroke-opacity: 0.6; }
+          to { stroke-opacity: 0.35; }
         }
       `}</style>
     </div>
