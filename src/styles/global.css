@@ -1196,3 +1196,215 @@ body {
     height: 105px;
   }
 }
+
+/* ============================================================================
+   CAUSAL NETWORK VISUALIZATION STYLES
+   ============================================================================ */
+
+/* Wrapper for decision panel */
+.causal-network-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 9rem;
+  height: 9rem;
+  padding: 0.25rem;
+}
+
+/* Container for the causal network */
+.causal-network-container {
+  position: relative;
+  width: 100%;
+  height: 9rem;
+  min-height: 9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* SVG network layer */
+.causal-network-svg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+/* Canvas particle layer */
+.causal-particles-canvas {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Node styling */
+.causal-node {
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.causal-node .node-bg {
+  transition: fill 0.3s ease, stroke 0.3s ease, stroke-width 0.3s ease;
+}
+
+.causal-node .node-label {
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: fill 0.3s ease;
+}
+
+.causal-node.active .node-bg {
+  fill: rgba(255, 170, 0, 0.2);
+  stroke: var(--amber);
+}
+
+.causal-node.source .node-bg {
+  fill: rgba(255, 170, 0, 0.3);
+  stroke: var(--amber);
+  stroke-width: 2;
+}
+
+.causal-node.active .node-label,
+.causal-node.source .node-label {
+  fill: var(--amber);
+}
+
+/* Edge styling */
+.causal-edge {
+  transition: stroke-opacity 0.3s ease, stroke-width 0.3s ease;
+}
+
+.causal-edge.pulsing {
+  stroke-opacity: 1;
+  animation: edge-pulse 0.6s ease-out;
+}
+
+@keyframes edge-pulse {
+  0% {
+    stroke-opacity: 0.4;
+    stroke-width: inherit;
+  }
+  50% {
+    stroke-opacity: 1;
+    stroke-width: calc(inherit + 1px);
+  }
+  100% {
+    stroke-opacity: 0.9;
+    stroke-width: inherit;
+  }
+}
+
+/* Edge coefficient labels */
+.edge-coefficient {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 5px;
+  transition: opacity 0.3s ease;
+}
+
+/* Intervention label (do() notation) */
+.intervention-label {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: var(--amber);
+  background: rgba(0, 0, 0, 0.7);
+  padding: 2px 8px;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 170, 0, 0.4);
+  z-index: 10;
+  animation: intervention-appear 0.3s ease-out;
+  text-shadow: 0 0 8px rgba(255, 170, 0, 0.6);
+}
+
+@keyframes intervention-appear {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Metrics enhancement for decision panel */
+.decision-metrics-enhanced {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.metric-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.metric-bar {
+  flex: 1;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.metric-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+.metric-bar-fill.positive {
+  background: linear-gradient(90deg, rgba(0, 255, 136, 0.6), var(--accent));
+}
+
+.metric-bar-fill.negative {
+  background: linear-gradient(90deg, rgba(255, 107, 107, 0.6), #ff6b6b);
+}
+
+.lift-indicator {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.6rem;
+  text-align: center;
+  color: var(--accent);
+  font-weight: 600;
+  text-shadow: 0 0 8px rgba(0, 255, 136, 0.4);
+}
+
+/* Responsive adjustments for causal network */
+@media (max-width: 768px) {
+  .causal-network-container {
+    min-height: 7rem;
+    height: 7rem;
+  }
+
+  .causal-network-svg {
+    font-size: 0.8em;
+  }
+
+  .intervention-label {
+    font-size: 0.5rem;
+    padding: 1px 6px;
+  }
+
+  .edge-coefficient {
+    font-size: 4px;
+  }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  .causal-network-container {
+    min-height: 8rem;
+    height: 8rem;
+  }
+}
