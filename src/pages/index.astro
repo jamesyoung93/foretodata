@@ -6,66 +6,62 @@ import FilterToggle from '../components/FilterToggle.jsx';
 <Base title="James Young | ML & AI Expert">
   <!-- Sidebar Navigation -->
   <Fragment slot="sidebar">
-    <div class="space-y-6">
-      <div>
-        <h2 class="text-terminal-dim text-xs uppercase tracking-wider mb-3">Explore</h2>
-        <ul class="space-y-1">
-          <li>
-            <a href="#work" class="flex items-center gap-2 py-1.5 px-2 rounded text-sm text-terminal-text hover:bg-terminal-accent/10 hover:text-terminal-accent transition-colors">
-              <span class="text-terminal-accent">01</span>
-              <span>Work & Projects</span>
-            </a>
-          </li>
-          <li>
-            <a href="/posts" class="flex items-center gap-2 py-1.5 px-2 rounded text-sm text-terminal-dim hover:bg-terminal-accent/10 hover:text-terminal-accent transition-colors">
-              <span class="text-terminal-accent/50">02</span>
-              <span>Writing</span>
-            </a>
-          </li>
-          <li>
-            <a href="/about" class="flex items-center gap-2 py-1.5 px-2 rounded text-sm text-terminal-dim hover:bg-terminal-accent/10 hover:text-terminal-accent transition-colors">
-              <span class="text-terminal-accent/50">03</span>
-              <span>About</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-      
-      <div>
-        <h2 class="text-terminal-dim text-xs uppercase tracking-wider mb-3">Quick Links</h2>
-        <ul class="space-y-1 text-sm">
-          <li>
-            <a href="https://www.linkedin.com/in/jamesyoungsd/" target="_blank" rel="noopener" 
-               class="flex items-center gap-2 py-1.5 px-2 rounded text-terminal-dim hover:bg-terminal-accent/10 hover:text-terminal-accent transition-colors">
-              <span>↗</span> LinkedIn
-            </a>
-          </li>
-          <li>
-            <a href="/newsletter" 
-               class="flex items-center gap-2 py-1.5 px-2 rounded text-terminal-dim hover:bg-terminal-accent/10 hover:text-terminal-accent transition-colors">
-              <span>✉</span> Newsletter
-            </a>
-          </li>
-        </ul>
-      </div>
+    <div class="nav-section">
+      <h2 class="nav-section-title">Explore</h2>
+      <ul class="nav-list">
+        <li>
+          <a href="#work" class="nav-link active">
+            <span class="num">01</span>
+            <span>Work & Projects</span>
+          </a>
+        </li>
+        <li>
+          <a href="/foretodata/posts" class="nav-link">
+            <span class="num">02</span>
+            <span>Writing</span>
+          </a>
+        </li>
+        <li>
+          <a href="/foretodata/about" class="nav-link">
+            <span class="num">03</span>
+            <span>About</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="nav-section">
+      <h2 class="nav-section-title">Quick Links</h2>
+      <ul class="nav-list">
+        <li>
+          <a href="https://www.linkedin.com/in/jamesyoungsd/" target="_blank" rel="noopener" class="nav-link">
+            <span>↗</span> LinkedIn
+          </a>
+        </li>
+        <li>
+          <a href="/foretodata/newsletter" class="nav-link">
+            <span>✉</span> Newsletter
+          </a>
+        </li>
+      </ul>
     </div>
   </Fragment>
 
   <!-- Main Content -->
-  <div class="max-w-4xl">
+  <div class="content-wrapper">
     <!-- Hero Section -->
-    <header class="mb-12">
-      <div class="inline-flex items-center gap-2 px-3 py-1 bg-terminal-accent/10 border border-terminal-accent/30 rounded-full text-terminal-accent text-xs font-medium mb-6">
-        <span class="w-1.5 h-1.5 bg-terminal-accent rounded-full animate-pulse"></span>
+    <header style="margin-bottom: 3rem;">
+      <div class="status-badge">
+        <span class="status-dot"></span>
         Available for consulting
       </div>
       
-      <h1 class="font-display text-4xl lg:text-5xl font-bold text-terminal-text mb-4 leading-tight">
+      <h1 class="hero-title">
         Exploring What's Next<br/>
-        <span class="text-terminal-accent">in ML and AI</span>
+        <span class="accent">in ML and AI</span>
       </h1>
       
-      <p class="text-terminal-dim text-lg max-w-2xl leading-relaxed">
+      <p class="hero-description">
         I build machine learning systems that drive measurable business outcomes—from 
         revenue optimization to operational automation. Here's what I've shipped.
       </p>
@@ -73,28 +69,23 @@ import FilterToggle from '../components/FilterToggle.jsx';
 
     <!-- Filter Toggle Section -->
     <section id="work">
-      <div class="flex items-center gap-3 mb-8">
-        <span class="text-terminal-accent font-mono">~/projects</span>
-        <div class="flex-1 h-px bg-terminal-border"></div>
+      <div class="section-header">
+        <span class="section-path">~/projects</span>
+        <div class="section-line"></div>
       </div>
       
       <FilterToggle client:load />
     </section>
 
     <!-- CTA Section -->
-    <section class="mt-16 pt-8 border-t border-terminal-border">
-      <div class="bg-terminal-surface border border-terminal-border rounded-lg p-6">
-        <h2 class="font-display text-xl font-semibold text-terminal-text mb-2">
-          Let's build something together
-        </h2>
-        <p class="text-terminal-dim text-sm mb-4">
+    <section class="cta-section">
+      <div class="cta-box">
+        <h2 class="cta-title">Let's build something together</h2>
+        <p class="cta-desc">
           I help companies implement ML solutions that ship. If you're working on 
           something interesting, I'd love to hear about it.
         </p>
-        <a href="https://www.linkedin.com/in/jamesyoungsd/" 
-           target="_blank"
-           rel="noopener noreferrer"
-           class="inline-flex items-center gap-2 px-4 py-2 bg-terminal-accent text-terminal-bg font-medium text-sm rounded hover:shadow-glow transition-shadow">
+        <a href="https://www.linkedin.com/in/jamesyoungsd/" target="_blank" rel="noopener noreferrer" class="cta-button">
           Get in touch
           <span>→</span>
         </a>
