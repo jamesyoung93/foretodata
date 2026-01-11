@@ -480,6 +480,28 @@ body {
   50% { opacity: 0.6; }
 }
 
+/* Regulatory panel state indicators */
+.status-growth {
+  color: var(--accent) !important;
+  text-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
+}
+
+.status-stress {
+  color: #ff6b9d !important;
+  text-shadow: 0 0 8px rgba(255, 107, 157, 0.5);
+}
+
+.status-transition {
+  color: var(--amber) !important;
+  animation: transition-pulse 0.5s ease-in-out infinite;
+  text-shadow: 0 0 8px rgba(255, 170, 0, 0.5);
+}
+
+@keyframes transition-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
 /* Color variants with glow effects */
 .ascii-panel.text-accent {
   color: var(--accent);
