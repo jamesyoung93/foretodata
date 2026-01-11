@@ -14,12 +14,12 @@ import { useEffect, useRef, useState } from 'react';
 // - SENESCENT (far-right): aged/exhausted phenotype
 
 // Valley definitions with positions and characteristics
-// Depths increased 3-4x for dramatic mountain range terrain
+// 4 distinct valleys (attractors) like bowls in a smooth landscape
 const VALLEYS = [
-  { id: 'STEM', label: 'STEM', x: 0, z: -0.3, depth: 2.8, color: '#ffffff' },
-  { id: 'PRODUCER', label: 'PRODUCER', x: -0.5, z: 0.5, depth: 4.0, color: '#00ff88' },
-  { id: 'SURVIVAL', label: 'SURVIVAL', x: 0.5, z: 0.4, depth: 3.2, color: '#ff6b9d' },
-  { id: 'SENESCENT', label: 'SENESCENT', x: 0.8, z: 0.6, depth: 2.2, color: '#ffaa00' },
+  { id: 'STEM', label: 'STEM', x: 0, z: -0.35, depth: 0.6, width: 0.35, color: '#ffffff' },
+  { id: 'PRODUCER', label: 'PRODUCER', x: -0.45, z: 0.4, depth: 0.8, width: 0.38, color: '#00ff88' },
+  { id: 'SURVIVAL', label: 'SURVIVAL', x: 0.4, z: 0.35, depth: 0.65, width: 0.35, color: '#ff6b9d' },
+  { id: 'SENESCENT', label: 'SENESCENT', x: 0.75, z: 0.55, depth: 0.5, width: 0.32, color: '#ffaa00' },
 ];
 
 // Cell phenotype cycle matching the regulatory frames
@@ -30,53 +30,42 @@ const PHENOTYPE_CYCLE = [
   { phenotype: 'PRODUCER', frames: [12, 13, 14, 15] },  // Transition back to producer
 ];
 
-// Simple noise function for organic terrain
-function noise2D(x, z, seed = 0) {
-  const n = Math.sin(x * 12.9898 + z * 78.233 + seed) * 43758.5453;
-  return n - Math.floor(n);
+// Gaussian function for smooth valley wells
+function gaussian(x, z, centerX, centerZ, width) {
+  const dx = x - centerX;
+  const dz = z - centerZ;
+  const distSq = dx * dx + dz * dz;
+  return Math.exp(-distSq / (2 * width * width));
 }
 
-// Fractal noise for terrain detail
-function fractalNoise(x, z, octaves = 4) {
-  let value = 0;
-  let amplitude = 1;
-  let frequency = 1;
-  let maxValue = 0;
-
-  for (let i = 0; i < octaves; i++) {
-    value += amplitude * (noise2D(x * frequency, z * frequency) - 0.5);
-    maxValue += amplitude;
-    amplitude *= 0.5;
-    frequency *= 2;
-  }
-
-  return value / maxValue;
-}
-
-// Calculate terrain height at a point
+// Calculate terrain height at a point - SMOOTH rolling hills with gaussian valleys
 function getTerrainHeight(x, z) {
-  // Base terrain with dramatic hills - amplified for mountain range effect
-  let height = 1.2 + fractalNoise(x * 2, z * 2, 4) * 0.6;
+  // Base surface - gentle dome shape
+  const baseSurface = 0.8;
 
-  // Add valleys (Gaussian wells) - deeper depressions for dramatic bowls
+  // Very low-frequency smooth undulation (like sand dunes)
+  const gentleWave = Math.sin(x * 0.8) * Math.cos(z * 0.6) * 0.15;
+
+  // Start with base surface
+  let height = baseSurface + gentleWave;
+
+  // Add smooth ridges between valleys using low-frequency sine waves
+  // Creates rolling hills, not spiky noise
+  const ridge1 = Math.sin((x + z) * 1.2) * 0.12;
+  const ridge2 = Math.cos((x - z * 0.7) * 1.5) * 0.08;
+  height += Math.max(0, ridge1) + Math.max(0, ridge2);
+
+  // Subtract gaussian wells to create distinct bowl-shaped valleys
+  // Each valley is a smooth depression like a crater or bowl
   VALLEYS.forEach(valley => {
-    const dx = x - valley.x;
-    const dz = z - valley.z;
-    const dist = Math.sqrt(dx * dx + dz * dz);
-    const valleyRadius = 0.32; // Slightly tighter valleys for more defined basins
-
-    // Gaussian valley shape with stronger depression
-    const depression = valley.depth * Math.exp(-(dist * dist) / (2 * valleyRadius * valleyRadius));
-    height -= depression * 0.45;
+    const depression = valley.depth * gaussian(x, z, valley.x, valley.z, valley.width);
+    height -= depression;
   });
 
-  // Add pronounced ridges between valleys for mountain peaks
-  const ridgeNoise = fractalNoise(x * 4 + 10, z * 4 + 10, 3);
-  height += Math.abs(ridgeNoise) * 0.35;
-
-  // Add secondary ridge detail
-  const detailNoise = fractalNoise(x * 6, z * 6, 2);
-  height += Math.abs(detailNoise) * 0.15;
+  // Add very subtle smooth ridge between valleys for separation
+  // This creates the "saddle" between adjacent attractors
+  const interValleyRidge = 0.08 * Math.exp(-Math.pow(z - 0.1, 2) / 0.8);
+  height += interValleyRidge;
 
   return height;
 }
@@ -139,9 +128,9 @@ export default function WaddingtonLandscape({ frameIndex = 0 }) {
         renderer.setClearColor(0x000000, 0);
         container.appendChild(renderer.domElement);
 
-        // Create terrain geometry
+        // Create terrain geometry - lower resolution for smooth wireframe
         const terrainSize = 2.5;
-        const segments = 60;
+        const segments = 35; // Reduced from 60 - smoother flowing wireframe lines
         const geometry = new THREE.PlaneGeometry(terrainSize, terrainSize, segments, segments);
 
         // Modify vertices to create landscape
@@ -177,14 +166,18 @@ export default function WaddingtonLandscape({ frameIndex = 0 }) {
         solidTerrain.position.y = -0.01;
         scene.add(solidTerrain);
 
-        // Create the "cell" ball
-        const ballGeometry = new THREE.SphereGeometry(0.08, 16, 16);
+        // Create the "cell" ball - renders ON TOP of terrain
+        const ballRadius = 0.08;
+        const ballGeometry = new THREE.SphereGeometry(ballRadius, 16, 16);
         const ballMaterial = new THREE.MeshBasicMaterial({
           color: 0xffffff,
           transparent: true,
           opacity: 0.95,
+          depthTest: true,  // Ensure proper depth sorting
+          depthWrite: true,
         });
         const ball = new THREE.Mesh(ballGeometry, ballMaterial);
+        ball.renderOrder = 10; // Render ball after terrain
 
         // Create glow effect for ball
         const glowGeometry = new THREE.SphereGeometry(0.12, 16, 16);
@@ -192,15 +185,22 @@ export default function WaddingtonLandscape({ frameIndex = 0 }) {
           color: 0x00d4ff,
           transparent: true,
           opacity: 0.3,
+          depthTest: true,
+          depthWrite: false, // Glow doesn't write to depth buffer
         });
         const glow = new THREE.Mesh(glowGeometry, glowMaterial);
+        glow.renderOrder = 9;
         ball.add(glow);
 
-        // Position ball at starting valley
-        const startHeight = getTerrainHeight(0, -0.3);
-        ball.position.set(0, startHeight + 0.1, -0.3 * (terrainSize / 2));
+        // Position ball at starting valley - on top of terrain surface
+        const startX = 0;
+        const startZ = -0.35;
+        const startHeight = getTerrainHeight(startX, startZ);
+        // Ball sits ON terrain: height + radius + small offset
+        ball.position.set(startX * (terrainSize / 2), startHeight + ballRadius + 0.02, startZ * (terrainSize / 2));
         scene.add(ball);
         ballRef.current = ball;
+        ballRef.current.ballRadius = ballRadius; // Store radius for physics
 
         // Create trail geometry - thicker, more visible trail
         const trailGeometry = new THREE.BufferGeometry();
@@ -324,11 +324,14 @@ export default function WaddingtonLandscape({ frameIndex = 0 }) {
             const clampedX = Math.max(-0.9, Math.min(0.9, newNormX));
             const clampedZ = Math.max(-0.9, Math.min(0.9, newNormZ));
 
-            const newHeight = getTerrainHeight(clampedX, clampedZ);
+            // Sample terrain height at ball position - ball sits ON surface
+            const terrainHeightAtBall = getTerrainHeight(clampedX, clampedZ);
+            const ballRadius = ball.ballRadius || 0.08;
 
             ball.position.x = clampedX * (terrainSize / 2);
             ball.position.z = clampedZ * (terrainSize / 2);
-            ball.position.y = newHeight + 0.12;
+            // Ball Y = terrain height + ball radius + small offset to sit ON TOP
+            ball.position.y = terrainHeightAtBall + ballRadius + 0.02;
 
             // Update trail - longer trail with slower fade (shows the journey)
             const trail = trailRef.current;
