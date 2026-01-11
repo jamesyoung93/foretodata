@@ -1408,3 +1408,179 @@ body {
     height: 8rem;
   }
 }
+
+/* ============================================================================
+   3D WADDINGTON EPIGENETIC LANDSCAPE STYLES
+   ============================================================================ */
+
+/* Container for the 3D Waddington landscape */
+.waddington-3d-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 9rem;
+  height: 9rem;
+  padding: 0.25rem;
+}
+
+.waddington-viewer-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The Three.js canvas container */
+.waddington-viewer-canvas {
+  width: 280px;
+  height: 180px;
+  border-radius: 0.375rem;
+  overflow: hidden;
+  transition: opacity 0.5s ease-in-out;
+  box-shadow:
+    0 0 20px rgba(0, 212, 255, 0.2),
+    0 0 40px rgba(0, 212, 255, 0.1),
+    inset 0 0 20px rgba(0, 212, 255, 0.05);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.waddington-viewer-canvas canvas {
+  border-radius: 0.375rem;
+}
+
+/* Loading state */
+.waddington-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: var(--cyan);
+  font-size: 0.5rem;
+  opacity: 0.7;
+}
+
+/* Labels for current fate indicator */
+.waddington-labels {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.35rem;
+  font-size: 0.45rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.8;
+}
+
+.waddington-fate-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.fate-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.fate-dot.stem {
+  background: #ffffff;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+}
+
+.fate-dot.producer {
+  background: var(--accent);
+  box-shadow: 0 0 6px rgba(0, 255, 136, 0.8);
+  animation: fate-pulse 1s ease-in-out infinite;
+}
+
+.fate-dot.survival {
+  background: #ff6b9d;
+  box-shadow: 0 0 6px rgba(255, 107, 157, 0.8);
+}
+
+.fate-dot.senescent {
+  background: var(--amber);
+  box-shadow: 0 0 6px rgba(255, 170, 0, 0.8);
+}
+
+@keyframes fate-pulse {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 8px rgba(0, 255, 136, 0.8);
+  }
+  50% {
+    opacity: 0.6;
+    box-shadow: 0 0 4px rgba(0, 255, 136, 0.4);
+  }
+}
+
+.fate-text {
+  color: var(--dim);
+}
+
+/* Fallback visualization when Three.js fails */
+.waddington-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.waddington-fallback-svg {
+  width: 200px;
+  height: 140px;
+  filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.4));
+}
+
+.waddington-fallback .fallback-label {
+  font-size: 0.45rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--dim);
+  margin-top: 0.5rem;
+  opacity: 0.6;
+}
+
+/* Responsive adjustments for Waddington landscape */
+@media (max-width: 768px) {
+  .waddington-3d-container {
+    min-height: 7rem;
+    height: 7rem;
+  }
+
+  .waddington-viewer-canvas {
+    width: 200px;
+    height: 130px;
+  }
+
+  .waddington-labels {
+    gap: 0.5rem;
+    font-size: 0.4rem;
+  }
+
+  .fate-dot {
+    width: 5px;
+    height: 5px;
+  }
+
+  .waddington-fallback-svg {
+    width: 160px;
+    height: 110px;
+  }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  .waddington-viewer-canvas {
+    width: 240px;
+    height: 155px;
+  }
+}
