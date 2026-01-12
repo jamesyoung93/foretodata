@@ -390,6 +390,13 @@ const decisionFrames = [
 // Panel configuration
 const panels = [
   {
+    id: 'decision',
+    title: 'DECISION SYSTEMS',
+    subtitle: 'intervention → propagation → impact',
+    color: 'text-amber',
+    frames: decisionFrames,
+  },
+  {
     id: 'enzyme',
     title: 'ENZYME ENGINEERING',
     subtitle: 'sequence → structure → function',
@@ -402,13 +409,6 @@ const panels = [
     subtitle: 'network → dynamics → phenotype',
     color: 'text-cyan',
     frames: regulatoryFrames,
-  },
-  {
-    id: 'decision',
-    title: 'DECISION SYSTEMS',
-    subtitle: 'intervention → propagation → impact',
-    color: 'text-amber',
-    frames: decisionFrames,
   },
 ];
 
@@ -586,7 +586,7 @@ export default function AsciiHeroAnimation() {
     <div className="ascii-hero-wrapper">
       <div className="ascii-hero-header">
         <span className="ascii-hero-tagline">
-          COMPLEX SYSTEMS — finding the levers that change outcomes
+          AI AND ML APPLICATIONS IN COMPLEX SYSTEMS — FINDING THE LEVERS THAT CHANGE OUTCOMES
         </span>
       </div>
       <div className="ascii-panels-grid">
