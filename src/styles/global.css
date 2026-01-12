@@ -185,6 +185,31 @@ html.classic .hover-highlight:focus-visible {
   box-shadow: none;
 }
 
+/* Override Tailwind text classes in classic mode for darker text */
+html.classic .text-terminal-text {
+  color: #1a1a1a !important;
+}
+
+html.classic .text-terminal-dim {
+  color: #4a4a4a !important;
+}
+
+html.classic .text-terminal-accent {
+  color: #2563eb !important;
+}
+
+html.classic .hero-title {
+  color: #1a1a1a;
+}
+
+html.classic .hero-title .accent {
+  color: #2563eb;
+}
+
+html.classic .section-title {
+  color: #1a1a1a;
+}
+
 /* Base Styles */
 html {
   scroll-behavior: smooth;
@@ -1258,9 +1283,9 @@ html.classic .view-toggle-btn.active {
   overflow: hidden;
   transition: opacity 0.5s ease-in-out;
   box-shadow:
-    0 0 20px rgba(0, 255, 136, 0.2),
-    0 0 40px rgba(0, 255, 136, 0.1),
-    inset 0 0 20px rgba(0, 255, 136, 0.05);
+    0 0 8px rgba(0, 255, 136, 0.2),
+    0 0 15px rgba(0, 255, 136, 0.1),
+    inset 0 0 10px rgba(0, 255, 136, 0.05);
   border: 1px solid rgba(0, 255, 136, 0.2);
 }
 
