@@ -510,9 +510,6 @@ function AsciiPanel({ panel, frameIndex }) {
             </div>
             <span className="metric-value metric-fixed metric-down">{frame.churn.padStart(3, ' ')}% {frame.churnDir}</span>
           </div>
-          <div className="lift-indicator">
-            LIFT: +$420K incremental
-          </div>
         </div>
       );
     }
