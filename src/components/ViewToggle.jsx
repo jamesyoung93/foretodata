@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { playToggle, playHover } from '../utils/soundManager.js';
 
 // ViewToggle component - switches between Terminal (dark) and Classic (light ggplot2-style) themes
 export default function ViewToggle() {
@@ -17,6 +18,7 @@ export default function ViewToggle() {
   const handleViewChange = (newView) => {
     setView(newView);
     localStorage.setItem('siteView', newView);
+    playToggle(); // Retro toggle sound
 
     if (newView === 'classic') {
       document.documentElement.classList.remove('dark');
@@ -34,6 +36,7 @@ export default function ViewToggle() {
         <button
           className={`view-toggle-btn ${view === 'terminal' ? 'active' : ''}`}
           onClick={() => handleViewChange('terminal')}
+          onMouseEnter={playHover}
           aria-pressed={view === 'terminal'}
         >
           Terminal
@@ -41,6 +44,7 @@ export default function ViewToggle() {
         <button
           className={`view-toggle-btn ${view === 'classic' ? 'active' : ''}`}
           onClick={() => handleViewChange('classic')}
+          onMouseEnter={playHover}
           aria-pressed={view === 'classic'}
         >
           Classic
