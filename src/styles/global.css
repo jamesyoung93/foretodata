@@ -1293,9 +1293,15 @@ html.classic .view-toggle-btn.active {
   border-radius: 0.375rem;
 }
 
-/* Force transparency on 3Dmol.js internal containers */
+/* Force transparency on ALL 3Dmol.js internal elements */
+.molecular-viewer-canvas,
+.molecular-viewer-canvas *,
 .molecular-viewer-canvas > div,
-.molecular-viewer-canvas > div > div {
+.molecular-viewer-canvas > div > div,
+.molecular-viewer-canvas > div > div > div,
+.molecular-viewer-canvas canvas,
+.molecular-viewer-canvas [class*="viewer"],
+.molecular-viewer-canvas [id*="viewer"] {
   background: transparent !important;
   background-color: transparent !important;
 }
