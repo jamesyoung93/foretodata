@@ -57,8 +57,7 @@ class SoundManager {
     return this.enabled;
   }
 
-  // CRT Click sound - crisp, short click for buttons/links
-  // Frequency sweep from 800Hz to 200Hz over 50ms
+  // Mechanical click sound - short, percussive tick
   playClick() {
     if (!this.enabled || !this.audioContext) return;
     this.resume();
@@ -66,35 +65,35 @@ class SoundManager {
     const ctx = this.audioContext;
     const now = ctx.currentTime;
 
-    // Main oscillator - square wave for that digital crunch
+    // Short impulse oscillator for the "tick"
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
 
-    // Add slight distortion for CRT character
-    const distortion = ctx.createWaveShaper();
-    distortion.curve = this.makeDistortionCurve(20);
+    // Add filter for more punch
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'highpass';
+    filter.frequency.value = 800;
 
     osc.type = 'square';
-    osc.connect(distortion);
-    distortion.connect(gain);
+    osc.connect(filter);
+    filter.connect(gain);
     gain.connect(ctx.destination);
 
-    // Frequency sweep down (descending blip)
-    osc.frequency.setValueAtTime(800, now);
-    osc.frequency.exponentialRampToValueAtTime(200, now + 0.05);
+    // Fixed frequency - no sweep for a sharper click
+    osc.frequency.setValueAtTime(1800, now);
 
-    // Volume envelope - quick attack, medium decay
-    gain.gain.setValueAtTime(0.25, now);
-    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.06);
+    // Very fast attack and decay for crisp click
+    gain.gain.setValueAtTime(0.18, now);
+    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.025);
 
     osc.start(now);
-    osc.stop(now + 0.07);
+    osc.stop(now + 0.03);
 
-    // Add subtle noise burst for that mechanical click feel
-    this.addNoiseBurst(0.08, 0.03);
+    // Prominent noise burst for mechanical click character
+    this.addNoiseBurst(0.12, 0.02);
   }
 
-  // Hover blip - softer, higher pitched, shorter
+  // Hover tick - subtle, soft click for hover feedback
   playHover() {
     if (!this.enabled || !this.audioContext) return;
 
@@ -108,26 +107,11 @@ class SoundManager {
     const ctx = this.audioContext;
     const time = ctx.currentTime;
 
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-
-    osc.type = 'sine'; // Softer tone for hover
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-
-    // Higher pitched, short sweep
-    osc.frequency.setValueAtTime(1200, time);
-    osc.frequency.exponentialRampToValueAtTime(800, time + 0.02);
-
-    // Quieter than click
-    gain.gain.setValueAtTime(0.12, time);
-    gain.gain.exponentialRampToValueAtTime(0.01, time + 0.025);
-
-    osc.start(time);
-    osc.stop(time + 0.03);
+    // Just a subtle noise tick, no tonal element
+    this.addNoiseBurst(0.06, 0.012);
   }
 
-  // Toggle switch sound - mechanical switch with satisfying clunk
+  // Toggle switch sound - mechanical snap
   playToggle() {
     if (!this.enabled || !this.audioContext) return;
     this.resume();
@@ -135,38 +119,35 @@ class SoundManager {
     const ctx = this.audioContext;
     const now = ctx.currentTime;
 
-    // Two-tone for mechanical feel
-    const osc1 = ctx.createOscillator();
-    const osc2 = ctx.createOscillator();
+    // Single sharp click with low thump
+    const osc = ctx.createOscillator();
     const gain = ctx.createGain();
+    const filter = ctx.createBiquadFilter();
 
-    osc1.type = 'square';
-    osc2.type = 'triangle';
+    filter.type = 'bandpass';
+    filter.frequency.value = 2000;
+    filter.Q.value = 2;
 
-    osc1.connect(gain);
-    osc2.connect(gain);
+    osc.type = 'square';
+    osc.connect(filter);
+    filter.connect(gain);
     gain.connect(ctx.destination);
 
-    // First tone - low thunk
-    osc1.frequency.setValueAtTime(400, now);
-    osc1.frequency.exponentialRampToValueAtTime(150, now + 0.04);
+    // Quick pitch drop for mechanical snap
+    osc.frequency.setValueAtTime(2400, now);
+    osc.frequency.exponentialRampToValueAtTime(800, now + 0.015);
 
-    // Second tone - higher click
-    osc2.frequency.setValueAtTime(600, now + 0.01);
-    osc2.frequency.exponentialRampToValueAtTime(300, now + 0.05);
+    gain.gain.setValueAtTime(0.15, now);
+    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.03);
 
-    gain.gain.setValueAtTime(0.2, now);
-    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+    osc.start(now);
+    osc.stop(now + 0.035);
 
-    osc1.start(now);
-    osc1.stop(now + 0.05);
-    osc2.start(now + 0.01);
-    osc2.stop(now + 0.06);
-
-    this.addNoiseBurst(0.05, 0.04);
+    // Noise for that physical switch character
+    this.addNoiseBurst(0.1, 0.025);
   }
 
-  // Sound when enabling audio - cheerful ascending beep
+  // Sound when enabling audio - crisp double-click activation
   playToggleOn() {
     if (!this.audioContext) return;
     this.resume();
@@ -174,27 +155,53 @@ class SoundManager {
     const ctx = this.audioContext;
     const now = ctx.currentTime;
 
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
+    // First click
+    const osc1 = ctx.createOscillator();
+    const gain1 = ctx.createGain();
+    const filter1 = ctx.createBiquadFilter();
 
-    osc.type = 'square';
-    osc.connect(gain);
-    gain.connect(ctx.destination);
+    filter1.type = 'highpass';
+    filter1.frequency.value = 1200;
 
-    // Ascending chirp
-    osc.frequency.setValueAtTime(400, now);
-    osc.frequency.exponentialRampToValueAtTime(800, now + 0.08);
-    osc.frequency.setValueAtTime(1000, now + 0.1);
-    osc.frequency.exponentialRampToValueAtTime(600, now + 0.15);
+    osc1.type = 'square';
+    osc1.connect(filter1);
+    filter1.connect(gain1);
+    gain1.connect(ctx.destination);
 
-    gain.gain.setValueAtTime(0.2, now);
-    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.18);
+    osc1.frequency.setValueAtTime(2200, now);
+    gain1.gain.setValueAtTime(0.12, now);
+    gain1.gain.exponentialRampToValueAtTime(0.01, now + 0.02);
 
-    osc.start(now);
-    osc.stop(now + 0.2);
+    osc1.start(now);
+    osc1.stop(now + 0.025);
+
+    // Second click (slightly delayed, slightly higher)
+    const osc2 = ctx.createOscillator();
+    const gain2 = ctx.createGain();
+    const filter2 = ctx.createBiquadFilter();
+
+    filter2.type = 'highpass';
+    filter2.frequency.value = 1200;
+
+    osc2.type = 'square';
+    osc2.connect(filter2);
+    filter2.connect(gain2);
+    gain2.connect(ctx.destination);
+
+    osc2.frequency.setValueAtTime(2600, now + 0.04);
+    gain2.gain.setValueAtTime(0, now);
+    gain2.gain.setValueAtTime(0.15, now + 0.04);
+    gain2.gain.exponentialRampToValueAtTime(0.01, now + 0.065);
+
+    osc2.start(now + 0.04);
+    osc2.stop(now + 0.07);
+
+    // Noise bursts for both clicks
+    this.addNoiseBurst(0.1, 0.015);
+    setTimeout(() => this.addNoiseBurst(0.12, 0.018), 40);
   }
 
-  // Card expand sound - descending whoosh
+  // Card expand sound - soft mechanical open
   playExpand() {
     if (!this.enabled || !this.audioContext) return;
     this.resume();
@@ -204,31 +211,31 @@ class SoundManager {
 
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
-
     const filter = ctx.createBiquadFilter();
-    filter.type = 'lowpass';
 
-    osc.type = 'sawtooth';
+    filter.type = 'bandpass';
+    filter.frequency.value = 1500;
+    filter.Q.value = 1;
+
+    osc.type = 'square';
     osc.connect(filter);
     filter.connect(gain);
     gain.connect(ctx.destination);
 
-    // Descending sweep for expand
-    osc.frequency.setValueAtTime(600, now);
-    osc.frequency.exponentialRampToValueAtTime(200, now + 0.1);
+    // Quick drop for mechanical feel
+    osc.frequency.setValueAtTime(1600, now);
+    osc.frequency.exponentialRampToValueAtTime(600, now + 0.025);
 
-    // Filter sweep for whoosh effect
-    filter.frequency.setValueAtTime(2000, now);
-    filter.frequency.exponentialRampToValueAtTime(400, now + 0.1);
-
-    gain.gain.setValueAtTime(0.15, now);
-    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.12);
+    gain.gain.setValueAtTime(0.1, now);
+    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.04);
 
     osc.start(now);
-    osc.stop(now + 0.12);
+    osc.stop(now + 0.045);
+
+    this.addNoiseBurst(0.08, 0.02);
   }
 
-  // Card collapse sound - ascending whoosh
+  // Card collapse sound - soft mechanical close
   playCollapse() {
     if (!this.enabled || !this.audioContext) return;
     this.resume();
@@ -238,30 +245,31 @@ class SoundManager {
 
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
-
     const filter = ctx.createBiquadFilter();
-    filter.type = 'lowpass';
 
-    osc.type = 'sawtooth';
+    filter.type = 'bandpass';
+    filter.frequency.value = 1200;
+    filter.Q.value = 1;
+
+    osc.type = 'square';
     osc.connect(filter);
     filter.connect(gain);
     gain.connect(ctx.destination);
 
-    // Ascending sweep for collapse
-    osc.frequency.setValueAtTime(200, now);
-    osc.frequency.exponentialRampToValueAtTime(500, now + 0.08);
+    // Quick rise for close feel
+    osc.frequency.setValueAtTime(800, now);
+    osc.frequency.exponentialRampToValueAtTime(1400, now + 0.02);
 
-    filter.frequency.setValueAtTime(600, now);
-    filter.frequency.exponentialRampToValueAtTime(1500, now + 0.08);
-
-    gain.gain.setValueAtTime(0.12, now);
-    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+    gain.gain.setValueAtTime(0.08, now);
+    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.035);
 
     osc.start(now);
-    osc.stop(now + 0.1);
+    osc.stop(now + 0.04);
+
+    this.addNoiseBurst(0.06, 0.015);
   }
 
-  // Select/filter sound - crisp selection beep
+  // Select/filter sound - crisp selection click
   playSelect() {
     if (!this.enabled || !this.audioContext) return;
     this.resume();
@@ -271,22 +279,26 @@ class SoundManager {
 
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
+    const filter = ctx.createBiquadFilter();
+
+    filter.type = 'highpass';
+    filter.frequency.value = 1000;
 
     osc.type = 'square';
-    osc.connect(gain);
+    osc.connect(filter);
+    filter.connect(gain);
     gain.connect(ctx.destination);
 
-    // Quick double-beep
-    osc.frequency.setValueAtTime(700, now);
-    osc.frequency.setValueAtTime(900, now + 0.03);
-    osc.frequency.exponentialRampToValueAtTime(500, now + 0.06);
+    // Single sharp click
+    osc.frequency.setValueAtTime(2000, now);
 
-    gain.gain.setValueAtTime(0.18, now);
-    gain.gain.setValueAtTime(0.15, now + 0.03);
-    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+    gain.gain.setValueAtTime(0.14, now);
+    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.025);
 
     osc.start(now);
-    osc.stop(now + 0.08);
+    osc.stop(now + 0.03);
+
+    this.addNoiseBurst(0.1, 0.018);
   }
 
   // Add noise burst for that CRT/mechanical character
