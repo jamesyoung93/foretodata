@@ -55,6 +55,8 @@ const { title = "James Young | ML & AI Expert" } = Astro.props;
 
         <ViewToggle client:load />
 
+        <SoundToggle client:load />
+
         <nav>
           <slot name="sidebar" />
         </nav>
@@ -71,7 +73,6 @@ const { title = "James Young | ML & AI Expert" } = Astro.props;
             </a>
             <a href="/foretodata/about" class="hover-highlight nav-sound-link">About</a>
             <a href="/foretodata/posts" class="hover-highlight nav-sound-link">Posts</a>
-            <SoundToggle client:load />
           </div>
           <div class="terminal-prompt">
             <span class="dollar">$</span> foretodata.com
@@ -94,8 +95,14 @@ const { title = "James Young | ML & AI Expert" } = Astro.props;
       document.addEventListener('DOMContentLoaded', () => {
         initSound();
 
-        // Attach sounds to nav links
+        // Attach sounds to footer nav links
         document.querySelectorAll('.nav-sound-link').forEach(link => {
+          link.addEventListener('mouseenter', () => playHover());
+          link.addEventListener('click', () => playClick());
+        });
+
+        // Attach sounds to sidebar nav links (EXPLORE and QUICK LINKS sections)
+        document.querySelectorAll('.nav-link').forEach(link => {
           link.addEventListener('mouseenter', () => playHover());
           link.addEventListener('click', () => playClick());
         });
