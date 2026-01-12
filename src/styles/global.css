@@ -474,8 +474,10 @@ html.classic .view-toggle-btn.active {
 
 .footer-links {
   display: flex;
+  align-items: center;
   gap: 1rem;
   font-size: 0.875rem;
+  flex-wrap: wrap;
 }
 
 .footer-links a {
@@ -1839,4 +1841,52 @@ html.classic .view-toggle-btn.active {
     width: 240px;
     height: 155px;
   }
+}
+
+/* ============================================================================
+   RETRO TERMINAL SOUND TOGGLE
+   ============================================================================ */
+
+/* Sound toggle button in footer */
+.sound-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  color: var(--dim);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.sound-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.25);
+}
+
+.sound-toggle:active {
+  transform: scale(0.95);
+}
+
+.sound-toggle svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Classic theme adjustments */
+html.classic .sound-toggle {
+  border-color: var(--border);
+  color: var(--dim);
+}
+
+html.classic .sound-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2);
 }

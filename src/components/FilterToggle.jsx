@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { playClick, playHover, playSelect, playExpand, playCollapse } from '../utils/soundManager.js';
 
 // 6 ML Project Accomplishments
 const accomplishments = [
@@ -136,6 +137,7 @@ export default function FilterToggle() {
     setViewMode(mode);
     setSelectedCategory(null);
     setExpandedId(null);
+    playClick(); // Retro click sound
   };
 
   return (
@@ -146,18 +148,21 @@ export default function FilterToggle() {
           <div className="toggle-group">
             <button
               onClick={() => handleViewChange('goal')}
+              onMouseEnter={playHover}
               className={`toggle-btn ${viewMode === 'goal' ? 'active' : ''}`}
             >
               Goal
             </button>
             <button
               onClick={() => handleViewChange('method')}
+              onMouseEnter={playHover}
               className={`toggle-btn ${viewMode === 'method' ? 'active' : ''}`}
             >
               Method
             </button>
             <button
               onClick={() => handleViewChange('industry')}
+              onMouseEnter={playHover}
               className={`toggle-btn ${viewMode === 'industry' ? 'active' : ''}`}
             >
               Industry
@@ -167,7 +172,8 @@ export default function FilterToggle() {
 
         {selectedCategory && (
           <button
-            onClick={() => setSelectedCategory(null)}
+            onClick={() => { setSelectedCategory(null); playClick(); }}
+            onMouseEnter={playHover}
             className="filter-label hover-highlight"
             style={{ background: 'none', border: 'none', cursor: 'pointer' }}
           >
@@ -180,7 +186,8 @@ export default function FilterToggle() {
         {Object.entries(categories).map(([key, { label, icon }]) => (
           <button
             key={key}
-            onClick={() => setSelectedCategory(selectedCategory === key ? null : key)}
+            onClick={() => { setSelectedCategory(selectedCategory === key ? null : key); playSelect(); }}
+            onMouseEnter={playHover}
             className={`pill ${selectedCategory === key ? 'active' : ''}`}
           >
             <span className="count">{icon}</span>
@@ -208,7 +215,12 @@ export default function FilterToggle() {
               <article
                 key={item.id}
                 className={`card ${expandedId === item.id ? 'expanded' : ''}`}
-                onClick={() => setExpandedId(expandedId === item.id ? null : item.id)}
+                onClick={() => {
+                  const isExpanding = expandedId !== item.id;
+                  setExpandedId(isExpanding ? item.id : null);
+                  isExpanding ? playExpand() : playCollapse();
+                }}
+                onMouseEnter={playHover}
               >
                 <div className="card-content">
                   <div className="card-main">
