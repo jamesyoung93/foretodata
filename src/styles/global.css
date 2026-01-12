@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* CSS Custom Properties */
+/* CSS Custom Properties - Terminal Theme (Default) */
 :root {
   --bg: #0a0a0a;
   --surface: #111111;
@@ -15,6 +15,174 @@
   --accent-glow: rgba(0, 255, 136, 0.15);
   --cyan: #00d4ff;
   --amber: #ffaa00;
+}
+
+/* Classic Theme - Clean, minimal ggplot2-inspired light theme */
+html.classic {
+  --bg: #ffffff;
+  --surface: #f8f8f8;
+  --border: #d0d0d0;
+  --muted: #e8e8e8;
+  --text: #1a1a1a;
+  --dim: #666666;
+  --accent: #2563eb;
+  --accent-dim: #1d4ed8;
+  --accent-glow: rgba(37, 99, 235, 0.1);
+  --cyan: #0891b2;
+  --amber: #d97706;
+}
+
+/* Classic theme overrides for special elements */
+html.classic .scanline-overlay,
+html.classic .vignette-overlay {
+  display: none;
+}
+
+html.classic .sidebar {
+  background: linear-gradient(180deg, #f0f0f0, #e8e8e8);
+  border-right: 1px solid #d0d0d0;
+  box-shadow: none;
+}
+
+html.classic .site-subtitle {
+  color: var(--accent);
+}
+
+html.classic .nav-link {
+  color: var(--text);
+}
+
+html.classic .nav-link:hover {
+  background: rgba(37, 99, 235, 0.1);
+  color: var(--accent);
+  box-shadow: none;
+}
+
+html.classic .nav-section-title {
+  color: var(--accent);
+}
+
+html.classic .nav-section:hover .nav-section-title {
+  text-shadow: none;
+}
+
+html.classic .terminal-prompt {
+  color: var(--dim);
+}
+
+html.classic .terminal-prompt .dollar {
+  color: var(--accent);
+}
+
+html.classic .cursor {
+  color: var(--accent);
+}
+
+html.classic .ascii-hero-wrapper {
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+html.classic .ascii-hero-wrapper::before {
+  display: none;
+}
+
+html.classic .ascii-panel {
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+
+html.classic .ascii-panel.text-accent {
+  color: var(--accent);
+  text-shadow: none;
+}
+
+html.classic .ascii-panel.text-cyan {
+  color: var(--cyan);
+  text-shadow: none;
+}
+
+html.classic .ascii-panel.text-amber {
+  color: var(--amber);
+  text-shadow: none;
+}
+
+html.classic .ascii-panel:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+html.classic .card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+html.classic .card:hover {
+  border-color: var(--accent);
+  background: var(--surface);
+}
+
+html.classic .card.expanded {
+  border-color: var(--accent);
+  background: var(--accent-glow);
+}
+
+html.classic .toggle-btn.active {
+  background: var(--accent);
+  color: #ffffff;
+  box-shadow: none;
+}
+
+html.classic .pill.active {
+  border-color: var(--accent);
+  background: var(--accent-glow);
+  color: var(--accent);
+}
+
+html.classic .cta-button {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+html.classic .cta-button:hover {
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+html.classic .hero-description {
+  color: var(--dim);
+}
+
+html.classic .molecular-viewer-canvas {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--border);
+}
+
+html.classic .waddington-viewer-canvas {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--border);
+}
+
+html.classic ::selection {
+  background: rgba(37, 99, 235, 0.3);
+  color: #000;
+}
+
+html.classic ::-webkit-scrollbar-track {
+  background: #f0f0f0;
+}
+
+html.classic ::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+}
+
+html.classic ::-webkit-scrollbar-thumb:hover {
+  background: #a0a0a0;
+}
+
+html.classic .hover-highlight:hover,
+html.classic .hover-highlight:focus-visible {
+  background: rgba(37, 99, 235, 0.05) !important;
+  color: var(--accent) !important;
+  box-shadow: none;
 }
 
 /* Base Styles */
@@ -220,6 +388,56 @@ body {
 
 .nav-link.active .num {
   opacity: 1;
+}
+
+/* View Toggle */
+.view-toggle-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  margin-bottom: 1rem;
+}
+
+.view-toggle-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--dim);
+}
+
+.view-toggle-group {
+  display: flex;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+  padding: 0.125rem;
+}
+
+.view-toggle-btn {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  font-family: inherit;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: transparent;
+  color: var(--dim);
+}
+
+.view-toggle-btn:hover {
+  color: var(--text);
+}
+
+.view-toggle-btn.active {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+html.classic .view-toggle-btn.active {
+  color: #ffffff;
 }
 
 /* Sidebar Footer */
