@@ -26,11 +26,16 @@ export default function MolecularViewer({ allostericPulse = [false, false], fram
       if (!containerRef.current || viewerRef.current) return;
 
       try {
-        // Create the viewer with transparent background
+        // Create the viewer with fully transparent background
+        // Must use backgroundAlpha: 0 for WebGL transparency
         const viewer = window.$3Dmol.createViewer(containerRef.current, {
-          backgroundColor: 'transparent',
+          backgroundColor: 'white',
+          backgroundAlpha: 0,
           antialias: true,
         });
+
+        // Explicitly set transparent background with alpha = 0
+        viewer.setBackgroundColor(0xffffff, 0);
 
         viewerRef.current = viewer;
 
