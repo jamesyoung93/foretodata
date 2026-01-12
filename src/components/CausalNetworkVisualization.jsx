@@ -298,25 +298,6 @@ export default function CausalNetworkVisualization({ frameIndex = 0 }) {
         </div>
       )}
 
-      {/* Metrics display */}
-      <div className="causal-metrics" style={{
-        position: 'absolute',
-        bottom: '4px',
-        left: '8px',
-        right: '8px',
-        display: 'flex',
-        justifyContent: 'space-between',
-        fontSize: '8px',
-        fontFamily: 'JetBrains Mono, monospace',
-        color: '#888',
-        gap: '4px'
-      }}>
-        <span style={{ color: '#00ff88' }}>CONV +23%</span>
-        <span style={{ color: '#ffaa00' }}>REV $2.4M</span>
-        <span style={{ color: '#ff6b9d' }}>CHURN -18%</span>
-        <span style={{ color: '#00d4ff' }}>LIFT +$420K</span>
-      </div>
-
       {/* SVG Network Layer */}
       <svg
         className="causal-network-svg"
