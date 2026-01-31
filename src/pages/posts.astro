@@ -1,33 +1,19 @@
 ---
 import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
 
-// In the future, you'll import your blog posts here
-// import { getCollection } from 'astro:content';
-// const posts = await getCollection('blog');
+const blogPosts = await getCollection('blog');
 
-const posts = [
-  {
-    slug: 'causal-inference-primer',
-    title: 'A Practical Guide to Causal Inference in ML',
-    date: '2024-01-15',
-    summary: 'Moving beyond correlation to understand what actually drives your metrics.',
-    tags: ['causal-inference', 'tutorial'],
-  },
-  {
-    slug: 'llm-production-lessons',
-    title: 'Lessons from Deploying LLMs in Production',
-    date: '2024-02-20',
-    summary: 'What I learned shipping LLM applications to real users.',
-    tags: ['llms', 'mlops'],
-  },
-  {
-    slug: 'interpretable-ml-business',
-    title: 'Why Interpretable ML Wins in Business',
-    date: '2024-03-10',
-    summary: 'How SHAP and LIME help you get buy-in from stakeholders.',
-    tags: ['interpretable-ml', 'business'],
-  },
-];
+// Sort by date descending
+const posts = blogPosts
+  .map((post) => ({
+    slug: post.slug,
+    title: post.data.title,
+    date: post.data.date.toISOString().split('T')[0],
+    summary: post.data.description,
+    tags: post.data.tags,
+  }))
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 ---
 
 <Base title="Posts | James Young">
@@ -80,7 +66,7 @@ const posts = [
     <div class="space-y-4">
       {posts.map((post) => (
         <article class="group border border-terminal-border rounded-lg p-5 bg-terminal-surface/30 hover:border-terminal-muted hover:bg-terminal-surface/50 transition-all hover-highlight">
-          <a href={`/posts/${post.slug}`} class="block">
+          <a href={`/foretodata/posts/${post.slug}`} class="block">
             <div class="flex items-start justify-between gap-4">
               <div class="flex-1">
                 <time class="text-terminal-dim text-xs font-mono">{post.date}</time>
