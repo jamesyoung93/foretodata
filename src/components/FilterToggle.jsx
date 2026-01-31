@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { playClick, playHover, playSelect, playExpand, playCollapse } from '../utils/soundManager.js';
 
-// 8 ML Project Accomplishments - Real Work
+// 7 ML Project Accomplishments - Real Work
 const accomplishments = [
   {
     id: 1,
@@ -45,13 +45,13 @@ const accomplishments = [
   },
   {
     id: 5,
-    title: "Bioinformatics ML Consulting",
-    summary: "Independent contractor (1099) for a livestock vaccine company, building ML models to support vaccine R&D.",
+    title: "Prior: Structural Biology & AI/ML Consulting",
+    summary: "Prior consulting engagement providing AI/ML expertise for structural biology and protein modeling applications in biotech R&D.",
     goals: ["accelerate-research", "reduce-risk"],
     methods: ["bioinformatics", "interpretable-ml"],
     industries: ["biotech"],
-    details: "Models predicted epitope regions, immunogenic distance of antigens, protein degradation rates, sequence-to-yield relationships, and identified target proteins for new pathogen projects. Work informed vaccine target selection and suggested yield-preserving modifications.",
-    metrics: ["Informed target selection", "Yield-preserving mods"],
+    details: "Provided expert opinion and built interpretable ML models for protein structure prediction, sequence analysis, and biological target identification. Work supported research decision-making and experimental prioritization.",
+    metrics: ["Research support", "ML model delivery"],
   },
   {
     id: 6,
@@ -72,16 +72,6 @@ const accomplishments = [
     industries: ["academic"],
     details: "Used XGBoost and comparative genomics to identify gene candidates essential for nitrogen fixation. Research contributed to publications and ongoing work in sustainable agriculture.",
     metrics: ["Published research", "Ongoing manuscripts"],
-  },
-  {
-    id: 8,
-    title: "VendorCheck",
-    summary: "In development: AI-powered tool for technical due diligence on analytics/ML vendor proposals in pharma commercial.",
-    goals: ["reduce-risk", "improve-operations"],
-    methods: ["llms", "rag"],
-    industries: ["pharma", "product"],
-    details: "Helps pharma commercial teams evaluate vendor claims for statistical red flags, methodology gaps, and unrealistic performance claims before signing contracts. Built with custom RAG system, Claude API integration, and specialized pharma analytics prompt engineering. Waitlist open at vendorcheck.carrd.co.",
-    metrics: ["Launching Jan 2026", "Waitlist open"],
   },
 ];
 
@@ -119,7 +109,6 @@ const industryCategories = {
   'biotech': { label: 'Biotech', icon: '>', description: 'Biotechnology and life sciences R&D' },
   'national-lab': { label: 'National Lab', icon: '>', description: 'Government research laboratories' },
   'academic': { label: 'Academic Research', icon: '>', description: 'University research' },
-  'product': { label: 'Product Development', icon: '>', description: 'Building new products and tools' },
 };
 
 export default function FilterToggle() {
