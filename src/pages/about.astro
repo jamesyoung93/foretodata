@@ -20,8 +20,13 @@ import Base from '../layouts/Base.astro';
       <h2 class="nav-section-title">On This Page</h2>
       <ul class="nav-list">
         <li>
-          <a href="#what-i-do" class="nav-link">
-            <span>What I Do</span>
+          <a href="#background" class="nav-link">
+            <span>Background</span>
+          </a>
+        </li>
+        <li>
+          <a href="#what-i-focus-on" class="nav-link">
+            <span>What I Focus On</span>
           </a>
         </li>
         <li>
@@ -48,25 +53,35 @@ import Base from '../layouts/Base.astro';
 
     <article class="prose prose-invert prose-terminal">
       <p class="text-terminal-text text-lg leading-relaxed mb-6">
-        I'm a machine learning and AI expert focused on turning complex ML capabilities
-        into tangible business outcomes.
+        I'm a data scientist with a PhD in molecular biology and a specialty in pharma commercial analytics. I build ML systems that help pharmaceutical companies optimize HCP targeting, measure promotional ROI, and make better resource allocation decisions.
       </p>
 
-      <h2 id="what-i-do" class="font-display text-xl font-semibold text-terminal-text mt-8 mb-4 flex items-center gap-2">
-        <span class="text-terminal-accent">▸</span> What I Do
+      <h2 id="background" class="font-display text-xl font-semibold text-terminal-text mt-8 mb-4 flex items-center gap-2">
+        <span class="text-terminal-accent">▸</span> Background
       </h2>
 
       <div class="space-y-4 text-terminal-dim">
         <p>
-          I specialize in the intersection of advanced ML techniques and real-world
-          applications. This means taking methods like causal inference, interpretable
-          ML, and large language models—and deploying them in ways that actually move
-          business metrics.
+          My path to ML came through biology—specifically, using machine learning to discover genes essential for nitrogen fixation in cyanobacteria (work that contributed to a $7M NSF grant). That research taught me to combine domain expertise with computational methods, a pattern I've carried into industry.
         </p>
         <p>
-          My work spans revenue optimization, operational automation, and strategic
-          expansion analysis. I've helped companies reduce costs, increase conversion
-          rates, and make better decisions with data.
+          I've worked at <strong class="text-terminal-text">Pfizer</strong> (dynamic targeting and causal inference for commercial teams), <strong class="text-terminal-text">NetApp</strong> (enterprise demand forecasting), and <strong class="text-terminal-text">Lawrence Livermore National Lab</strong> (materials property prediction). I also consult independently on ML applications in biotech and pharma.
+        </p>
+      </div>
+
+      <h2 id="what-i-focus-on" class="font-display text-xl font-semibold text-terminal-text mt-8 mb-4 flex items-center gap-2">
+        <span class="text-terminal-accent">▸</span> What I Focus On
+      </h2>
+
+      <div class="space-y-4 text-terminal-dim">
+        <p>
+          <strong class="text-terminal-text">Pharma Commercial Analytics:</strong> HCP targeting, promotional response modeling, omnichannel resource allocation, and measuring lift with causal inference methods (propensity matching, DiD, double ML).
+        </p>
+        <p>
+          <strong class="text-terminal-text">ML Engineering:</strong> I don't just build models—I deploy them. R Shiny, Streamlit, automated pipelines, and dashboards that let non-technical users make decisions without waiting on a data scientist.
+        </p>
+        <p>
+          <strong class="text-terminal-text">Biology + ML:</strong> Protein fitness prediction, sequence-to-function modeling, bioinformatics pipelines. My PhD gave me intuition for biological systems that pure CS folks often lack.
         </p>
       </div>
 
@@ -76,13 +91,7 @@ import Base from '../layouts/Base.astro';
 
       <div class="space-y-4 text-terminal-dim">
         <p>
-          I believe in ML that you can explain. Black-box models have their place,
-          but the most valuable insights come when you can tell stakeholders not just
-          <em>what</em> to do, but <em>why</em>.
-        </p>
-        <p>
-          I'm also obsessive about MLOps—because a model that can't be deployed,
-          monitored, and maintained isn't really a solution.
+          I believe in ML you can explain. Stakeholders need to know <em>why</em> the model recommends something, not just <em>what</em>. I also believe in ML that actually ships—a model that can't be deployed, monitored, and maintained isn't a solution.
         </p>
       </div>
 
@@ -91,8 +100,7 @@ import Base from '../layouts/Base.astro';
       </h2>
 
       <p class="text-terminal-dim mb-6">
-        I'm always interested in discussing interesting ML problems. Reach out on
-        LinkedIn or subscribe to my newsletter for regular insights.
+        I write about ML, analytics, and complex systems at <strong class="text-terminal-text">Foretodata</strong>. For consulting inquiries or interesting problems, reach out on LinkedIn.
       </p>
 
       <div class="flex gap-4">
@@ -110,7 +118,7 @@ import Base from '../layouts/Base.astro';
           rel="noopener noreferrer"
           class="inline-flex items-center gap-2 px-4 py-2 border border-terminal-accent text-terminal-accent font-medium text-sm rounded hover:bg-terminal-accent/10 transition-colors hover-highlight"
         >
-          Substack →
+          Newsletter →
         </a>
       </div>
     </article>
