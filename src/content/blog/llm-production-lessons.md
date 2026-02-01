@@ -49,7 +49,7 @@ So the first lesson is simple:
 ## 2) Rule #1: the model isn't the product. The workflow is.
 
 If your LLM feature is good in production, it's rarely because the model is "smart."
-It's because the *workflow* makes it hard for the model to be stupid in expensive ways.
+It's because the *workflow* makes it hard for the model to fail in expensive ways.
 
 The workflow includes:
 - intent capture (what does the user actually want?)
