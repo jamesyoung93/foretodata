@@ -201,7 +201,7 @@ If you control for site visits, you're partially blocking the email's pathway.
 ### Colliders (conditioning can create bias)
 If two things cause a third thing, controlling for the third can create a fake relationship between the causes.
 
-You don't need to become a graph theorist. You just need to avoid obvious self-inflicted wounds.
+You don't need to become a graph theorist. You just need to avoid common pitfalls.
 
 ---
 

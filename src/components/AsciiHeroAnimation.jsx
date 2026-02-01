@@ -121,7 +121,7 @@ const enzymeFrames = [
 //
 // Biotech context: Classic tradeoff between cell health and production output
 // - OPTIMAL attractor: high viability + high productivity (sweet spot)
-// - SURVIVAL attractor: high viability but low productivity (lazy cells)
+// - SURVIVAL attractor: high viability but low productivity (dormant cells)
 const regulatoryFrames = [
   // ========== OPTIMAL STATE (TF1 dominant, high productivity) ==========
   {
