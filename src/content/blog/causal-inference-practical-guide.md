@@ -16,7 +16,7 @@ Most teams I work with start with a perfectly reasonable plan:
 
 And then the metric… doesn't move. Or worse: it moves in the wrong direction.
 
-This isn't because people are dumb. It's because **prediction** and **intervention** are different games.
+This isn't because people lack the skills. It's because **prediction** and **intervention** are different games.
 
 A predictive model can be *accurate* and still be useless for answering:
 > "If we change X, does Y change?"
