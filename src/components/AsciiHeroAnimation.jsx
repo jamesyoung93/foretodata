@@ -111,237 +111,65 @@ const enzymeFrames = [
 ];
 
 // ============================================================================
-// PANEL 2: REGULATORY CIRCUITS - Bistable toggle switch controls cell fate
+// PANEL 3: PROTEIN FITNESS LANDSCAPE - Active learning optimizes protein function
 // ============================================================================
-// Animation tells the story of a bistable genetic switch:
-// - LEFT: Network state with TF1/TF2 mutual repression and expression bars
-// - RIGHT: 2D phenotype space with VIABILITY (x) and PRODUCTIVITY (y) axes
-// - Signal triggers transitions between stable states
-// - Full cycle: 12 frames (~8-9 seconds at 700ms/frame)
-//
-// Biotech context: Classic tradeoff between cell health and production output
-// - OPTIMAL attractor: high viability + high productivity (sweet spot)
-// - SURVIVAL attractor: high viability but low productivity (dormant cells)
+// Animation tells the story of ML-guided protein engineering:
+// - 3D landscape shows fitness surface (sequence → embedding → function)
+// - Ball moves through landscape as active learning explores
+// - Metrics show fitness, uncertainty, delta vs wildtype, and round
+// - Progression through active learning rounds toward optimum
 const regulatoryFrames = [
-  // ========== OPTIMAL STATE (TF1 dominant, high productivity) ==========
+  // ========== ROUND 1: Initial exploration ==========
   {
-    // Frame 1: Stable optimal state - TF1 high, TF2 low
-    art: `
- NETWORK STATE       PHENOTYPE SPACE
-┌─────────────┐    ┌────────────────┐
-│             │    │ P              │
-│ ┌─ TF1 ─┐   │    │ ↑      ●       │
-│ │███████│   │    │ │       ╲      │
-│ └───┬───┘   │    │ │        ╲     │
-│   ⊣─┼─⊣     │    │ │         ╲    │
-│ ┌───┴───┐   │    │ │          ╲   │
-│ │░░░░░░░│   │    │ │           ○  │
-│ └─ TF2 ─┘   │    │ └────────────→ │
-│  ↓     ↓    │    │            V   │
-│prod  surv   │    └────────────────┘
-└─────────────┘`,
-    state: 'OPTIMAL', stability: 94, v: 0.87, p: 0.91
+    art: ``, // Using 3D WaddingtonLandscape instead
+    fitness: 0.42, uncertainty: 0.18, deltaWT: '-0.8σ', round: 'Active Learning R1'
   },
   {
-    // Frame 2: Optimal state with repression pulse from TF1
-    art: `
- NETWORK STATE       PHENOTYPE SPACE
-┌─────────────┐    ┌────────────────┐
-│             │    │ P              │
-│ ┌─ TF1 ─┐   │    │ ↑      ●       │
-│ │███████│   │    │ │       ╲      │
-│ └───┬───┘   │    │ │        ╲     │
-│   ⊣─●─⊣     │    │ │         ╲    │
-│ ┌───┴───┐   │    │ │          ╲   │
-│ │░░░░░░░│   │    │ │           ○  │
-│ └─ TF2 ─┘   │    │ └────────────→ │
-│  ↓     ↓    │    │            V   │
-│prod  surv   │    └────────────────┘
-└─────────────┘`,
-    state: 'OPTIMAL', stability: 92, v: 0.85, p: 0.89
+    art: ``,
+    fitness: 0.48, uncertainty: 0.15, deltaWT: '-0.4σ', round: 'Active Learning R1'
   },
   {
-    // Frame 3: Signal appears, about to trigger transition
-    art: `
- NETWORK STATE       PHENOTYPE SPACE
-┌─────────────┐    ┌────────────────┐
-│   ⚡signal   │    │ P              │
-│     ↓       │    │ ↑      ●       │
-│ ┌─ TF1 ─┐   │    │ │       ╲      │
-│ │██████░│   │    │ │        ╲     │
-│ └───┬───┘   │    │ │         ╲    │
-│   ⊣─┼─⊣     │    │ │          ╲   │
-│ ┌───┴───┐   │    │ │           ○  │
-│ │░░░░░░░│   │    │ └────────────→ │
-│ └─ TF2 ─┘   │    │            V   │
-│             │    └────────────────┘
-└─────────────┘`,
-    state: 'OPTIMAL', stability: 78, v: 0.79, p: 0.82
+    art: ``,
+    fitness: 0.53, uncertainty: 0.14, deltaWT: '+0.2σ', round: 'Active Learning R1'
   },
-  // ========== TRANSITION: OPTIMAL → SURVIVAL ==========
+  // ========== ROUND 2: Refining search ==========
   {
-    // Frame 4: Signal triggers, TF1 starts dropping
-    art: `
- NETWORK STATE       PHENOTYPE SPACE
-┌─────────────┐    ┌────────────────┐
-│   ⚡⚡signal  │    │ P              │
-│     ↓↓      │    │ ↑     ·        │
-│ ┌─ TF1 ─┐   │    │ │    ·  ╲      │
-│ │████░░░│   │    │ │   ●    ╲     │
-│ └───┬───┘   │    │ │         ╲    │
-│   ⊣─┼─⊣     │    │ │          ╲   │
-│ ┌───┴───┐   │    │ │           ○  │
-│ │██░░░░░│   │    │ └────────────→ │
-│ └─ TF2 ─┘   │    │            V   │
-│             │    └────────────────┘
-└─────────────┘`,
-    state: 'switching', stability: 34, v: 0.52, p: 0.48
+    art: ``,
+    fitness: 0.61, uncertainty: 0.12, deltaWT: '+0.9σ', round: 'Active Learning R2'
   },
   {
-    // Frame 5: Mid-transition, crossing the boundary
-    art: `
- NETWORK STATE       PHENOTYPE SPACE
-┌─────────────┐    ┌────────────────┐
-│             │    │ P              │
-│ ┌─ TF1 ─┐   │    │ ↑    ·         │
-│ │██░░░░░│   │    │ │  ·    ╲      │
-│ └───┬───┘   │    │ │ ●      ╲     │
-│   ⊣─○─⊣     │    │ │         ╲    │
-│ ┌───┴───┐   │    │ │          ╲   │
-│ │████░░░│   │    │ │           ○  │
-│ └─ TF2 ─┘   │    │ └────────────→ │
-│  ↓     ↓    │    │            V   │
-│prod  surv   │    └────────────────┘
-└─────────────┘`,
-    state: 'switching', stability: 12, v: 0.38, p: 0.31
+    art: ``,
+    fitness: 0.68, uncertainty: 0.11, deltaWT: '+1.3σ', round: 'Active Learning R2'
   },
   {
-    // Frame 6: Approaching survival state, TF2 rising
-    art: `
- NETWORK STATE       PHENOTYPE SPACE
-┌─────────────┐    ┌────────────────┐
-│             │    │ P              │
-│ ┌─ TF1 ─┐   │    │ ↑       ╲      │
-│ │█░░░░░░│   │    │ │ ·      ╲     │
-│ └───┬───┘   │    │ │·        ╲    │
-│   ⊣─┼─⊣     │    │ │          ╲   │
-│ ┌───┴───┐   │    │ │       ●   ○  │
-│ │█████░░│   │    │ └────────────→ │
-│ └─ TF2 ─┘   │    │            V   │
-│  ↓     ↓    │    │                │
-│prod  surv   │    └────────────────┘
-└─────────────┘`,
-    state: 'SURVIVAL', stability: 58, v: 0.78, p: 0.21
+    art: ``,
+    fitness: 0.74, uncertainty: 0.10, deltaWT: '+1.6σ', round: 'Active Learning R2'
   },
-  // ========== SURVIVAL STATE (TF2 dominant, low productivity) ==========
+  // ========== ROUND 3: Approaching optimum ==========
   {
-    // Frame 7: Stable survival state - TF2 high, TF1 low
-    art: `
- NETWORK STATE       PHENOTYPE SPACE
-┌─────────────┐    ┌────────────────┐
-│             │    │ P              │
-│ ┌─ TF1 ─┐   │    │ ↑       ╲      │
-│ │░░░░░░░│   │    │ │        ╲     │
-│ └───┬───┘   │    │ │         ╲    │
-│   ⊣─┼─⊣     │    │ │          ╲   │
-│ ┌───┴───┐   │    │ │           ●  │
-│ │███████│   │    │ └────────────→ │
-│ └─ TF2 ─┘   │    │            V   │
-│  ↓     ↓    │    │                │
-│prod  surv   │    └────────────────┘
-└─────────────┘`,
-    state: 'SURVIVAL', stability: 89, v: 0.91, p: 0.11
+    art: ``,
+    fitness: 0.79, uncertainty: 0.09, deltaWT: '+1.8σ', round: 'Active Learning R3'
   },
   {
-    // Frame 8: Survival state with repression pulse from TF2
-    art: `
- NETWORK STATE       PHENOTYPE SPACE
-┌─────────────┐    ┌────────────────┐
-│             │    │ P              │
-│ ┌─ TF1 ─┐   │    │ ↑       ╲      │
-│ │░░░░░░░│   │    │ │        ╲     │
-│ └───┬───┘   │    │ │         ╲    │
-│   ⊣─●─⊣     │    │ │          ╲   │
-│ ┌───┴───┐   │    │ │           ●  │
-│ │███████│   │    │ └────────────→ │
-│ └─ TF2 ─┘   │    │            V   │
-│  ↓     ↓    │    │                │
-│prod  surv   │    └────────────────┘
-└─────────────┘`,
-    state: 'SURVIVAL', stability: 91, v: 0.88, p: 0.13
+    art: ``,
+    fitness: 0.85, uncertainty: 0.08, deltaWT: '+2.0σ', round: 'Active Learning R3'
   },
   {
-    // Frame 9: Signal appears again, about to flip back
-    art: `
- NETWORK STATE       PHENOTYPE SPACE
-┌─────────────┐    ┌────────────────┐
-│   ⚡signal   │    │ P              │
-│     ↓       │    │ ↑       ╲      │
-│ ┌─ TF1 ─┐   │    │ │        ╲     │
-│ │░░░░░░░│   │    │ │         ╲    │
-│ └───┬───┘   │    │ │          ╲   │
-│   ⊣─┼─⊣     │    │ │           ●  │
-│ ┌───┴───┐   │    │ └────────────→ │
-│ │██████░│   │    │            V   │
-│ └─ TF2 ─┘   │    │                │
-│             │    └────────────────┘
-└─────────────┘`,
-    state: 'SURVIVAL', stability: 76, v: 0.82, p: 0.19
+    art: ``,
+    fitness: 0.91, uncertainty: 0.08, deltaWT: '+2.3σ', round: 'Active Learning R3'
   },
-  // ========== TRANSITION: SURVIVAL → OPTIMAL ==========
+  // ========== ROUND 4: Fine-tuning at optimum ==========
   {
-    // Frame 10: Signal triggers, TF2 starts dropping
-    art: `
- NETWORK STATE       PHENOTYPE SPACE
-┌─────────────┐    ┌────────────────┐
-│   ⚡⚡signal  │    │ P              │
-│     ↓↓      │    │ ↑       ╲      │
-│ ┌─ TF1 ─┐   │    │ │   ·    ╲     │
-│ │██░░░░░│   │    │ │  ●      ╲    │
-│ └───┬───┘   │    │ │          ╲   │
-│   ⊣─┼─⊣     │    │ │       ·   ○  │
-│ ┌───┴───┐   │    │ └────────────→ │
-│ │████░░░│   │    │            V   │
-│ └─ TF2 ─┘   │    │                │
-│             │    └────────────────┘
-└─────────────┘`,
-    state: 'switching', stability: 31, v: 0.52, p: 0.45
+    art: ``,
+    fitness: 0.94, uncertainty: 0.06, deltaWT: '+2.5σ', round: 'Active Learning R4'
   },
   {
-    // Frame 11: Crossing back toward optimal
-    art: `
- NETWORK STATE       PHENOTYPE SPACE
-┌─────────────┐    ┌────────────────┐
-│             │    │ P              │
-│ ┌─ TF1 ─┐   │    │ ↑    ·         │
-│ │████░░░│   │    │ │   ●   ╲      │
-│ └───┬───┘   │    │ │        ╲     │
-│   ⊣─○─⊣     │    │ │     ·   ╲    │
-│ ┌───┴───┐   │    │ │          ╲   │
-│ │██░░░░░│   │    │ │           ○  │
-│ └─ TF2 ─┘   │    │ └────────────→ │
-│  ↓     ↓    │    │            V   │
-│prod  surv   │    └────────────────┘
-└─────────────┘`,
-    state: 'switching', stability: 18, v: 0.41, p: 0.58
+    art: ``,
+    fitness: 0.96, uncertainty: 0.05, deltaWT: '+2.7σ', round: 'Active Learning R4'
   },
   {
-    // Frame 12: Approaching optimal state again
-    art: `
- NETWORK STATE       PHENOTYPE SPACE
-┌─────────────┐    ┌────────────────┐
-│             │    │ P              │
-│ ┌─ TF1 ─┐   │    │ ↑     ·        │
-│ │█████░░│   │    │ │     ●  ╲     │
-│ └───┬───┘   │    │ │   ·     ╲    │
-│   ⊣─┼─⊣     │    │ │          ╲   │
-│ ┌───┴───┐   │    │ │           ○  │
-│ │█░░░░░░│   │    │ └────────────→ │
-│ └─ TF2 ─┘   │    │            V   │
-│  ↓     ↓    │    │                │
-│prod  surv   │    └────────────────┘
-└─────────────┘`,
-    state: 'OPTIMAL', stability: 62, v: 0.74, p: 0.75
+    art: ``,
+    fitness: 0.97, uncertainty: 0.04, deltaWT: '+2.8σ', round: 'Active Learning R4'
   },
 ];
 
@@ -405,8 +233,8 @@ const panels = [
   },
   {
     id: 'regulatory',
-    title: 'CELL PHENOTYPE LANDSCAPE',
-    subtitle: 'network → dynamics → phenotype',
+    title: 'PROTEIN FITNESS LANDSCAPE',
+    subtitle: 'sequence → embedding → function',
     color: 'text-cyan',
     frames: regulatoryFrames,
   },
@@ -445,29 +273,23 @@ function AsciiPanel({ panel, frameIndex }) {
     }
 
     if (panel.id === 'regulatory') {
-      const isTransition = frame.state === 'switching';
-      const stateClass = isTransition ? 'status-transition' : (frame.state === 'SURVIVAL' ? 'status-stress' : 'status-growth');
-      // Fixed-width state display: "OPTIMAL      " or "SURVIVAL     " or "switching... " (all 12 chars)
-      const stateDisplay = isTransition ? 'switching...' : frame.state.padEnd(12, ' ');
       return (
         <div className="ascii-metrics">
           <div className="metric-row">
-            <span className="metric-label">STATE:</span>
-            <span className={`metric-value metric-fixed ${stateClass}`}>
-              {stateDisplay}
-            </span>
+            <span className="metric-label">fitness:</span>
+            <span className="metric-value metric-fixed">{padDecimal(frame.fitness, 1, 2)}</span>
           </div>
           <div className="metric-row">
-            <span className="metric-label">stability:</span>
-            <span className="metric-value metric-fixed">{padNumber(frame.stability, 2)}%</span>
+            <span className="metric-label">uncertainty:</span>
+            <span className="metric-value metric-fixed">±{padDecimal(frame.uncertainty, 1, 2)}</span>
           </div>
           <div className="metric-row">
-            <span className="metric-label">position:</span>
-            <span className="metric-value metric-fixed">V:{padDecimal(frame.v, 1, 2)} P:{padDecimal(frame.p, 1, 2)}</span>
+            <span className="metric-label">Δ vs WT:</span>
+            <span className="metric-value metric-fixed">{frame.deltaWT}</span>
           </div>
           <div className="metric-row">
-            <span className="metric-label">titer:</span>
-            <span className="metric-value metric-fixed">{padDecimal((frame.p * 3.2).toFixed(1), 1, 1)} g/L</span>
+            <span className="metric-label">round:</span>
+            <span className="metric-value metric-fixed">{frame.round}</span>
           </div>
         </div>
       );
