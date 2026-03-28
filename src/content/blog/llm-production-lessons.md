@@ -9,7 +9,7 @@ LLMs are the first piece of software I've worked with that can look **shockingly
 
 In a demo, that's charming. In production, it's a support ticket factory.
 
-This post is my attempt to compress the stuff I wish someone had drilled into me earlier—especially the parts that *don't* show up in the "look, it works!" version.
+This post is my attempt to compress the stuff I wish someone had drilled into me earlier, especially the parts that *don't* show up in the "look, it works!" version.
 
 ---
 
@@ -213,7 +213,7 @@ Log the funnel:
 ### C) Use quasi-experiments when you can't A/B
 Phased rollout? Difference-in-differences.
 Adoption-driven? Matching / weighting.
-The goal is not academic perfection—the goal is *not lying to yourself*.
+The goal isn't academic perfection. The goal is not lying to yourself.
 
 ---
 
@@ -250,13 +250,7 @@ The goal is not academic perfection—the goal is *not lying to yourself*.
 
 Most LLM pain comes from treating a probabilistic system like deterministic software.
 
-If you instead treat it like:
-- an untrusted component,
-- wrapped in a workflow,
-- governed by evaluation,
-- and measured like an intervention…
-
-…you end up shipping things that survive real users.
+If you treat the LLM as an untrusted component, put a real workflow around it, build evaluation into the loop, and measure it like any other intervention, you end up shipping things that survive real users.
 
 That's the whole game.
 

@@ -5,7 +5,7 @@ description: "How SHAP and LIME help you get buy-in from stakeholders (without p
 tags: ["interpretable-ml", "shap", "lime", "causal-inference", "ml-in-business"]
 ---
 
-You can build a model that's "objectively good" — great lift chart, clean CV, the whole thing — and still watch it die quietly in production.
+You can build a model that's "objectively good." Great lift chart, clean CV, the works. And it can still die quietly in production.
 
 Not because it was wrong.
 
@@ -13,7 +13,7 @@ Because nobody trusted it enough to *act on it*.
 
 And in business, a model that isn't acted on is just a spreadsheet with extra steps.
 
-So let's talk about why interpretable ML wins — and why tools like SHAP and LIME are often the difference between "cool demo" and "approved initiative."
+So let's talk about why interpretable ML wins, and why tools like SHAP and LIME are often the difference between "cool demo" and "approved initiative."
 
 ---
 
@@ -25,7 +25,7 @@ If you want stakeholders to actually *use* your model:
 - **Interpretability turns "trust me" into something inspectable.**
 - **SHAP gives you local + global explanations that scale.**
 - **LIME is great for "why *this* prediction?" moments.**
-- **Neither SHAP nor LIME proves causality** — but they *do* help you spot confounding, leakage, and unstable patterns early, and they help you design the next experiment faster.
+- **Neither SHAP nor LIME proves causality**, but they *do* help you spot confounding, leakage, and unstable patterns early, and they help you design the next experiment faster.
 
 ---
 
@@ -39,7 +39,7 @@ Stakeholders hear:
 
 Those are different questions.
 
-Prediction is about *ranking outcomes*. Decision-making is about *changing outcomes*.
+Prediction ranks outcomes. Decision-making changes them.
 
 Which means the moment your model touches a real business process — marketing allocation, sales prioritization, outreach timing, risk triage — you've entered causal territory whether you like it or not.
 
@@ -61,14 +61,13 @@ Here's the honest version:
 
 If your model is a black box, adoption depends on social proof:
 - "Trust us, it's accurate."
-- "Trust us, we're data people."
-- "Trust us, this time is different."
+- "Trust us, we're the experts."
 
-That works exactly once. Maybe twice.
+That works maybe once.
 
 Interpretability changes the conversation from "trust me" to "here's what the model is seeing."
 
-That's huge — because it unlocks four things businesses actually care about:
+That matters because it gives you four things businesses actually care about:
 
 ### 1) Trust you can operationalize
 Not vibes. Not reputations. Something you can inspect and sanity-check.
@@ -252,13 +251,9 @@ Interpretability is one of the highest-ROI "engineering investments" you can mak
 
 Not because SHAP and LIME are magic.
 
-But because they let you replace:
+But because they give your stakeholders something concrete:
 
-> "The model says so."
-
-with:
-
-> "Here's what it's seeing, here's what we think it means, and here's how we'll test it."
+> "Here's what the model is seeing, here's what we think it means, and here's how we'll test it."
 
 That's how ML becomes decision infrastructure instead of a science project.
 

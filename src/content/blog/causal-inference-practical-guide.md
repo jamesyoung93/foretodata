@@ -5,7 +5,7 @@ description: "Moving beyond correlation to understand what actually drives your 
 tags: ["causal-inference", "tutorial"]
 ---
 
-_*~12 minute read. Written for people who have shipped models, stared at dashboards, and felt that quiet dread of not knowing what actually moved the needle.*_
+_*~12 minute read. Written for people who have shipped models and stared at dashboards wondering what actually moved the needle.*_
 
 Most teams I work with start with a perfectly reasonable plan:
 
@@ -16,7 +16,7 @@ Most teams I work with start with a perfectly reasonable plan:
 
 And then the metric… doesn't move. Or worse: it moves in the wrong direction.
 
-This isn't because people lack the skills. It's because **prediction** and **intervention** are different games.
+The issue is that **prediction** and **intervention** are different games.
 
 A predictive model can be *accurate* and still be useless for answering:
 > "If we change X, does Y change?"
@@ -108,7 +108,7 @@ Before modeling, write down the experiment you *wish* you could run:
 - **Outcome:** precisely what metric, and over what window?
 - **Estimand:** average effect? effect on treated? uplift by subgroup?
 
-If you can't describe this cleanly, you don't have a causal estimate yet — you have an idea.
+If you can't describe this cleanly, you don't have a causal estimate yet. You have an idea.
 
 _(If you've never done this, it feels "extra." Then you do it once and realize it prevents weeks of ambiguity.)_
 
@@ -116,7 +116,7 @@ _(If you've never done this, it feels "extra." Then you do it once and realize i
 
 ## Step 1: If you can randomize, do it
 
-Randomization is not "academic purity." It's operational leverage.
+Randomization is not "academic purity." It's a practical advantage.
 
 It breaks the link between treatment assignment and the hidden stuff you didn't measure.
 
