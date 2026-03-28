@@ -25,13 +25,18 @@ import Base from '../layouts/Base.astro';
       <h2 class="nav-section-title">On This Page</h2>
       <ul class="nav-list">
         <li>
-          <a href="#ml-bioinformatics" class="nav-link">
-            <span>ML / Bioinformatics</span>
+          <a href="#closely-related" class="nav-link">
+            <span>Publications</span>
           </a>
         </li>
         <li>
-          <a href="#wet-lab" class="nav-link">
-            <span>Wet Lab / Experimental</span>
+          <a href="#other-works" class="nav-link">
+            <span>Other Works</span>
+          </a>
+        </li>
+        <li>
+          <a href="#honors" class="nav-link">
+            <span>Honors &amp; Awards</span>
           </a>
         </li>
       </ul>
@@ -45,71 +50,104 @@ import Base from '../layouts/Base.astro';
         Publications
       </h1>
       <p class="text-terminal-dim text-sm">
-        135+ citations &middot;
         <a href="https://scholar.google.com/citations?user=EyrW6pEAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" class="text-terminal-accent hover:underline">Google Scholar</a>
       </p>
     </header>
 
     <article class="prose prose-invert prose-terminal">
 
-      <h2 id="ml-bioinformatics" class="font-display text-xl font-semibold text-terminal-text mt-8 mb-4 flex items-center gap-2">
-        <span class="text-terminal-accent">&#9655;</span> ML / Bioinformatics
+      <h2 id="closely-related" class="font-display text-xl font-semibold text-terminal-text mt-8 mb-4 flex items-center gap-2">
+        <span class="text-terminal-accent">&#9655;</span> Publications
       </h2>
 
       <div class="space-y-6 text-terminal-dim">
         <div>
-          <p class="text-terminal-text font-medium mb-1">Crowdsourcing assessment of maternal blood multi-omics for predicting gestational age and preterm birth</p>
-          <p class="text-sm">Tarca AL, et al. (including <strong class="text-terminal-text">Young J</strong>)</p>
-          <p class="text-sm"><em>Cell Reports Medicine</em>, 2(6):100323, 2021</p>
-          <p class="text-sm mt-2">Organized a team at SDSU for a biological ML competition. Feature engineering and modeling (XGBoost, neural networks) on high-dimensional multi-omics data to predict preterm birth risk and gestational age.</p>
+          <p class="text-terminal-text font-medium mb-1">Predicting FOX gene candidates for oxic nitrogen fixation using multi-omic machine learning and comparative bioinformatics</p>
+          <p class="text-sm"><strong class="text-terminal-text">J Young</strong>, L Gu, R Zhou*</p>
+          <p class="text-sm"><em>Scientific Reports</em>, 2026 (Article in Press)</p>
+          <p class="text-sm"><a href="https://doi.org/10.1038/s41598-026-41873-w" target="_blank" rel="noopener noreferrer" class="text-terminal-accent hover:underline">doi:10.1038/s41598-026-41873-w</a></p>
         </div>
 
         <div>
-          <p class="text-terminal-text font-medium mb-1">Chromosome-level genome assembly of the Chinese three-keeled pond turtle (<em>Mauremys reevesii</em>)</p>
-          <p class="text-sm">Liu J, et al. (including <strong class="text-terminal-text">Young J</strong>)</p>
-          <p class="text-sm"><em>Molecular Ecology Resources</em>, 22(4):1596-1605, 2022</p>
-          <p class="text-sm mt-2">Contributed genome assembly and synteny analysis on the SDSU HPC cluster.</p>
+          <p class="text-terminal-text font-medium mb-1">Secondary Metabolites Predict Diazotrophic Cyanobacteria: A Model-Based Cheminformatic Approach</p>
+          <p class="text-sm"><strong class="text-terminal-text">J Young</strong>, T Nawaz, L Gu, R Zhou*</p>
+          <p class="text-sm"><em>Metabolites</em> 15(9), 562, 2025</p>
+          <p class="text-sm"><a href="https://doi.org/10.3390/metabo15090562" target="_blank" rel="noopener noreferrer" class="text-terminal-accent hover:underline">doi:10.3390/metabo15090562</a></p>
         </div>
 
         <div>
-          <p class="text-terminal-text font-medium mb-1">Secondary Metabolites Are Highly Predictive of Diazotrophic Cyanobacteria Strains</p>
-          <p class="text-sm"><strong class="text-terminal-text">Young J</strong>, Gu L, Zhou R</p>
-          <p class="text-sm"><em>In Submission</em>, 2023</p>
-          <p class="text-sm mt-2">Extracted secondary metabolites from CyanoDB, mapped them to diazotrophic capability, and validated with leave-one-out cross-validation (~0.98 AUC on holdout).</p>
-        </div>
-
-        <div>
-          <p class="text-terminal-text font-medium mb-1">Predicting Cyanobacterial FOX Genes with a Data-Centric Machine Learning Approach</p>
-          <p class="text-sm"><strong class="text-terminal-text">Young J</strong>, Gu L, Zhou R</p>
-          <p class="text-sm"><em>In Submission</em>, 2023</p>
-          <p class="text-sm mt-2">Integrated proteomic, transcriptomic, and genomic promoter data to build a predictive model for FOX genes (~0.85 holdout AUC), validated on experimentally determined genes.</p>
-        </div>
-      </div>
-
-      <h2 id="wet-lab" class="font-display text-xl font-semibold text-terminal-text mt-10 mb-4 flex items-center gap-2">
-        <span class="text-terminal-accent">&#9655;</span> Wet Lab / Experimental
-      </h2>
-
-      <div class="space-y-6 text-terminal-dim">
-        <div>
-          <p class="text-terminal-text font-medium mb-1">Harnessing Solar-Powered Oxic N<sub>2</sub>-fixing Cyanobacteria for the BioNitrogen Economy</p>
-          <p class="text-sm"><strong class="text-terminal-text">Young J</strong>, Gu L, Gibbons W, Zhou R</p>
-          <p class="text-sm"><em>Cyanobacteria Biotechnology</em>, 2021</p>
-          <p class="text-sm mt-2">Synthesized the research landscape and economic case for industrial-scale biological nitrogen fixation.</p>
+          <p class="text-terminal-text font-medium mb-1">Discovery of Photosynthetic Oxic N<sub>2</sub>-Fixation in Cyanobacteria Using Wet Lab and Machine Learning Approaches</p>
+          <p class="text-sm"><strong class="text-terminal-text">J Young</strong></p>
+          <p class="text-sm">Ph.D. Dissertation, South Dakota State University, 2025</p>
+          <p class="text-sm"><a href="https://openprairie.sdstate.edu/etd2/1717" target="_blank" rel="noopener noreferrer" class="text-terminal-accent hover:underline">openprairie.sdstate.edu/etd2/1717</a></p>
         </div>
 
         <div>
           <p class="text-terminal-text font-medium mb-1">Unicellular Cyanobacteria Exhibit Light-Driven, Oxygen-Tolerant, Constitutive Nitrogenase Activity Under Continuous Illumination</p>
-          <p class="text-sm"><strong class="text-terminal-text">Young J</strong>, Gu L, Hildreth M, Zhou R</p>
-          <p class="text-sm"><em>bioRxiv</em> 619353</p>
-          <p class="text-sm mt-2">Demonstrated a nitrogen-fixation phenotype tolerating net-oxygen gains. Used GCMS, oxygraph, controlled growth chambers, inhibition assays, proteomics, and network analysis.</p>
+          <p class="text-sm"><strong class="text-terminal-text">J Young</strong>, L Gu, M Hildreth, R Zhou*</p>
+          <p class="text-sm"><em>bioRxiv</em>, 619353, 2019</p>
+          <p class="text-sm"><a href="https://doi.org/10.1101/619353" target="_blank" rel="noopener noreferrer" class="text-terminal-accent hover:underline">doi:10.1101/619353</a></p>
         </div>
 
         <div>
-          <p class="text-terminal-text font-medium mb-1">Identification of Cell Surface Sugars in N<sub>2</sub>-fixing Cyanobacterium <em>Cyanothece</em> ATCC 51142 Using Fluorescein Labeled Lectins</p>
-          <p class="text-sm"><strong class="text-terminal-text">Young J</strong>, Gu L, Hildreth M, Zhou R</p>
-          <p class="text-sm"><em>SDAOS</em> Conference Paper, 2018</p>
-          <p class="text-sm mt-2">Used microscopy to quantify cell surface fluorescence under different lectin treatments to identify cell envelope polysaccharides relevant to nitrogen fixation.</p>
+          <p class="text-terminal-text font-medium mb-1">Harnessing Solar-Powered Oxic N<sub>2</sub>-fixing Cyanobacteria for the BioNitrogen Economy</p>
+          <p class="text-sm"><strong class="text-terminal-text">J Young</strong>, L Gu, W Gibbons, R Zhou*</p>
+          <p class="text-sm"><em>Cyanobacteria Biotechnology</em>, Wiley-VCH, pp. 407-439, 2021</p>
+          <p class="text-sm"><a href="https://doi.org/10.1002/9783527824908.ch13" target="_blank" rel="noopener noreferrer" class="text-terminal-accent hover:underline">doi:10.1002/9783527824908.ch13</a></p>
+        </div>
+
+        <div>
+          <p class="text-terminal-text font-medium mb-1">Chromosome-level genome assembly of the Chinese three-keeled pond turtle (<em>Mauremys reevesii</em>) provides insights into freshwater adaptation</p>
+          <p class="text-sm">J Liu, K Zheng, S Liu, L Gu, <strong class="text-terminal-text">J Young</strong>, Z Wang, Y Qiu, S Gu, L Xiong, R Zhou*, L Nie*</p>
+          <p class="text-sm"><em>Molecular Ecology Resources</em> (IF=8.678), 22(4):1596-1605, 2022</p>
+        </div>
+      </div>
+
+      <h2 id="other-works" class="font-display text-xl font-semibold text-terminal-text mt-10 mb-4 flex items-center gap-2">
+        <span class="text-terminal-accent">&#9655;</span> Other Works
+      </h2>
+
+      <div class="space-y-6 text-terminal-dim">
+        <div>
+          <p class="text-terminal-text font-medium mb-1">Active Learning on Protein Language Model Embeddings Accelerates Rubisco Variant Discovery for Desired Traits</p>
+          <p class="text-sm"><strong class="text-terminal-text">J Young</strong>, L Gu, R Zhou</p>
+          <p class="text-sm"><em>In revisions</em></p>
+        </div>
+
+        <div>
+          <p class="text-terminal-text font-medium mb-1">Predictive Pangenomics Prioritizes Gene Families Associated with Oxic Nitrogen Fixation in Cyanobacteria</p>
+          <p class="text-sm"><strong class="text-terminal-text">J Young</strong>, S Aryal, D Nelson, EZ Gnimpieba, R Zhou</p>
+          <p class="text-sm"><em>In preparation</em></p>
+        </div>
+
+        <div>
+          <p class="text-terminal-text font-medium mb-1">Crowdsourcing assessment of maternal blood multi-omics for predicting gestational age and preterm birth</p>
+          <p class="text-sm">AL Tarca, B&Aacute; Pataki, R Romero, et al. (including <strong class="text-terminal-text">J Young</strong> as consortium author)</p>
+          <p class="text-sm"><em>Cell Reports Medicine</em>, 2(6), 2021</p>
+          <p class="text-sm"><a href="https://doi.org/10.1016/j.xcrm.2021.100323" target="_blank" rel="noopener noreferrer" class="text-terminal-accent hover:underline">doi:10.1016/j.xcrm.2021.100323</a></p>
+        </div>
+      </div>
+
+      <h2 id="honors" class="font-display text-xl font-semibold text-terminal-text mt-10 mb-4 flex items-center gap-2">
+        <span class="text-terminal-accent">&#9655;</span> Honors &amp; Awards
+      </h2>
+
+      <div class="space-y-3 text-terminal-dim">
+        <div class="flex justify-between items-baseline">
+          <p class="text-terminal-text font-medium">Scientific Communication Fellowship</p>
+          <p class="text-sm text-terminal-dim whitespace-nowrap ml-4">SDSU, 2021</p>
+        </div>
+        <div class="flex justify-between items-baseline">
+          <p class="text-terminal-text font-medium">Grant Writing Competition Winner</p>
+          <p class="text-sm text-terminal-dim whitespace-nowrap ml-4">SDSU, 2020</p>
+        </div>
+        <div class="flex justify-between items-baseline">
+          <p class="text-terminal-text font-medium">3 Minute Thesis Competition Winner</p>
+          <p class="text-sm text-terminal-dim whitespace-nowrap ml-4">SDSU, 2020</p>
+        </div>
+        <div class="flex justify-between items-baseline">
+          <p class="text-terminal-text font-medium">Fellow, Department of Biochemistry</p>
+          <p class="text-sm text-terminal-dim whitespace-nowrap ml-4">U. of Jamestown, 2017</p>
         </div>
       </div>
 
