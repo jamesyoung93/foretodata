@@ -1,0 +1,118 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Publications | James Young">
+  <Fragment slot="sidebar">
+    <div class="nav-section">
+      <h2 class="nav-section-title">Navigation</h2>
+      <ul class="nav-list">
+        <li>
+          <a href="/foretodata/" class="nav-link">
+            <span class="num">&larr;</span>
+            <span>Back to Home</span>
+          </a>
+        </li>
+        <li>
+          <a href="/foretodata/about" class="nav-link">
+            <span>About</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-section">
+      <h2 class="nav-section-title">On This Page</h2>
+      <ul class="nav-list">
+        <li>
+          <a href="#ml-bioinformatics" class="nav-link">
+            <span>ML / Bioinformatics</span>
+          </a>
+        </li>
+        <li>
+          <a href="#wet-lab" class="nav-link">
+            <span>Wet Lab / Experimental</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </Fragment>
+
+  <div class="max-w-2xl">
+    <header class="mb-12">
+      <span class="text-terminal-accent font-mono text-sm">~/publications</span>
+      <h1 class="font-display text-4xl font-bold text-terminal-text mt-4 mb-6">
+        Publications
+      </h1>
+      <p class="text-terminal-dim text-sm">
+        135+ citations &middot;
+        <a href="https://scholar.google.com/citations?user=EyrW6pEAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" class="text-terminal-accent hover:underline">Google Scholar</a>
+      </p>
+    </header>
+
+    <article class="prose prose-invert prose-terminal">
+
+      <h2 id="ml-bioinformatics" class="font-display text-xl font-semibold text-terminal-text mt-8 mb-4 flex items-center gap-2">
+        <span class="text-terminal-accent">&#9655;</span> ML / Bioinformatics
+      </h2>
+
+      <div class="space-y-6 text-terminal-dim">
+        <div>
+          <p class="text-terminal-text font-medium mb-1">Crowdsourcing assessment of maternal blood multi-omics for predicting gestational age and preterm birth</p>
+          <p class="text-sm">Tarca AL, et al. (including <strong class="text-terminal-text">Young J</strong>)</p>
+          <p class="text-sm"><em>Cell Reports Medicine</em>, 2(6):100323, 2021</p>
+          <p class="text-sm mt-2">Organized a team at SDSU for a biological ML competition. Feature engineering and modeling (XGBoost, neural networks) on high-dimensional multi-omics data to predict preterm birth risk and gestational age.</p>
+        </div>
+
+        <div>
+          <p class="text-terminal-text font-medium mb-1">Chromosome-level genome assembly of the Chinese three-keeled pond turtle (<em>Mauremys reevesii</em>)</p>
+          <p class="text-sm">Liu J, et al. (including <strong class="text-terminal-text">Young J</strong>)</p>
+          <p class="text-sm"><em>Molecular Ecology Resources</em>, 22(4):1596-1605, 2022</p>
+          <p class="text-sm mt-2">Contributed genome assembly and synteny analysis on the SDSU HPC cluster.</p>
+        </div>
+
+        <div>
+          <p class="text-terminal-text font-medium mb-1">Secondary Metabolites Are Highly Predictive of Diazotrophic Cyanobacteria Strains</p>
+          <p class="text-sm"><strong class="text-terminal-text">Young J</strong>, Gu L, Zhou R</p>
+          <p class="text-sm"><em>In Submission</em>, 2023</p>
+          <p class="text-sm mt-2">Extracted secondary metabolites from CyanoDB, mapped them to diazotrophic capability, and validated with leave-one-out cross-validation (~0.98 AUC on holdout).</p>
+        </div>
+
+        <div>
+          <p class="text-terminal-text font-medium mb-1">Predicting Cyanobacterial FOX Genes with a Data-Centric Machine Learning Approach</p>
+          <p class="text-sm"><strong class="text-terminal-text">Young J</strong>, Gu L, Zhou R</p>
+          <p class="text-sm"><em>In Submission</em>, 2023</p>
+          <p class="text-sm mt-2">Integrated proteomic, transcriptomic, and genomic promoter data to build a predictive model for FOX genes (~0.85 holdout AUC), validated on experimentally determined genes.</p>
+        </div>
+      </div>
+
+      <h2 id="wet-lab" class="font-display text-xl font-semibold text-terminal-text mt-10 mb-4 flex items-center gap-2">
+        <span class="text-terminal-accent">&#9655;</span> Wet Lab / Experimental
+      </h2>
+
+      <div class="space-y-6 text-terminal-dim">
+        <div>
+          <p class="text-terminal-text font-medium mb-1">Harnessing Solar-Powered Oxic N<sub>2</sub>-fixing Cyanobacteria for the BioNitrogen Economy</p>
+          <p class="text-sm"><strong class="text-terminal-text">Young J</strong>, Gu L, Gibbons W, Zhou R</p>
+          <p class="text-sm"><em>Cyanobacteria Biotechnology</em>, 2021</p>
+          <p class="text-sm mt-2">Synthesized the research landscape and economic case for industrial-scale biological nitrogen fixation.</p>
+        </div>
+
+        <div>
+          <p class="text-terminal-text font-medium mb-1">Unicellular Cyanobacteria Exhibit Light-Driven, Oxygen-Tolerant, Constitutive Nitrogenase Activity Under Continuous Illumination</p>
+          <p class="text-sm"><strong class="text-terminal-text">Young J</strong>, Gu L, Hildreth M, Zhou R</p>
+          <p class="text-sm"><em>bioRxiv</em> 619353</p>
+          <p class="text-sm mt-2">Demonstrated a nitrogen-fixation phenotype tolerating net-oxygen gains. Used GCMS, oxygraph, controlled growth chambers, inhibition assays, proteomics, and network analysis.</p>
+        </div>
+
+        <div>
+          <p class="text-terminal-text font-medium mb-1">Identification of Cell Surface Sugars in N<sub>2</sub>-fixing Cyanobacterium <em>Cyanothece</em> ATCC 51142 Using Fluorescein Labeled Lectins</p>
+          <p class="text-sm"><strong class="text-terminal-text">Young J</strong>, Gu L, Hildreth M, Zhou R</p>
+          <p class="text-sm"><em>SDAOS</em> Conference Paper, 2018</p>
+          <p class="text-sm mt-2">Used microscopy to quantify cell surface fluorescence under different lectin treatments to identify cell envelope polysaccharides relevant to nitrogen fixation.</p>
+        </div>
+      </div>
+
+    </article>
+  </div>
+</Base>
