@@ -2,7 +2,6 @@
 import Base from '../layouts/Base.astro';
 import FilterToggle from '../components/FilterToggle.jsx';
 import AsciiHeroAnimation from '../components/AsciiHeroAnimation.jsx';
-import SurpriseMe from '../components/SurpriseMe.jsx';
 ---
 
 <Base title="James Young | Technology, Innovation, & Transformation">
@@ -30,7 +29,7 @@ import SurpriseMe from '../components/SurpriseMe.jsx';
           </a>
         </li>
         <li>
-          <a href="#surprise" class="nav-link">
+          <a href="/foretodata/surprise" class="nav-link">
             <span class="num">04</span>
             <span>Surprise Me</span>
           </a>
@@ -79,11 +78,6 @@ import SurpriseMe from '../components/SurpriseMe.jsx';
       </div>
 
       <FilterToggle client:load />
-    </section>
-
-    <!-- Surprise Me Section -->
-    <section id="surprise">
-      <SurpriseMe client:load />
     </section>
   </div>
 </Base>

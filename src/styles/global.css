@@ -2035,26 +2035,68 @@ html.classic .audio-opt-in-btn.enabled {
   background: rgba(37, 99, 235, 0.08);
 }
 
-/* Surprise Me section */
-.surprise-section {
-  margin-top: 3rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--border);
+/* Surprise Me page */
+.surprise-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+  padding: 2rem 0;
+  font-family: 'JetBrains Mono', monospace;
 }
 
-.surprise-btn {
+.surprise-art {
+  margin-bottom: 2.5rem;
+}
+
+.splitflap-block {
+  white-space: pre;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--accent);
+  text-shadow: 0 0 6px var(--accent-glow);
+  letter-spacing: 0.05em;
+}
+
+.splitflap-line {
+  min-height: 1.12em;
+}
+
+.surprise-quote-container {
+  text-align: center;
+  max-width: 600px;
+  margin-bottom: 3rem;
+}
+
+.surprise-quote-text {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: var(--text);
+  margin-bottom: 1rem;
+  min-height: 2em;
+}
+
+.surprise-quote-author {
+  font-size: 0.85rem;
+  color: var(--dim);
+  font-style: italic;
+  min-height: 1.2em;
+}
+
+.surprise-next-btn {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.9rem;
   background: transparent;
   border: 1px dashed var(--border);
   color: var(--dim);
-  padding: 0.6rem 1.2rem;
+  padding: 0.6rem 1.5rem;
   cursor: pointer;
   transition: all 0.2s;
   border-radius: 4px;
 }
 
-.surprise-btn:hover {
+.surprise-next-btn:hover {
   border-color: var(--accent);
   color: var(--accent);
   text-shadow: 0 0 8px var(--accent-glow);
@@ -2071,88 +2113,42 @@ html.classic .audio-opt-in-btn.enabled {
   color: var(--accent);
 }
 
-.surprise-card {
-  margin-top: 1.5rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.8rem;
-  line-height: 1.6;
-  color: var(--dim);
-  overflow: hidden;
-}
-
-.surprise-border-top,
-.surprise-border-bottom {
-  color: var(--border);
-  white-space: pre;
-  overflow: hidden;
-  font-size: 0.75rem;
-}
-
-.surprise-body {
-  padding: 1rem 0 0.5rem 0;
-  font-size: 1.05rem;
-  color: var(--text);
-  min-height: 2rem;
-}
-
-.surprise-quote-mark {
-  color: var(--accent);
-}
-
-.surprise-text {
-  color: var(--text);
-}
-
-.surprise-typing-cursor {
-  animation: blink 0.6s step-end infinite;
-  color: var(--accent);
-}
-
-.surprise-author {
-  padding: 0.25rem 0 0.75rem 1.25rem;
-  font-size: 0.8rem;
-  font-style: italic;
-  color: var(--dim);
-  transition: opacity 0.4s ease;
-}
-
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
 }
 
-/* Classic theme overrides for surprise */
-html.classic .surprise-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 0 1.25rem;
-}
-
-html.classic .surprise-border-top,
-html.classic .surprise-border-bottom {
-  display: none;
-}
-
-html.classic .surprise-body {
-  font-size: 1.1rem;
-  font-style: italic;
-  color: var(--text);
-}
-
-html.classic .surprise-quote-mark {
-  display: none;
-}
-
-html.classic .surprise-author {
-  font-style: normal;
+/* Classic theme overrides for surprise page */
+html.classic .splitflap-block {
   color: var(--accent);
+  text-shadow: none;
 }
 
-html.classic .surprise-typing-cursor {
+html.classic .surprise-quote-text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.3rem;
+  font-style: italic;
+}
+
+html.classic .surprise-quote-author {
+  color: var(--accent);
+  font-style: normal;
+}
+
+html.classic .surprise-next-btn {
+  border-style: solid;
+}
+
+html.classic .surprise-cursor {
   display: none;
 }
 
-html.classic .surprise-btn {
-  border-style: solid;
+@media (max-width: 768px) {
+  .splitflap-block {
+    font-size: 0.55rem;
+  }
+  .surprise-quote-text {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
 }
