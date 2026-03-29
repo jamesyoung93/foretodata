@@ -1218,8 +1218,15 @@ html.classic .view-toggle-btn.active {
   }
 
   .footer-links {
-    gap: 0.75rem;
-    font-size: 0.75rem;
+    gap: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .footer-links a {
+    padding: 0.25rem 0;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
   }
 
   .terminal-prompt {
@@ -2052,25 +2059,26 @@ html.classic .audio-opt-in-btn.enabled {
 
 .splitflap-block {
   white-space: pre;
-  font-size: 0.8rem;
-  line-height: 1.4;
+  font-size: 0.85rem;
+  line-height: 1.35;
   color: var(--accent);
-  text-shadow: 0 0 6px var(--accent-glow);
-  letter-spacing: 0.05em;
+  text-shadow: 0 0 8px var(--accent-glow);
+  letter-spacing: 0.02em;
 }
 
 .splitflap-line {
-  min-height: 1.12em;
+  min-height: 1.15em;
 }
 
 .surprise-quote-container {
   text-align: center;
   max-width: 600px;
   margin-bottom: 3rem;
+  padding: 0 1rem;
 }
 
 .surprise-quote-text {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   line-height: 1.6;
   color: var(--text);
   margin-bottom: 1rem;
@@ -2090,16 +2098,21 @@ html.classic .audio-opt-in-btn.enabled {
   background: transparent;
   border: 1px dashed var(--border);
   color: var(--dim);
-  padding: 0.6rem 1.5rem;
+  padding: 0.75rem 2rem;
   cursor: pointer;
   transition: all 0.2s;
   border-radius: 4px;
+  min-height: 44px;
 }
 
 .surprise-next-btn:hover {
   border-color: var(--accent);
   color: var(--accent);
   text-shadow: 0 0 8px var(--accent-glow);
+}
+
+.surprise-next-btn:active {
+  background: var(--accent-glow);
 }
 
 .surprise-prompt {
@@ -2113,11 +2126,6 @@ html.classic .audio-opt-in-btn.enabled {
   color: var(--accent);
 }
 
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
 /* Classic theme overrides for surprise page */
 html.classic .splitflap-block {
   color: var(--accent);
@@ -2126,7 +2134,7 @@ html.classic .splitflap-block {
 
 html.classic .surprise-quote-text {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 1.3rem;
+  font-size: 1.35rem;
   font-style: italic;
 }
 
@@ -2144,11 +2152,28 @@ html.classic .surprise-cursor {
 }
 
 @media (max-width: 768px) {
+  .surprise-page {
+    min-height: 60vh;
+    padding: 1.5rem 0;
+  }
   .splitflap-block {
-    font-size: 0.55rem;
+    font-size: 0.5rem;
+    line-height: 1.3;
+  }
+  .surprise-art {
+    margin-bottom: 1.5rem;
+    overflow-x: auto;
+    max-width: 100%;
+    padding: 0 0.5rem;
   }
   .surprise-quote-text {
     font-size: 1rem;
-    padding: 0 1rem;
+  }
+  .surprise-quote-container {
+    margin-bottom: 2rem;
+  }
+  .surprise-next-btn {
+    padding: 0.75rem 2.5rem;
+    font-size: 1rem;
   }
 }

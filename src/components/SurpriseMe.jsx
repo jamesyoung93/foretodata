@@ -5,91 +5,88 @@ const quotes = [
     text: "So long, and thanks for all the fish.",
     author: "Douglas Adams",
     art: [
-      "                        ,",
-      "                   .  -/}-.",
-      "                  (  o/    )",
-      "                   `-\\  _,'",
-      "            ~~~~~~~~~`-\\~~~~~~~~~~",
-      "          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+      "                          .--.",
+      "                        .'    `.",
+      "                _      /   o    \\",
+      "               ( `-._ |         ;",
+      "                `>   `-\\   .---<'",
+      "               /   .--'`-'     |",
+      "              ;   /            |",
+      "              |  \\    .--.    /",
+      "               \\  `~~'   ;  /'",
+      "                `-.____,' /'",
+      "           ~~~~~~~~~~~~~~~'~~~~~~~~~~~~~",
+      "         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+      "       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
     ],
   },
   {
     text: "The best way to predict the future is to invent it.",
     author: "Alan Kay",
     art: [
-      "          ____",
-      "        .'    '.",
-      "       /  .--.  \\",
-      "      |  /    \\  |",
-      "      | |  ()  | |",
-      "      |  \\    /  |",
-      "       \\  '--'  /",
-      "        '.____.'",
-      "          |  |",
-      "          |  |",
-      "         _|  |_",
-      "        |______|",
-      "      /~~~~~~~~~~\\",
-      "     /~~~~~~~~~~~~\\",
+      "              *    .  *",
+      "           .    *    .",
+      "        *    ______    *",
+      "           .'      `.",
+      "     *    /   .~~.   \\    .",
+      "         |   |    |   |",
+      "         |   |    |   |",
+      "          \\  `.__.'  /",
+      "           `.      .'",
+      "             '----'",
+      "              |  |",
+      "             _|  |_",
+      "            [______]",
     ],
   },
   {
     text: "In God we trust. All others must bring data.",
     author: "W. Edwards Deming",
     art: [
-      "                    _",
-      "       |           |#|",
-      "       |     _     |#|",
-      "       |    |#|    |#|",
-      "       |    |#|    |#|",
-      "  _    |    |#|    |#|",
-      " |#|   |    |#|    |#|",
-      " |#|   |    |#|    |#|",
-      " |#|   |    |#|    |#|",
-      " |#|   |    |#|    |#|",
-      " |#|   |    |#|    |#|",
-      " |#|   |    |#|    |#|",
-      "_|#|___|____|#|____|#|___",
-      " Q1    Q2   Q3    Q4",
+      "                           _____",
+      "                     __   |     |",
+      "               __   |  |  |     |",
+      "         __   |  |  |  |  |     |",
+      "   __   |  |  |  |  |  |  |     |",
+      "  |  |  |  |  |  |  |  |  |     |",
+      "  |  |  |  |  |  |  |  |  |     |",
+      "  |  |  |  |  |  |  |  |  |     |",
+      "  |__|__|__|__|__|__|__|__|_____|",
+      "  Q1   Q2   Q3   Q4   >>>>>>>>>>",
     ],
   },
   {
     text: "Enjoy every sandwich.",
     author: "Warren Zevon",
     art: [
-      "     _.---._",
-      "   .'       '.",
-      "  / ~ ~ ~ ~ ~ \\",
-      " |  ~ ~ ~ ~ ~  |",
-      " | %%  %%%  %% |",
-      " |~~~~~~~~~~~~ |",
-      " |  ()  ()  () |",
-      " | %%%% %%% %% |",
-      " |~~~~~~~~~~~~~|",
-      " |   @@@ @@@   |",
-      " | %%% %%%% %% |",
-      "  \\ ~ ~ ~ ~ ~ /",
-      "   '.  ___  .'",
-      "     '-----'",
+      "        _.------._",
+      "      .'           '.",
+      "     /  ~~  ~~  ~~  ~\\",
+      "    |__________________|",
+      "    |  ///  ///  ///   |",
+      "    |__________________|",
+      "    | ~~~~~ ~~~~~ ~~~~ |",
+      "    |__________________|",
+      "    | . .. . .. . .. . |",
+      "    |__________________|",
+      "     \\  ~~  ~~  ~~  ~ /",
+      "      '.__________.'",
     ],
   },
   {
     text: "The map is not the territory.",
     author: "Alfred Korzybski",
     art: [
-      "          N",
-      "          |",
-      "     W ---+--- E",
-      "          |",
-      "          S",
+      "           .    N    .",
+      "            \\   |   /",
+      "         .---\\--+--/---.",
+      "         |    \\ | /    |",
+      "      W--+-----*-----+--E",
+      "         |    / | \\    |",
+      "         '---/--+--\\---'",
+      "            /   |   \\",
+      "           '    S    '",
       "",
-      "    .----.----.----.",
-      "    | .  |    | // |",
-      "    |    |  . |    |",
-      "    |----+----|  . |",
-      "    | // |    |    |",
-      "    |    | .  | // |",
-      "    '----'----'----'",
       "       [X] YOU ARE HERE",
     ],
   },
@@ -97,45 +94,42 @@ const quotes = [
     text: "Not all those who wander are lost.",
     author: "J.R.R. Tolkien",
     art: [
-      "                /\\",
-      "               /  \\",
-      "              / .. \\",
-      "     /\\      /.''.  \\",
-      "    /  \\    / .    . \\",
-      "   /    \\  /  .  .    \\",
-      "  / .    \\/            \\",
-      " /   . .  \\    /\\      \\",
-      "/          \\  /  \\   .  \\",
-      "~~~~~~~~~~~~\\/    \\~~~~~~\\~~",
-      "  ~         ~\\    /~   ~",
-      "     ~    ~   \\  /   ~",
-      "   ~    ~      \\/  ~   ~",
-      "      ~    ~      ~",
+      "                  /\\",
+      "                 /  \\      /\\",
+      "                /    \\    /  \\",
+      "          /\\   /      \\  /    \\",
+      "         /  \\ /   /\\   \\/      \\",
+      "        /    /   /  \\   \\       \\",
+      "       /    /   /    \\   \\   /\\  \\",
+      "      /    /   /      \\   \\ /  \\  \\",
+      "   __/    /___/________\\___/    \\__\\__",
+      "         *",
+      "        /|\\     .  .  .  .  .  .  .",
+      "         |",
     ],
   },
   {
     text: "All that glitters is not gold.",
     author: "J.R.R. Tolkien",
     art: [
-      "          .",
-      "         /|\\",
-      "        / | \\",
-      "       /  |  \\",
-      "      /  /|\\  \\",
-      "     /  / | \\  \\",
-      "    /  /  |  \\  \\",
-      "   /  /   *   \\  \\",
-      "  /  /   /|\\   \\  \\",
-      " /  /   / | \\   \\  \\",
-      " \\  \\  /  |  \\  /  /",
-      "  \\  \\/   |   \\/  /",
-      "   \\  \\   |   /  /",
-      "    \\__\\__|__/__/",
+      "              .",
+      "             / \\",
+      "            / | \\",
+      "           /  |  \\",
+      "          /   |   \\",
+      "         / ,--+--, \\",
+      "        / '   |   ` \\",
+      "       /   `--+--'   \\",
+      "      /       |       \\",
+      "     /_______/|\\_______\\",
+      "        \\   /   \\   /",
+      "         \\_/     \\_/",
+      "       ~  ~  ~  ~  ~  ~",
     ],
   },
 ];
 
-const FLIP_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*!?/\\|=-+~";
+const FLIP_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*!?=-+~";
 
 function shuffle(arr) {
   const a = [...arr];
@@ -155,8 +149,6 @@ function SplitFlapText({ text, startDelay = 0, charDelay = 30, flipsPerChar = 6 
     const chars = text.split('');
     const settled = new Array(chars.length).fill(false);
     const current = new Array(chars.length).fill(' ');
-    let flipCounts = new Array(chars.length).fill(0);
-    let started = false;
     let startTime = null;
 
     function tick(timestamp) {
@@ -168,7 +160,6 @@ function SplitFlapText({ text, startDelay = 0, charDelay = 30, flipsPerChar = 6 
         return;
       }
 
-      if (!started) started = true;
       const activeElapsed = elapsed - startDelay;
       let allDone = true;
 
@@ -223,8 +214,8 @@ function SplitFlapBlock({ lines, startDelay = 0 }) {
         <div key={i} className="splitflap-line">
           <SplitFlapText
             text={line}
-            startDelay={startDelay + i * 120}
-            charDelay={18}
+            startDelay={startDelay + i * 100}
+            charDelay={15}
             flipsPerChar={4}
           />
         </div>
@@ -250,35 +241,36 @@ export default function SurpriseMe() {
   if (order.length === 0) return null;
 
   const quote = order[index % order.length];
+  const artDuration = quote.art.length * 100 + quote.art.reduce((max, l) => Math.max(max, l.length), 0) * 15 + 200;
 
   return (
     <div className="surprise-page" key={key}>
       <div className="surprise-art">
-        <SplitFlapBlock lines={quote.art} startDelay={200} />
+        <SplitFlapBlock lines={quote.art} startDelay={300} />
       </div>
 
       <div className="surprise-quote-container">
         <div className="surprise-quote-text">
           <SplitFlapText
             text={quote.text}
-            startDelay={200 + quote.art.length * 120 + 400}
-            charDelay={25}
+            startDelay={300 + artDuration + 600}
+            charDelay={28}
             flipsPerChar={5}
           />
         </div>
         <div className="surprise-quote-author">
           <SplitFlapText
             text={"// " + quote.author}
-            startDelay={200 + quote.art.length * 120 + 400 + quote.text.length * 25 + 500}
-            charDelay={30}
-            flipsPerChar={4}
+            startDelay={300 + artDuration + 600 + quote.text.length * 28 + 400}
+            charDelay={35}
+            flipsPerChar={3}
           />
         </div>
       </div>
 
       <button onClick={handleNext} className="surprise-next-btn">
         <span className="surprise-prompt">$</span> next
-        <span className="surprise-cursor">▋</span>
+        <span className="surprise-cursor">&#9611;</span>
       </button>
     </div>
   );
