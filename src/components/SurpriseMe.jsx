@@ -230,7 +230,11 @@ export default function SurpriseMe() {
   const [key, setKey] = useState(0);
 
   useEffect(() => {
-    setOrder(shuffle(quotes));
+    // Lead with Zevon, then Adams, then shuffle the rest
+    const zevon = quotes.find(q => q.author === "Warren Zevon");
+    const adams = quotes.find(q => q.author === "Douglas Adams");
+    const rest = shuffle(quotes.filter(q => q.author !== "Warren Zevon" && q.author !== "Douglas Adams"));
+    setOrder([zevon, adams, ...rest]);
   }, []);
 
   const handleNext = useCallback(() => {
