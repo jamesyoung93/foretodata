@@ -1,0 +1,84 @@
+---
+import Base from '../../layouts/Base.astro';
+import { caseStudies, type CaseStudy } from '../../data/site';
+import { sitePath } from '../../utils/paths';
+
+export function getStaticPaths() {
+  return caseStudies.map((study) => ({
+    params: { slug: study.slug },
+    props: { study },
+  }));
+}
+
+interface Props {
+  study: CaseStudy;
+}
+
+const { study } = Astro.props;
+---
+
+<Base title={`${study.title} | James Young`} description={study.summary}>
+  <header class="page-hero">
+    <div class="shell">
+      <span class="page-path">ForetoData / work / {study.slug}</span>
+      <h1>{study.title}</h1>
+      <div class="page-intro">
+        <span class="section-kicker">{study.domain}</span>
+        <p class="lede">{study.question}</p>
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="shell case-detail-grid">
+      <aside class="case-index" aria-label="Case study sections">
+        <span class="meta-label">In this record</span>
+        <a href="#question">The question</a>
+        <a href="#context">Context</a>
+        <a href="#difficulty">Why it was difficult</a>
+        <a href="#approach">Approach</a>
+        <a href="#outcome">Outcome</a>
+        <a href="#role">James’s role</a>
+        {study.evidence && <a href="#evidence">Evidence</a>}
+      </aside>
+      <article class="case-detail">
+        <span class="section-kicker">Case study</span>
+        <h2 id="question">The question</h2>
+        <p class="lead-paragraph">{study.question}</p>
+
+        <h2 id="context">Context</h2>
+        <p>{study.context}</p>
+
+        <h2 id="difficulty">Why the problem was difficult</h2>
+        <ul class="clean-list">
+          {study.difficulty.map((item) => <li>{item}</li>)}
+        </ul>
+
+        <h2 id="approach">Approach</h2>
+        <ol class="clean-list">
+          {study.approach.map((item) => <li>{item}</li>)}
+        </ol>
+
+        <h2 id="outcome">Outcome or resulting capability</h2>
+        <p>{study.outcome}</p>
+
+        <h2 id="role">James’s role</h2>
+        <p>{study.role}</p>
+
+        {study.evidence && (
+          <div class="evidence-box" id="evidence">
+            <span class="meta-label">Evidence</span>
+            <p><a href={study.evidence.href} target="_blank" rel="noopener noreferrer">{study.evidence.label} <span aria-hidden="true">↗</span></a></p>
+          </div>
+        )}
+
+        {study.confidentiality && <p class="disclosure">{study.confidentiality}</p>}
+
+        <div class="text-links">
+          <a class="text-link" href={sitePath('work')}><span aria-hidden="true">←</span> All selected work</a>
+        </div>
+      </article>
+    </div>
+  </section>
+</Base>
+

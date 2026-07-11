@@ -261,6 +261,6 @@ That's the whole game.
 
 ### Further reading (if you want to go deeper)
 - OWASP Top 10 for LLM Applications: https://owasp.org/www-project-top-10-for-large-language-model-applications/
-- NIST AI RMF 1.0 (PDF): https://nvlpubs.nist.gov/nistpubs/ai/nist.ai.100-1.pdf
+- NIST AI RMF 1.0 (PDF): https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf
 - OpenAI evaluation best practices: https://platform.openai.com/docs/guides/evaluation-best-practices
 - Anthropic: Building Effective Agents: https://www.anthropic.com/research/building-effective-agents

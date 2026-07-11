@@ -27,4 +27,3 @@ Teams whose plays were easier to classify had more "transparent" formations. Tea
 
 Coaching staffs probably already know this intuitively, but this puts a number on it. Diversifying formations and concealing play-calling tendencies through alignment variations has measurable value. Front offices could factor scheme predictability into how they evaluate player performance across different systems.
 
-Full methodology and code: [Kaggle notebook](https://www.kaggle.com/code/jyoung22/pre-snap-tells-relationship-to-success)

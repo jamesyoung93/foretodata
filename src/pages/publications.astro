@@ -1,156 +1,52 @@
 ---
 import Base from '../layouts/Base.astro';
+import { profile, publicationPrograms } from '../data/site';
 ---
 
-<Base title="Publications | James Young">
-  <Fragment slot="sidebar">
-    <div class="nav-section">
-      <h2 class="nav-section-title">Navigation</h2>
-      <ul class="nav-list">
-        <li>
-          <a href="/foretodata/" class="nav-link">
-            <span class="num">&larr;</span>
-            <span>Back to Home</span>
-          </a>
-        </li>
-        <li>
-          <a href="/foretodata/about" class="nav-link">
-            <span>About</span>
-          </a>
-        </li>
-      </ul>
+<Base
+  title="Publications | James Young"
+  description="Publications by James Young across functional discovery and nitrogen fixation, protein learning, comparative genomics, and computational biology."
+>
+  <header class="page-hero">
+    <div class="shell">
+      <span class="page-path">ForetoData / publications</span>
+      <h1>Publications</h1>
+      <div class="page-intro">
+        <span class="section-kicker">Research record</span>
+        <p>Three connected programs: discovering function in undercharacterized systems, learning across protein sequence space, and integrating broader biological evidence. Citation details are carried from the existing publication record; manuscript statuses are explicitly marked for review.</p>
+      </div>
+      <div class="text-links">
+        <a class="text-link" href={profile.scholar} target="_blank" rel="noopener noreferrer">Google Scholar <span aria-hidden="true">↗</span></a>
+      </div>
     </div>
+  </header>
 
-    <div class="nav-section">
-      <h2 class="nav-section-title">On This Page</h2>
-      <ul class="nav-list">
-        <li>
-          <a href="#closely-related" class="nav-link">
-            <span>Publications</span>
-          </a>
-        </li>
-        <li>
-          <a href="#other-works" class="nav-link">
-            <span>Other Works</span>
-          </a>
-        </li>
-        <li>
-          <a href="#honors" class="nav-link">
-            <span>Honors &amp; Awards</span>
-          </a>
-        </li>
-      </ul>
+  <section class="section">
+    <div class="shell">
+      {publicationPrograms.map((program) => (
+        <section class="program-section" id={program.id}>
+          <div class="program-heading">
+            <h2>{program.title}</h2>
+            <p>{program.description}</p>
+          </div>
+          <div class="publication-list">
+            {program.publications.map((publication) => (
+              <article class="publication-item">
+                <span class="citation">{publication.citation}</span>
+                <div>
+                  <h3>{publication.title}</h3>
+                  <p>{publication.authors}</p>
+                  {publication.note && <small class="status-note">Editorial note: {publication.note}</small>}
+                </div>
+                {publication.href ? (
+                  <a href={publication.href} target="_blank" rel="noopener noreferrer" aria-label={`Open ${publication.title}`}>↗</a>
+                ) : <span aria-hidden="true">—</span>}
+              </article>
+            ))}
+          </div>
+        </section>
+      ))}
     </div>
-  </Fragment>
-
-  <div class="max-w-2xl">
-    <header class="mb-12">
-      <span class="text-terminal-accent font-mono text-sm">~/publications</span>
-      <h1 class="font-display text-4xl font-bold text-terminal-text mt-4 mb-6">
-        Publications
-      </h1>
-      <p class="text-terminal-dim text-sm">
-        <a href="https://scholar.google.com/citations?user=EyrW6pEAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" class="text-terminal-accent hover:underline">Google Scholar</a>
-      </p>
-    </header>
-
-    <article class="prose prose-invert prose-terminal">
-
-      <h2 id="closely-related" class="font-display text-xl font-semibold text-terminal-text mt-8 mb-4 flex items-center gap-2">
-        <span class="text-terminal-accent">&#9655;</span> Publications
-      </h2>
-
-      <div class="space-y-6 text-terminal-dim">
-        <div>
-          <p class="text-terminal-text font-medium mb-1">Predicting FOX gene candidates for oxic nitrogen fixation using multi-omic machine learning and comparative bioinformatics</p>
-          <p class="text-sm"><strong class="text-terminal-text">J Young</strong>, L Gu, R Zhou*</p>
-          <p class="text-sm"><em>Scientific Reports</em>, 2026 (Article in Press)</p>
-          <p class="text-sm"><a href="https://doi.org/10.1038/s41598-026-41873-w" target="_blank" rel="noopener noreferrer" class="text-terminal-accent hover:underline">doi:10.1038/s41598-026-41873-w</a></p>
-        </div>
-
-        <div>
-          <p class="text-terminal-text font-medium mb-1">Secondary Metabolites Predict Diazotrophic Cyanobacteria: A Model-Based Cheminformatic Approach</p>
-          <p class="text-sm"><strong class="text-terminal-text">J Young</strong>, T Nawaz, L Gu, R Zhou*</p>
-          <p class="text-sm"><em>Metabolites</em> 15(9), 562, 2025</p>
-          <p class="text-sm"><a href="https://doi.org/10.3390/metabo15090562" target="_blank" rel="noopener noreferrer" class="text-terminal-accent hover:underline">doi:10.3390/metabo15090562</a></p>
-        </div>
-
-        <div>
-          <p class="text-terminal-text font-medium mb-1">Discovery of Photosynthetic Oxic N<sub>2</sub>-Fixation in Cyanobacteria Using Wet Lab and Machine Learning Approaches</p>
-          <p class="text-sm"><strong class="text-terminal-text">J Young</strong></p>
-          <p class="text-sm">Ph.D. Dissertation, South Dakota State University</p>
-          <p class="text-sm"><a href="https://openprairie.sdstate.edu/etd2/1717" target="_blank" rel="noopener noreferrer" class="text-terminal-accent hover:underline">openprairie.sdstate.edu/etd2/1717</a></p>
-        </div>
-
-        <div>
-          <p class="text-terminal-text font-medium mb-1">Unicellular Cyanobacteria Exhibit Light-Driven, Oxygen-Tolerant, Constitutive Nitrogenase Activity Under Continuous Illumination</p>
-          <p class="text-sm"><strong class="text-terminal-text">J Young</strong>, L Gu, M Hildreth, R Zhou*</p>
-          <p class="text-sm"><em>bioRxiv</em>, 619353, 2019</p>
-          <p class="text-sm"><a href="https://doi.org/10.1101/619353" target="_blank" rel="noopener noreferrer" class="text-terminal-accent hover:underline">doi:10.1101/619353</a></p>
-        </div>
-
-        <div>
-          <p class="text-terminal-text font-medium mb-1">Harnessing Solar-Powered Oxic N<sub>2</sub>-fixing Cyanobacteria for the BioNitrogen Economy</p>
-          <p class="text-sm"><strong class="text-terminal-text">J Young</strong>, L Gu, W Gibbons, R Zhou*</p>
-          <p class="text-sm"><em>Cyanobacteria Biotechnology</em>, Wiley-VCH, pp. 407-439, 2021</p>
-          <p class="text-sm"><a href="https://doi.org/10.1002/9783527824908.ch13" target="_blank" rel="noopener noreferrer" class="text-terminal-accent hover:underline">doi:10.1002/9783527824908.ch13</a></p>
-        </div>
-
-        <div>
-          <p class="text-terminal-text font-medium mb-1">Chromosome-level genome assembly of the Chinese three-keeled pond turtle (<em>Mauremys reevesii</em>) provides insights into freshwater adaptation</p>
-          <p class="text-sm">J Liu, K Zheng, S Liu, L Gu, <strong class="text-terminal-text">J Young</strong>, Z Wang, Y Qiu, S Gu, L Xiong, R Zhou*, L Nie*</p>
-          <p class="text-sm"><em>Molecular Ecology Resources</em> (IF=8.678), 22(4):1596-1605, 2022</p>
-        </div>
-      </div>
-
-      <h2 id="other-works" class="font-display text-xl font-semibold text-terminal-text mt-10 mb-4 flex items-center gap-2">
-        <span class="text-terminal-accent">&#9655;</span> Other Works
-      </h2>
-
-      <div class="space-y-6 text-terminal-dim">
-        <div>
-          <p class="text-terminal-text font-medium mb-1">Active Learning on Protein Language Model Embeddings Accelerates Rubisco Variant Discovery for Desired Traits</p>
-          <p class="text-sm"><strong class="text-terminal-text">J Young</strong>, L Gu, R Zhou</p>
-          <p class="text-sm"><em>In revisions</em></p>
-        </div>
-
-        <div>
-          <p class="text-terminal-text font-medium mb-1">Predictive Pangenomics Prioritizes Gene Families Associated with Oxic Nitrogen Fixation in Cyanobacteria</p>
-          <p class="text-sm"><strong class="text-terminal-text">J Young</strong>, S Aryal, D Nelson, EZ Gnimpieba, R Zhou</p>
-          <p class="text-sm"><em>In preparation</em></p>
-        </div>
-
-        <div>
-          <p class="text-terminal-text font-medium mb-1">Crowdsourcing assessment of maternal blood multi-omics for predicting gestational age and preterm birth</p>
-          <p class="text-sm">AL Tarca, B&Aacute; Pataki, R Romero, et al. (including <strong class="text-terminal-text">J Young</strong> as consortium author)</p>
-          <p class="text-sm"><em>Cell Reports Medicine</em>, 2(6), 2021</p>
-          <p class="text-sm"><a href="https://doi.org/10.1016/j.xcrm.2021.100323" target="_blank" rel="noopener noreferrer" class="text-terminal-accent hover:underline">doi:10.1016/j.xcrm.2021.100323</a></p>
-        </div>
-      </div>
-
-      <h2 id="honors" class="font-display text-xl font-semibold text-terminal-text mt-10 mb-4 flex items-center gap-2">
-        <span class="text-terminal-accent">&#9655;</span> Honors &amp; Awards
-      </h2>
-
-      <div class="space-y-3 text-terminal-dim">
-        <div class="flex flex-wrap justify-between items-baseline gap-x-4 gap-y-0">
-          <p class="text-terminal-text font-medium">Scientific Communication Fellowship</p>
-          <p class="text-sm text-terminal-dim">South Dakota State University</p>
-        </div>
-        <div class="flex flex-wrap justify-between items-baseline gap-x-4 gap-y-0">
-          <p class="text-terminal-text font-medium">Grant Writing Competition Winner</p>
-          <p class="text-sm text-terminal-dim">South Dakota State University</p>
-        </div>
-        <div class="flex flex-wrap justify-between items-baseline gap-x-4 gap-y-0">
-          <p class="text-terminal-text font-medium">3 Minute Thesis Competition Winner</p>
-          <p class="text-sm text-terminal-dim">South Dakota State University</p>
-        </div>
-        <div class="flex flex-wrap justify-between items-baseline gap-x-4 gap-y-0">
-          <p class="text-terminal-text font-medium">Fellow, Department of Biochemistry</p>
-          <p class="text-sm text-terminal-dim">University of Jamestown</p>
-        </div>
-      </div>
-
-    </article>
-  </div>
+  </section>
 </Base>
+

@@ -1,0 +1,62 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { sitePath } from '../utils/paths';
+
+interface Props {
+  posts: CollectionEntry<'blog'>[];
+}
+
+const { posts } = Astro.props;
+const definitions = [
+  {
+    title: 'Scientific machine learning',
+    description: 'Interpretability, evaluation, causal reasoning, and production systems.',
+    match: (post: CollectionEntry<'blog'>) => post.data.tags.some((tag) => ['interpretable-ml', 'causal-inference', 'llms', 'mlops'].includes(tag)),
+  },
+  {
+    title: 'Biological discovery',
+    description: 'Sequence, structure, genomics, and biological data readiness.',
+    match: (post: CollectionEntry<'blog'>) => post.data.tags.some((tag) => ['bioinformatics', 'genomics', 'cheminformatics', 'sequence-alignment'].includes(tag)),
+  },
+  {
+    title: 'Decision systems and applied analysis',
+    description: 'How analytical evidence connects to interventions and operational choices.',
+    match: (post: CollectionEntry<'blog'>) => post.data.tags.some((tag) => ['sports-analytics', 'classification'].includes(tag)),
+  },
+];
+
+const assigned = new Set<string>();
+const groups = definitions.map((definition) => {
+  const groupPosts = posts.filter((post) => !assigned.has(post.slug) && definition.match(post));
+  groupPosts.forEach((post) => assigned.add(post.slug));
+  return { ...definition, posts: groupPosts };
+}).filter((group) => group.posts.length > 0);
+
+const remainder = posts.filter((post) => !assigned.has(post.slug));
+if (remainder.length) {
+  groups.push({ title: 'Technical implementation', description: 'Practical notes on building and operating analytical systems.', match: () => true, posts: remainder });
+}
+
+const formatDate = (date: Date) => date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+---
+
+{groups.map((group) => (
+  <section class="program-section">
+    <div class="program-heading">
+      <h2>{group.title}</h2>
+      <p>{group.description}</p>
+    </div>
+    <div class="archive-list">
+      {group.posts.map((post) => (
+        <a class="archive-item" href={sitePath(`posts/${post.slug}`)}>
+          <span class="archive-meta">{formatDate(post.data.date)}</span>
+          <div>
+            <h3>{post.data.title}</h3>
+            <p>{post.data.description}</p>
+          </div>
+          <span aria-hidden="true">→</span>
+        </a>
+      ))}
+    </div>
+  </section>
+))}
