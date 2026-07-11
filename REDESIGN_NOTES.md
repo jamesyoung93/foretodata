@@ -73,7 +73,7 @@ The mode does not maintain separate case-study content. It reads the same data a
 
 - Nitrogen fixation is the flagship application inside a broader functional-discovery program.
 - The FOX gene work is presented as computational prioritization with a published evidence link, not as completed experimental validation.
-- Rubisco active learning is described as a workflow; the manuscript status remains explicitly marked for verification.
+- Rubisco active learning is described as a workflow and linked to its 2026 publication in *AI Chemistry*.
 - Independent advisory work is generalized, client-free, metric-free, and framed around scientific judgment and feasibility.
 - Employer-specific commercial systems and outcomes were removed from public case-study copy. Decision systems are presented as transferable professional experience, not an offered pharma consulting service.
 - No inquiry form or scheduling tool was added; LinkedIn remains the contact path.
@@ -98,12 +98,12 @@ Review captures are stored outside the public site at `review/screenshots/`:
 
 Captures use 1440×1000 and 390×844 viewports and record the first viewport of each page.
 
-## Known limitations and content decisions still needed
+## Known limitations and content decisions
 
-- Reconfirm the current status of the Rubisco active-learning and predictive-pangenomics manuscripts before publication.
-- Confirm the preferred public wording for seniority and the molecular-biology PhD credential.
-- Confirm the public description of independent work against current employment and intellectual-property policies.
-- Decide whether professional employer names should remain absent or appear in a future approved résumé component.
+- Reconfirm whether “Beyond nif: protein-family modeling reveals the accessory systems of cyanobacterial diazotrophy” is still in submission immediately before any production publication.
+- James approved the seniority and degree wording: “A senior applied machine-learning and data-science leader with a PhD in Biological Sciences, specializing in molecular biology.”
+- Independent work now uses experience-based “I have advised” language and avoids overt availability or defensive disclaimers.
+- Employer names, unsupported performance metrics, the NSF award amount, and honors remain omitted as deliberate positioning decisions.
 - The browser automation surface could not synthesize a reliable end-to-end Tab sequence, so a short manual keyboard pass is still recommended before merge.
 - External publisher sites sometimes reject automated HEAD requests even when DOI redirects are valid; those links should receive a final human click-through review.
 
@@ -112,4 +112,3 @@ Captures use 1440×1000 and 390×844 viewports and record the first viewport of 
 Stage 2 can add a discreet Advisory page, approved evidence, defined problem categories, and a restrained inquiry form without changing the primary content model. The current `Scientific ML advisory` domain can feed that page.
 
 Stage 3 can elevate ForetoData to the primary brand, add a team or specialist network, and expand institutional capabilities only after the organization exists. The current separation between person identity, platform label, shared work data, and routes supports that evolution without implying it today.
-

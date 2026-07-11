@@ -34,7 +34,7 @@ export const caseStudies: CaseStudy[] = [
       'Structured outputs as a ranked, reviewable set of hypotheses for downstream validation planning.',
     ],
     outcome: 'The work produced a published, reproducible framework for prioritizing FOX gene candidates and distinguishing model evidence from experimental validation.',
-    role: 'James led data curation, machine-learning methodology, software development, formal analysis, visualization, and the initial manuscript draft, working with biological collaborators on interpretation and review.',
+    role: 'James led data curation, machine-learning methodology, software development, formal analysis, and the initial manuscript draft, and contributed to visualization and biological interpretation.',
     evidence: {
       label: 'Scientific Reports 16, 11412 (2026)',
       href: 'https://doi.org/10.1038/s41598-026-41873-w',
@@ -59,8 +59,12 @@ export const caseStudies: CaseStudy[] = [
       'Framed each round around which variants would be most informative to test next.',
       'Kept the computational ranking connected to practical validation planning.',
     ],
-    outcome: 'The resulting workflow provides a structured way to move from sequence representations to a prioritized experimental set. The associated manuscript remains under revision; the site does not imply completed experimental validation.',
-    role: 'James developed the scientific-machine-learning framing and candidate-prioritization workflow with research collaborators.',
+    outcome: 'The resulting workflow provides a structured way to move from sequence representations to a prioritized experimental set. The work was published in AI Chemistry in 2026.',
+    role: 'James developed the scientific-machine-learning framing and candidate-prioritization workflow.',
+    evidence: {
+      label: 'AI Chemistry 1(2), 7 (2026)',
+      href: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=EyrW6pEAAAAJ&citation_for_view=EyrW6pEAAAAJ:ufrVoPGSRksC',
+    },
     featured: true,
   },
   {
@@ -81,8 +85,8 @@ export const caseStudies: CaseStudy[] = [
       'Connected computational outputs to candidate prioritization and experimental translation.',
       'Identified feasibility risks and practical next steps without overstating certainty.',
     ],
-    outcome: 'Engagements support technical strategy, method review, and experimental prioritization. Specific clients, systems, and results are intentionally not disclosed.',
-    role: 'James served as an independent scientific and technical advisor on narrowly scoped questions.',
+    outcome: 'This work has supported technical strategy, method review, and experimental prioritization. Specific clients, systems, and results are not disclosed.',
+    role: 'James has served as an independent scientific and technical advisor on narrowly scoped questions.',
     confidentiality: 'Representative work is summarized at a high level. Details and results have been generalized to protect confidential information.',
     featured: true,
   },
@@ -113,10 +117,8 @@ export const caseStudies: CaseStudy[] = [
 
 export type Publication = {
   title: string;
-  authors: string;
   citation: string;
   href?: string;
-  note?: string;
 };
 
 export const publicationPrograms: { id: string; title: string; description: string; publications: Publication[] }[] = [
@@ -127,39 +129,52 @@ export const publicationPrograms: { id: string; title: string; description: stri
     publications: [
       {
         title: 'Predicting FOX gene candidates for oxic nitrogen fixation using multi-omic machine learning and comparative bioinformatics',
-        authors: 'J Young, L Gu, R Zhou',
-        citation: 'Scientific Reports 16, 11412 (2026)',
+        citation: 'Scientific Reports 16(1), 11412 (2026)',
         href: 'https://doi.org/10.1038/s41598-026-41873-w',
       },
       {
+        title: 'Nitrosomes: protein language modeling and live-cell imaging reveal condensate-like nitrogenase organization in heterocysts',
+        citation: 'bioRxiv 2026.05.23.727275 (2026)',
+        href: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=EyrW6pEAAAAJ&citation_for_view=EyrW6pEAAAAJ:LkGwnXOMwfcC',
+      },
+      {
+        title: 'Nitrogen-Responsive Extracellular Proteomics Reveals Evidence for a Novel Heterocyst-Specific Protein Secretion Pathway in Anabaena',
+        citation: 'bioRxiv 2026.06.08.730779 (2026)',
+        href: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=EyrW6pEAAAAJ&citation_for_view=EyrW6pEAAAAJ:_FxGoFyzp5QC',
+      },
+      {
+        title: 'Harnessing Nitrogen Fixing Plants for a Bio-Solar Nitrogen Economy',
+        citation: 'Resources, Environment and Sustainability, 100359 (2026)',
+        href: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=EyrW6pEAAAAJ&citation_for_view=EyrW6pEAAAAJ:roLk4NBRz8UC',
+      },
+      {
+        title: 'Beyond nif: protein-family modeling reveals the accessory systems of cyanobacterial diazotrophy',
+        citation: 'In submission',
+      },
+      {
         title: 'Secondary Metabolites Predict Diazotrophic Cyanobacteria: A Model-Based Cheminformatic Approach',
-        authors: 'J Young, T Nawaz, L Gu, R Zhou',
         citation: 'Metabolites 15(9), 562 (2025)',
         href: 'https://doi.org/10.3390/metabo15090562',
       },
       {
         title: 'Discovery of Photosynthetic Oxic N₂-Fixation in Cyanobacteria Using Wet Lab and Machine Learning Approaches',
-        authors: 'J Young',
-        citation: 'PhD dissertation, South Dakota State University',
+        citation: 'PhD dissertation, South Dakota State University (2025)',
         href: 'https://openprairie.sdstate.edu/etd2/1717',
       },
       {
-        title: 'Unicellular Cyanobacteria Exhibit Light-Driven, Oxygen-Tolerant, Constitutive Nitrogenase Activity Under Continuous Illumination',
-        authors: 'J Young, L Gu, M Hildreth, R Zhou',
-        citation: 'bioRxiv 619353 (2019)',
-        href: 'https://doi.org/10.1101/619353',
-      },
-      {
         title: 'Harnessing Solar-Powered Oxic N₂-fixing Cyanobacteria for the BioNitrogen Economy',
-        authors: 'J Young, L Gu, W Gibbons, R Zhou',
         citation: 'Cyanobacteria Biotechnology, Wiley-VCH, 407–439 (2021)',
         href: 'https://doi.org/10.1002/9783527824908.ch13',
       },
       {
-        title: 'Predictive Pangenomics Prioritizes Gene Families Associated with Oxic Nitrogen Fixation in Cyanobacteria',
-        authors: 'J Young, S Aryal, D Nelson, EZ Gnimpieba, R Zhou',
-        citation: 'Manuscript in preparation',
-        note: 'Status carried forward from the existing site and should be reconfirmed before publication.',
+        title: 'Unicellular Cyanobacteria Exhibit Light-Driven, Oxygen-Tolerant, Constitutive Nitrogenase Activity Under Continuous Illumination',
+        citation: 'bioRxiv 619353 (2019)',
+        href: 'https://doi.org/10.1101/619353',
+      },
+      {
+        title: 'Identification of Cell Surface Sugars in N₂-Fixing Cyanobacterium Cyanothece ATCC 51142 Using Fluorescein Labeled Lectins',
+        citation: 'Proceedings of the South Dakota Academy of Science 97 (2018)',
+        href: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=EyrW6pEAAAAJ&citation_for_view=EyrW6pEAAAAJ:u5HHmVD_uO8C',
       },
     ],
   },
@@ -170,9 +185,8 @@ export const publicationPrograms: { id: string; title: string; description: stri
     publications: [
       {
         title: 'Active Learning on Protein Language Model Embeddings Accelerates Rubisco Variant Discovery for Desired Traits',
-        authors: 'J Young, L Gu, R Zhou',
-        citation: 'Manuscript in revision',
-        note: 'Status carried forward from the existing site and should be reconfirmed before publication.',
+        citation: 'AI Chemistry 1(2), 7 (2026)',
+        href: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=EyrW6pEAAAAJ&citation_for_view=EyrW6pEAAAAJ:ufrVoPGSRksC',
       },
     ],
   },
@@ -183,12 +197,11 @@ export const publicationPrograms: { id: string; title: string; description: stri
     publications: [
       {
         title: 'Chromosome-level genome assembly of the Chinese three-keeled pond turtle (Mauremys reevesii) provides insights into freshwater adaptation',
-        authors: 'J Liu, K Zheng, S Liu, L Gu, J Young, Z Wang, Y Qiu, S Gu, L Xiong, R Zhou, L Nie',
         citation: 'Molecular Ecology Resources 22(4), 1596–1605 (2022)',
+        href: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=EyrW6pEAAAAJ&citation_for_view=EyrW6pEAAAAJ:zYLM7Y9cAGgC',
       },
       {
         title: 'Crowdsourcing assessment of maternal blood multi-omics for predicting gestational age and preterm birth',
-        authors: 'AL Tarca, BÁ Pataki, R Romero, et al. (J Young, consortium author)',
         citation: 'Cell Reports Medicine 2(6) (2021)',
         href: 'https://doi.org/10.1016/j.xcrm.2021.100323',
       },

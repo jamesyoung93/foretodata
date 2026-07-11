@@ -13,7 +13,7 @@ import { profile, publicationPrograms } from '../data/site';
       <h1>Publications</h1>
       <div class="page-intro">
         <span class="section-kicker">Research record</span>
-        <p>Three connected programs: discovering function in undercharacterized systems, learning across protein sequence space, and integrating broader biological evidence. Citation details are carried from the existing publication record; manuscript statuses are explicitly marked for review.</p>
+        <p>Three connected programs: discovering function in undercharacterized systems, learning across protein sequence space, and integrating broader biological evidence. Links open the publication or its current scholarly record.</p>
       </div>
       <div class="text-links">
         <a class="text-link" href={profile.scholar} target="_blank" rel="noopener noreferrer">Google Scholar <span aria-hidden="true">↗</span></a>
@@ -35,8 +35,6 @@ import { profile, publicationPrograms } from '../data/site';
                 <span class="citation">{publication.citation}</span>
                 <div>
                   <h3>{publication.title}</h3>
-                  <p>{publication.authors}</p>
-                  {publication.note && <small class="status-note">Editorial note: {publication.note}</small>}
                 </div>
                 {publication.href ? (
                   <a href={publication.href} target="_blank" rel="noopener noreferrer" aria-label={`Open ${publication.title}`}>↗</a>
@@ -49,4 +47,3 @@ import { profile, publicationPrograms } from '../data/site';
     </div>
   </section>
 </Base>
-

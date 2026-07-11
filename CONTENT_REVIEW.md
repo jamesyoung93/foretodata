@@ -1,33 +1,50 @@
 # Non-public content review
 
-This file is not imported by the site and is not copied to `public/`. Items are ordered roughly by publication risk.
+This file is not imported by the site and is not copied to `public/`. James reviewed the flagged items in conversation on 2026-07-11. The table records the resulting decisions.
 
-| Page | Component or file | Exact statement | Why it may be sensitive | Risk category | Recommended safer alternative or action |
-| --- | --- | --- | --- | --- | --- |
-| Original homepage (removed) | Removed `src/components/FilterToggle.jsx` | “Built standardized targeting models prescribing omnichannel HCP engagement and resource allocation across pharmaceutical brands at Pfizer and UCB.” | Named employers, brands, and system purpose could imply endorsement or expose internal work. | Employer confidentiality; employer endorsement implication; current employment conflict | Keep the replacement generalized: “professional experience connecting targeting, forecasting, causal inference, measurement, and resource allocation to operational workflows.” |
-| Original homepage (removed) | Removed `src/components/FilterToggle.jsx` | “5–10% lift at plan attainment” and “Multi-brand deployment” | Numerical commercial outcomes were unattributed and not independently supported in the repository. | Unsupported metric; employer confidentiality | Do not republish without written approval, scope, attribution, and defensible evidence. |
-| Original homepage (removed) | Removed `src/components/FilterToggle.jsx` | “30–50% error reduction vs. field forecasts” and “Days → hours runtime” | Employer-specific performance claims lacked public evidence and context. | Unsupported metric; employer confidentiality | Retain only generalized forecasting and implementation experience. |
-| Original homepage (removed) | Removed `src/components/FilterToggle.jsx` | “~10 hrs/week freed” | Quantified productivity outcome was not attributed or documented. | Unsupported metric; employer confidentiality | Omit the number; describe automation capability only if future approval supports it. |
-| Original About (removed) | Prior `src/pages/about.astro` | “work that contributed to a $7M NSF grant” | Contribution and causal wording could overstate James’s role in a funded award. | Credential verification; employer endorsement implication | The redesign omits the amount. If restored, identify the award, principal investigators, and James’s documented role precisely. |
-| Homepage and About | `src/pages/index.astro`, `src/pages/about.astro` | “PhD-trained molecular biologist” / “I am … a senior applied machine-learning and data-science leader with a PhD in molecular biology.” | Public credential and seniority language should match the preferred résumé and current title. | Credential verification | Confirm exact degree field and preferred public seniority wording before merge. |
-| Homepage | `src/pages/index.astro` | “Peer-reviewed computational biology” | Accurate only if listed publication statuses and authorship are current. | Credential verification; publication-status verification | Keep after final publication record review; otherwise use “computational biology research.” |
-| Nitrogen-fixation case | `src/data/site.ts` | “James led data curation, machine-learning methodology, software development, formal analysis, visualization, and the initial manuscript draft…” | Role detail should match the published contribution statement and collaborator expectations. | Credential verification; collaborator attribution | Compare verbatim with the final Scientific Reports contribution statement before publishing. |
-| Publications | `src/data/site.ts` | “Scientific Reports 16, 11412 (2026)” | Updated from the stale “Article in Press” label using the publisher’s version of record. | Publication-status verification | Retain; verify once more immediately before merge. |
-| Rubisco case and Publications | `src/data/site.ts` | “The associated manuscript remains under revision” / “Manuscript in revision” | Manuscript status can change and may be confidential before submission or acceptance. | Publication-status verification; intellectual-property ambiguity | Reconfirm status and whether the title may be public. If uncertain, label as “ongoing research” without a manuscript claim. |
-| Publications | `src/data/site.ts` | “Predictive Pangenomics … Manuscript in preparation” | In-preparation status and title can become stale or expose unpublished work. | Publication-status verification; intellectual-property ambiguity | Reconfirm title, author list, and public status or move it to a private CV. |
-| Independent advisory case | `src/data/site.ts` | “James served as an independent scientific and technical advisor on narrowly scoped questions.” | Could conflict with employer policy or imply current availability. | Consulting availability; current employment conflict; client confidentiality | Confirm outside-work approval and keep the existing limited, conflict-aware wording. |
-| Independent advisory case | `src/data/site.ts` | “Engagements support technical strategy, method review, and experimental prioritization.” | Even generalized scope may reveal client work categories. | Client confidentiality; intellectual-property ambiguity | Obtain confirmation that these categories are safe; otherwise shorten to “select scientific and technical questions.” |
-| Homepage and About | `src/pages/index.astro`, `src/pages/about.astro` | “I keep outside engagements limited and avoid work that creates professional or intellectual-property conflicts. Relevant introductions are welcome.” | Expresses availability and should align with current employment policy. | Consulting availability; current employment conflict | Retain only after policy review; otherwise end after the conflict-avoidance sentence or remove the section temporarily. |
-| Decision-systems case | `src/data/site.ts` | “professional experience connecting targeting, forecasting, causal inference, measurement, and resource allocation to operational workflows” | The combination may still let colleagues infer specific internal platforms. | Employer confidentiality; intellectual-property ambiguity | Keep employer names, product names, metrics, and system details omitted. Review with a current-employment lens. |
-| About | `src/pages/about.astro` | “Commercial-pharma analytics is presented here as professional experience, not as an external consulting service.” | The disclaimer is protective but confirms the industry area. | Current employment conflict | Retain if accurate; otherwise remove industry specificity and say “employer work is not offered as an external service.” |
-| Publications | `src/data/site.ts` | Author lists and publication group assignments | Author order, consortium status, and publication metadata must remain exact. | Publication-status verification; credential verification | Compare every entry with DOI landing pages or an approved CV before publishing. |
-| Original Publications (not carried forward) | Prior `src/pages/publications.astro` | Honors including “Scientific Communication Fellowship,” “Grant Writing Competition Winner,” and “3 Minute Thesis Competition Winner” | No dates or public evidence were present in the repository. | Credential verification | Keep omitted unless an approved CV provides exact names, dates, and awarding bodies. |
+| Review area | Decision | Resolution in the site |
+| --- | --- | --- |
+| Degree and seniority | Approved: “A senior applied machine-learning and data-science leader with a PhD in Biological Sciences, specializing in molecular biology.” | Exact wording now appears on About; the homepage credential summary uses “PhD in Biological Sciences.” |
+| Scientific Reports contribution wording | Keep the role concise without naming or emphasizing individual collaborators. | The case study says James led data curation, methodology, software, formal analysis, and the initial manuscript draft, and contributed to visualization and biological interpretation. |
+| Rubisco title and status | Title may be public; the work is published. Author lines are unnecessary on the portfolio. | Updated to `AI Chemistry 1(2), 7 (2026)` with a scholarly-record link. The case study no longer calls it a manuscript in revision. |
+| Pangenomics title and status | Replace the prior working title with “Beyond nif: protein-family modeling reveals the accessory systems of cyanobacterial diazotrophy”; status is “In submission.” | Updated in the functional-discovery publication program. Recheck the status immediately before any later production publication because submission state can change. |
+| Publication authors | Do not list author lines on individual entries; readers can inspect the linked record. | Removed authors from the public publication data model and page presentation. |
+| Publication record | Use the current Google Scholar record supplied by James. | Added the 2026 AI Chemistry paper, two 2026 bioRxiv records, the 2026 Resources, Environment and Sustainability paper, and the 2018 Proceedings record; retained and corrected the existing publication entries. |
+| Independent advisory tense | Prefer historical/experience-based language such as “I have advised,” without aggressively announcing availability or listing prohibitions. | Homepage and About now say James has advised biotechnology and research teams. The direct “Relevant introductions are welcome” and strong conflict disclaimer were replaced with neutral relationship-and-scope language. |
+| Advisory scope | Structural biology, scientific ML, technical strategy, method review, candidate prioritization, model evaluation, experimental translation, and feasibility assessment are acceptable. | Existing generalized scope remains. Client identities, metrics, systems, and results remain omitted. |
+| Decision-systems framing | Approved. | Retained the generalized targeting, forecasting, causal inference, measurement, resource-allocation, and operational-workflow language. |
+| Commercial-pharma disclaimer | Unnecessary. | Removed from About rather than replacing it with another defensive disclaimer. |
+| Employer-specific claims | Keep removed. | Pfizer, UCB, NetApp, employer systems, brand references, and internal-platform descriptions remain absent from public work records. |
+| Unsupported metrics | Keep removed. | “5–10% lift,” “30–50% error reduction,” “Days → hours,” and “~10 hrs/week freed” remain absent. |
+| NSF award amount | Keep removed. | The ambiguous “contributed to a $7M NSF grant” statement remains absent. |
+| Employer names | Keep omitted. | Professional experience is described through transferable problem types rather than an employer résumé. |
+| Honors | Verified by James but strategically unnecessary in the current positioning. | Scientific Communication Fellowship, Grant Writing Competition Winner, 3 Minute Thesis Competition Winner, and departmental fellowship remain omitted. |
 
-## Review priority
+## Current publication record represented on the site
 
-1. Current-employment and outside-work policy review.
-2. Rubisco and pangenomics manuscript status/title review.
-3. Final publication metadata and contribution-statement review.
-4. Preferred public seniority and degree wording.
-5. Whether any employer names should be restored in a separately approved résumé component.
+### Functional discovery and nitrogen fixation
+
+- Predicting FOX gene candidates for oxic nitrogen fixation using multi-omic machine learning and comparative bioinformatics — *Scientific Reports* 16(1), 11412 (2026)
+- Nitrosomes: protein language modeling and live-cell imaging reveal condensate-like nitrogenase organization in heterocysts — bioRxiv (2026)
+- Nitrogen-Responsive Extracellular Proteomics Reveals Evidence for a Novel Heterocyst-Specific Protein Secretion Pathway in *Anabaena* — bioRxiv (2026)
+- Harnessing Nitrogen Fixing Plants for a Bio-Solar Nitrogen Economy — *Resources, Environment and Sustainability*, 100359 (2026)
+- Beyond nif: protein-family modeling reveals the accessory systems of cyanobacterial diazotrophy — in submission
+- Secondary Metabolites Predict Diazotrophic Cyanobacteria: A Model-Based Cheminformatic Approach — *Metabolites* 15(9), 562 (2025)
+- Discovery of Photosynthetic Oxic N₂-Fixation in Cyanobacteria Using Wet Lab and Machine Learning Approaches — PhD dissertation (2025)
+- Harnessing Solar-Powered Oxic N₂-fixing Cyanobacteria for the BioNitrogen Economy — *Cyanobacteria Biotechnology* (2021)
+- Unicellular Cyanobacteria Exhibit Light-Driven, Oxygen-Tolerant, Constitutive Nitrogenase Activity Under Continuous Illumination — bioRxiv (2019)
+- Identification of Cell Surface Sugars in N₂-Fixing Cyanobacterium *Cyanothece* ATCC 51142 Using Fluorescein Labeled Lectins — *Proceedings of the South Dakota Academy of Science* 97 (2018)
+
+### Protein learning and engineering
+
+- Active Learning on Protein Language Model Embeddings Accelerates Rubisco Variant Discovery for Desired Traits — *AI Chemistry* 1(2), 7 (2026)
+
+### Comparative genomics and broader computational biology
+
+- Chromosome-level genome assembly of the Chinese three-keeled pond turtle (*Mauremys reevesii*) provides insights into freshwater adaptation — *Molecular Ecology Resources* 22(4), 1596–1605 (2022)
+- Crowdsourcing assessment of maternal blood multi-omics for predicting gestational age and preterm birth — *Cell Reports Medicine* 2(6) (2021)
+
+## Remaining publication-time check
+
+Only one volatile item remains: reconfirm whether “Beyond nif” is still “In submission” immediately before merging or deploying. No other content decision from this review remains open.
 

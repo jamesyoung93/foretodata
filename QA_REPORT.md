@@ -1,6 +1,6 @@
 # ForetoData redesign QA report
 
-Review date: 2026-07-10 (America/New_York)
+Review date: 2026-07-11 (America/New_York)
 
 ## Build, type-check, lint, and tests
 
@@ -28,6 +28,7 @@ External references were checked with concurrent HTTP requests and targeted brow
 - Wiley and MDPI DOI destinations rejected automated HEAD requests with 403 after a valid redirect; retain for human click-through review.
 - LinkedIn rejects HEAD with 405 but remains the existing public profile URL.
 - The bioRxiv DOI could not be conclusively checked by the automated client; retain for manual review.
+- All newly supplied Google Scholar publication-record links returned HTTP 200 during the 2026-07-11 content update.
 
 ## Mobile and responsive review
 
@@ -83,7 +84,7 @@ Fix applied: replaced generic accomplishment filters with scientific questions a
 
 The research identity is coherent around functional discovery in undercharacterized microbial systems. Nitrogen fixation is explicitly a flagship application rather than the whole identity. Computational prioritization is distinguished from experimental validation. Publications are grouped by program, and unpublished statuses are marked for review.
 
-Fix applied: removed illustrative enzyme-performance metrics and avoided claims of completed Rubisco validation.
+Fix applied: removed illustrative enzyme-performance metrics. The Rubisco workflow now links to its 2026 *AI Chemistry* publication without implying additional experimental results beyond the scholarly record.
 
 ### Investor or attorney
 
@@ -101,7 +102,7 @@ Fix applied: the About page now distinguishes professional experience from exter
 
 No employer endorsement is implied in the redesigned public copy. Internal platforms, brands, and commercial results are absent. Consulting language is limited, conflict-aware, and biotechnology/research focused.
 
-Remaining concern: current outside-work policy and the exact independent-work wording require James’s review before publication.
+Resolution: James approved the advisory scope and requested historical, experience-based language. The site now says “I have advised,” omits overt availability language, and avoids a defensive commercial-pharma disclaimer.
 
 ## Screenshots
 
@@ -109,7 +110,7 @@ Fourteen non-public review captures are stored in `review/screenshots/`, with de
 
 ## Remaining limitations
 
-- Manuscript titles and statuses can change and require final owner confirmation.
+- The “Beyond nif” submission status can change and requires a final owner confirmation immediately before production publication.
 - Automated external checks cannot prove that bot-protected publisher pages work in every user browser.
 - Browser review covered one representative desktop and mobile viewport rather than a device matrix.
 - A manual keyboard traversal and screen-reader spot check are still recommended before merge.
