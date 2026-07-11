@@ -37,8 +37,10 @@ import { profile, publicationPrograms } from '../data/site';
                   <h3>{publication.title}</h3>
                 </div>
                 {publication.href ? (
-                  <a href={publication.href} target="_blank" rel="noopener noreferrer" aria-label={`Open ${publication.title}`}>↗</a>
-                ) : <span aria-hidden="true">—</span>}
+                  <a class="publication-link" href={publication.href} target="_blank" rel="noopener noreferrer" aria-label={`Open ${publication.title}`}>
+                    {publication.accessLabel ?? 'Publication record'} <span aria-hidden="true">↗</span>
+                  </a>
+                ) : null}
               </article>
             ))}
           </div>

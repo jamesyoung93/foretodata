@@ -1,6 +1,7 @@
 export type CaseStudy = {
   slug: string;
-  domain: 'Biological discovery' | 'Scientific ML advisory' | 'Decision systems';
+  recordType: 'Case study' | 'Practice record';
+  domain: 'Biological discovery' | 'Decision systems';
   title: string;
   question: string;
   summary: string;
@@ -10,13 +11,13 @@ export type CaseStudy = {
   outcome: string;
   role: string;
   evidence?: { label: string; href: string };
-  confidentiality?: string;
   featured: boolean;
 };
 
 export const caseStudies: CaseStudy[] = [
   {
     slug: 'oxic-nitrogen-fixation',
+    recordType: 'Case study',
     domain: 'Biological discovery',
     title: 'Multi-omic discovery for oxic nitrogen fixation',
     question: 'Which undercharacterized genes should be prioritized for experiments on oxygen-tolerant nitrogen fixation?',
@@ -25,7 +26,7 @@ export const caseStudies: CaseStudy[] = [
     difficulty: [
       'The positive reference set is small relative to the genomic search space.',
       'Relevant evidence is distributed across expression, protein abundance, conservation, promoter architecture, and genomic context.',
-      'A useful result must support experimental prioritization, not merely produce a model score.',
+      'The result had to support experimental prioritization rather than stop at a model score.',
     ],
     approach: [
       'Defined the biological question and assembled literature-supported reference genes.',
@@ -43,6 +44,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: 'rubisco-active-learning',
+    recordType: 'Case study',
     domain: 'Biological discovery',
     title: 'Protein-language-model search for Rubisco variants',
     question: 'How can a large protein sequence space be narrowed to a small, informative set of variants for experimental consideration?',
@@ -63,39 +65,17 @@ export const caseStudies: CaseStudy[] = [
     role: 'James developed the scientific-machine-learning framing and candidate-prioritization workflow.',
     evidence: {
       label: 'AI Chemistry 1(2), 7 (2026)',
-      href: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=EyrW6pEAAAAJ&citation_for_view=EyrW6pEAAAAJ:ufrVoPGSRksC',
+      href: 'https://doi.org/10.3390/aichem1020007',
     },
     featured: true,
   },
   {
-    slug: 'independent-scientific-ml-advisory',
-    domain: 'Scientific ML advisory',
-    title: 'Independent Advisory: Structural Biology and Scientific ML',
-    question: 'Is a proposed scientific-AI approach feasible, decision-relevant, and connected to a credible experimental path?',
-    summary: 'Selective, narrowly scoped advisory work at the boundary of structural biology, model evaluation, and experimental translation.',
-    context: 'Biotechnology teams often face a decision before they face an implementation problem: whether the available data, methods, and validation capacity can support a useful predictive or prioritization system.',
-    difficulty: [
-      'Scientific feasibility and modeling feasibility are not the same thing.',
-      'Vendor or internal proposals may obscure assumptions, data limitations, and validation costs.',
-      'The useful output is often a narrower decision, staged plan, or stopping rule rather than a larger model.',
-    ],
-    approach: [
-      'Clarified the scientific decision and the evidence needed to change it.',
-      'Reviewed data readiness, candidate representations, model-evaluation plans, and biological constraints.',
-      'Connected computational outputs to candidate prioritization and experimental translation.',
-      'Identified feasibility risks and practical next steps without overstating certainty.',
-    ],
-    outcome: 'This work has supported technical strategy, method review, and experimental prioritization. Specific clients, systems, and results are not disclosed.',
-    role: 'James has served as an independent scientific and technical advisor on narrowly scoped questions.',
-    confidentiality: 'Representative work is summarized at a high level. Details and results have been generalized to protect confidential information.',
-    featured: true,
-  },
-  {
     slug: 'operational-decision-systems',
+    recordType: 'Practice record',
     domain: 'Decision systems',
-    title: 'From predictions to operational decisions',
-    question: 'How should forecasts and causal estimates be translated into repeatable choices under real operating constraints?',
-    summary: 'Professional experience connecting targeting, forecasting, causal inference, measurement, and resource allocation to operational workflows.',
+    title: 'Operating principles for decision systems',
+    question: 'What makes an analytical system usable in recurring operational decisions?',
+    summary: 'Principles drawn from applied work across targeting, forecasting, causal inference, measurement, and resource allocation.',
     context: 'In applied settings, model performance is only one part of the system. Recommendations must fit decision rights, capacity constraints, measurement plans, and the way people actually work.',
     difficulty: [
       'Predictive signals do not automatically identify effective interventions.',
@@ -108,10 +88,9 @@ export const caseStudies: CaseStudy[] = [
       'Designed reviewable outputs and measurement loops for technical and non-technical stakeholders.',
       'Treated deployment, adoption, and iteration as part of the analytical system.',
     ],
-    outcome: 'This work established reusable patterns for moving from analytical output to governed decision workflows. Employer-specific systems and commercial results are not presented as external advisory offerings.',
-    role: 'James led and contributed to applied data-science work across forecasting, targeting, causal measurement, and operational implementation.',
-    confidentiality: 'This summary describes transferable professional experience. Employer systems, brand details, and commercial outcomes have been omitted.',
-    featured: false,
+    outcome: 'Across these settings, the recurring lesson has been to treat decision rights, measurement, adoption, and iteration as part of the analytical design.',
+    role: 'James has led and contributed to applied data-science work across forecasting, targeting, causal measurement, and operational implementation.',
+    featured: true,
   },
 ];
 
@@ -119,6 +98,8 @@ export type Publication = {
   title: string;
   citation: string;
   href?: string;
+  accessLabel?: string;
+  featureRank?: number;
 };
 
 export const publicationPrograms: { id: string; title: string; description: string; publications: Publication[] }[] = [
@@ -131,16 +112,20 @@ export const publicationPrograms: { id: string; title: string; description: stri
         title: 'Predicting FOX gene candidates for oxic nitrogen fixation using multi-omic machine learning and comparative bioinformatics',
         citation: 'Scientific Reports 16(1), 11412 (2026)',
         href: 'https://doi.org/10.1038/s41598-026-41873-w',
+        accessLabel: 'Open paper',
+        featureRank: 1,
       },
       {
         title: 'Nitrosomes: protein language modeling and live-cell imaging reveal condensate-like nitrogenase organization in heterocysts',
         citation: 'bioRxiv 2026.05.23.727275 (2026)',
-        href: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=EyrW6pEAAAAJ&citation_for_view=EyrW6pEAAAAJ:LkGwnXOMwfcC',
+        href: 'https://doi.org/10.64898/2026.05.23.727275',
+        accessLabel: 'Open preprint',
       },
       {
         title: 'Nitrogen-Responsive Extracellular Proteomics Reveals Evidence for a Novel Heterocyst-Specific Protein Secretion Pathway in Anabaena',
         citation: 'bioRxiv 2026.06.08.730779 (2026)',
-        href: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=EyrW6pEAAAAJ&citation_for_view=EyrW6pEAAAAJ:_FxGoFyzp5QC',
+        href: 'https://doi.org/10.64898/2026.06.08.730779',
+        accessLabel: 'Open preprint',
       },
       {
         title: 'Harnessing Nitrogen Fixing Plants for a Bio-Solar Nitrogen Economy',
@@ -155,21 +140,25 @@ export const publicationPrograms: { id: string; title: string; description: stri
         title: 'Secondary Metabolites Predict Diazotrophic Cyanobacteria: A Model-Based Cheminformatic Approach',
         citation: 'Metabolites 15(9), 562 (2025)',
         href: 'https://doi.org/10.3390/metabo15090562',
+        accessLabel: 'Open paper',
+        featureRank: 3,
       },
       {
         title: 'Discovery of Photosynthetic Oxic N₂-Fixation in Cyanobacteria Using Wet Lab and Machine Learning Approaches',
         citation: 'PhD dissertation, South Dakota State University (2025)',
         href: 'https://openprairie.sdstate.edu/etd2/1717',
+        accessLabel: 'Open dissertation',
       },
       {
         title: 'Harnessing Solar-Powered Oxic N₂-fixing Cyanobacteria for the BioNitrogen Economy',
-        citation: 'Cyanobacteria Biotechnology, Wiley-VCH, 407–439 (2021)',
+        citation: 'Cyanobacteria Biotechnology, Wiley-VCH, 407-439 (2021)',
         href: 'https://doi.org/10.1002/9783527824908.ch13',
       },
       {
         title: 'Unicellular Cyanobacteria Exhibit Light-Driven, Oxygen-Tolerant, Constitutive Nitrogenase Activity Under Continuous Illumination',
         citation: 'bioRxiv 619353 (2019)',
         href: 'https://doi.org/10.1101/619353',
+        accessLabel: 'Open preprint',
       },
       {
         title: 'Identification of Cell Surface Sugars in N₂-Fixing Cyanobacterium Cyanothece ATCC 51142 Using Fluorescein Labeled Lectins',
@@ -186,7 +175,9 @@ export const publicationPrograms: { id: string; title: string; description: stri
       {
         title: 'Active Learning on Protein Language Model Embeddings Accelerates Rubisco Variant Discovery for Desired Traits',
         citation: 'AI Chemistry 1(2), 7 (2026)',
-        href: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=EyrW6pEAAAAJ&citation_for_view=EyrW6pEAAAAJ:ufrVoPGSRksC',
+        href: 'https://doi.org/10.3390/aichem1020007',
+        accessLabel: 'Open paper',
+        featureRank: 2,
       },
     ],
   },
@@ -197,13 +188,14 @@ export const publicationPrograms: { id: string; title: string; description: stri
     publications: [
       {
         title: 'Chromosome-level genome assembly of the Chinese three-keeled pond turtle (Mauremys reevesii) provides insights into freshwater adaptation',
-        citation: 'Molecular Ecology Resources 22(4), 1596–1605 (2022)',
+        citation: 'Molecular Ecology Resources 22(4), 1596-1605 (2022)',
         href: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=EyrW6pEAAAAJ&citation_for_view=EyrW6pEAAAAJ:zYLM7Y9cAGgC',
       },
       {
         title: 'Crowdsourcing assessment of maternal blood multi-omics for predicting gestational age and preterm birth',
         citation: 'Cell Reports Medicine 2(6) (2021)',
         href: 'https://doi.org/10.1016/j.xcrm.2021.100323',
+        accessLabel: 'Open paper',
       },
     ],
   },
@@ -213,7 +205,7 @@ export const approachPrinciples = [
   {
     index: '01',
     title: 'Start with the decision or experiment',
-    text: 'Define what will be chosen, tested, or changed—and what evidence would be sufficient to act.',
+    text: 'Define what will be chosen, tested, or changed. Then decide what evidence would be sufficient to act.',
   },
   {
     index: '02',
@@ -230,7 +222,7 @@ export const approachPrinciples = [
 export const profile = {
   name: 'James Young',
   descriptor: 'Scientific Machine Learning · Biological Discovery · Decision Systems',
-  headline: 'Machine learning for biological discovery and consequential decisions.',
+  headline: 'Machine learning for biological discovery and operational decisions.',
   summary: 'I build analytical systems that narrow complex search spaces, prioritize experiments and interventions, and translate data into decisions.',
   linkedin: 'https://www.linkedin.com/in/jamesyoungsd/',
   scholar: 'https://scholar.google.com/citations?user=EyrW6pEAAAAJ&hl=en',

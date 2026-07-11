@@ -271,7 +271,7 @@ select {
 
 .credibility-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   border-top: 1px solid var(--rule-dark);
   border-bottom: 1px solid var(--rule-dark);
 }
@@ -480,8 +480,12 @@ select {
 .clean-list li::before {
   position: absolute;
   left: 0;
-  content: '—';
-  color: var(--accent-dark);
+  top: 50%;
+  width: 0.3rem;
+  height: 0.3rem;
+  content: '';
+  background: var(--accent-dark);
+  transform: translateY(-50%);
 }
 
 .writing-list,
@@ -502,11 +506,24 @@ select {
 }
 
 .writing-row time,
+.writing-row .archive-meta,
 .publication-item .citation,
 .archive-item .archive-meta {
   color: var(--muted);
   font-family: var(--mono);
   font-size: 0.73rem;
+}
+
+.publication-link {
+  color: var(--accent-dark);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.publication-link:hover {
+  text-decoration: underline;
 }
 
 .writing-row h3,
@@ -606,19 +623,13 @@ select {
   color: var(--accent-dark);
 }
 
-.evidence-box,
-.disclosure {
+.evidence-box {
   margin-top: 2rem;
   padding: 1.1rem 1.25rem;
   border-left: 3px solid var(--accent);
   background: #e7ebe5;
 }
 
-.disclosure {
-  border-left-color: var(--rule-dark);
-  color: var(--muted);
-  font-size: 0.9rem;
-}
 
 .program-section + .program-section {
   margin-top: 5rem;
@@ -951,7 +962,6 @@ html[data-mode='lab'] .mode-link {
     grid-template-columns: 1fr;
   }
 
-  .credibility-grid,
   .case-grid,
   .approach-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -971,6 +981,10 @@ html[data-mode='lab'] .mode-link {
     --shell: min(100% - 28px, 1180px);
   }
 
+
+  .archive-arrow {
+    display: none;
+  }
   .header-inner {
     grid-template-columns: 1fr;
   }

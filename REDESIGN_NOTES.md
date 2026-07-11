@@ -19,19 +19,19 @@ The desired positioning is senior scientific and analytical judgment across two 
 1. Biological discovery: computational biology, gene and protein function, multi-omics, protein representations, active learning, and experimental prioritization.
 2. Decision systems: causal inference, forecasting, resource allocation, measurement, adoption, and operational implementation.
 
-Biological discovery is primary. Decision systems demonstrate the ability to move analytical work into consequential use. External advisory work is visible but intentionally understated.
+Biological discovery is primary. Decision systems demonstrate the ability to move analytical work into recurring operational choices. Independent advisory is no longer a public positioning pillar.
 
 ## Brand architecture
 
 James Young is the primary visible identity. “ForetoData” is a secondary field-notes platform and possible future studio identity. The site does not imply a team, agency infrastructure, broad service capacity, or institutional scale.
 
-The principal message is: “Machine learning for biological discovery and consequential decisions.” The unifying idea is turning complex data into prioritized action.
+The principal message is: “Machine learning for biological discovery and operational decisions.” The unifying idea is turning complex data into prioritized action.
 
 ## Information architecture
 
-Primary navigation is conventional: Work, Research, Publications, Writing, and About. Independent work appears near the bottom of the homepage and within About. Lab Mode is discoverable as a secondary utility rather than a primary identity.
+Primary navigation is conventional: Work, Research, Publications, Writing, and About. Lab Mode is discoverable as a secondary utility rather than a primary identity.
 
-The homepage order is hero, credibility summary, selected work, current research, approach, independent work, selected writing, and a minimal footer. Three primary case studies appear once each, followed by one secondary professional-experience record.
+The homepage order is hero, credibility summary, three selected work records, recent open research, current research, approach, and a minimal footer.
 
 ## Visual-system rationale
 
@@ -47,7 +47,7 @@ Added components:
 
 - `CaseStudyCard.astro` for consistent selected-work summaries.
 - `DiscoveryDiagram.astro` for a lightweight, accessible, explicitly conceptual research workflow.
-- `WritingArchive.astro` for subject-based archive groups.
+- `WritingArchive.astro` for selected technical essays and foundation notes.
 - `LabExplorer.jsx` for accessible project filtering and terminal diagrams.
 
 The old filter, three-dimensional molecular/landscape visualizations, animated hero, and theme toggle were removed after their useful ideas were translated into Lab Mode. They were tightly coupled to the prior design, duplicated project data, carried unsupported illustrative metrics, required global third-party scripts, and added motion and performance costs. The stale generated CSS file under `public/_astro/` was also removed.
@@ -56,7 +56,7 @@ The old filter, three-dimensional molecular/landscape visualizations, animated h
 
 - Astro’s static architecture, React integration, Tailwind integration, package lock, and GitHub Pages workflow.
 - The `/foretodata/` base-path configuration.
-- All seven writing entries and their existing detail URLs.
+- Five reviewed writing entries, plus `noindex` archive notices at four retired post URLs.
 - The publication record, reorganized into connected programs.
 - The opt-in sound manager and sound control.
 - Surprise Me as a Lab Mode easter egg.
@@ -74,7 +74,7 @@ The mode does not maintain separate case-study content. It reads the same data a
 - Nitrogen fixation is the flagship application inside a broader functional-discovery program.
 - The FOX gene work is presented as computational prioritization with a published evidence link, not as completed experimental validation.
 - Rubisco active learning is described as a workflow and linked to its 2026 publication in *AI Chemistry*.
-- Independent advisory work is generalized, client-free, metric-free, and framed around scientific judgment and feasibility.
+- Recent open papers lead the homepage; earlier writing is a curated record of technical development rather than a current-content feed.
 - Employer-specific commercial systems and outcomes were removed from public case-study copy. Decision systems are presented as transferable professional experience, not an offered pharma consulting service.
 - No inquiry form or scheduling tool was added; LinkedIn remains the contact path.
 - No service packages, rates, availability promises, income claims, or revenue claims are published.
@@ -102,13 +102,13 @@ Captures use 1440×1000 and 390×844 viewports and record the first viewport of 
 
 - Reconfirm whether “Beyond nif: protein-family modeling reveals the accessory systems of cyanobacterial diazotrophy” is still in submission immediately before any production publication.
 - James approved the seniority and degree wording: “A senior applied machine-learning and data-science leader with a PhD in Biological Sciences, specializing in molecular biology.”
-- Independent work now uses experience-based “I have advised” language and avoids overt availability or defensive disclaimers.
+- Independent-work positioning and generic confidentiality boilerplate were removed in the second editorial pass.
 - Employer names, unsupported performance metrics, the NSF award amount, and honors remain omitted as deliberate positioning decisions.
 - The browser automation surface could not synthesize a reliable end-to-end Tab sequence, so a short manual keyboard pass is still recommended before merge.
 - External publisher sites sometimes reject automated HEAD requests even when DOI redirects are valid; those links should receive a final human click-through review.
 
 ## Future compatibility
 
-Stage 2 can add a discreet Advisory page, approved evidence, defined problem categories, and a restrained inquiry form without changing the primary content model. The current `Scientific ML advisory` domain can feed that page.
+A future Advisory page should be added only if there is approved evidence, a clear operating model, and a reason for it to become part of the public positioning.
 
 Stage 3 can elevate ForetoData to the primary brand, add a team or specialist network, and expand institutional capabilities only after the organization exists. The current separation between person identity, platform label, shared work data, and routes supports that evolution without implying it today.

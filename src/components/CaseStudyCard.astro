@@ -17,6 +17,6 @@ const { study, index } = Astro.props;
   </div>
   <h3>{study.title}</h3>
   <p class="question">{study.question}</p>
-  <span class="card-action">Read case study <span aria-hidden="true">→</span></span>
+  <span class="card-action">Read {study.recordType.toLowerCase()} <span aria-hidden="true">→</span></span>
 </a>
 

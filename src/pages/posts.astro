@@ -3,12 +3,14 @@ import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import WritingArchive from '../components/WritingArchive.astro';
 
-const posts = (await getCollection('blog')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const posts = (await getCollection('blog'))
+  .filter((post) => !post.data.hidden)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
 <Base
   title="Writing | James Young"
-  description="Writing by James Young on scientific machine learning, biological discovery, causal inference, decision systems, and technical implementation."
+  description="Selected technical essays by James Young on bioinformatics, forecasting, reproducible data workflows, model evaluation, and decision systems."
   canonicalPath="writing"
   noindex={true}
 >

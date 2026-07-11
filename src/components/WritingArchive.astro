@@ -9,19 +9,14 @@ interface Props {
 const { posts } = Astro.props;
 const definitions = [
   {
-    title: 'Scientific machine learning',
-    description: 'Interpretability, evaluation, causal reasoning, and production systems.',
-    match: (post: CollectionEntry<'blog'>) => post.data.tags.some((tag) => ['interpretable-ml', 'causal-inference', 'llms', 'mlops'].includes(tag)),
+    title: 'Selected technical essays',
+    description: 'Applied analyses selected for the technical judgment they document.',
+    match: (post: CollectionEntry<'blog'>) => post.data.section === 'selected',
   },
   {
-    title: 'Biological discovery',
-    description: 'Sequence, structure, genomics, and biological data readiness.',
-    match: (post: CollectionEntry<'blog'>) => post.data.tags.some((tag) => ['bioinformatics', 'genomics', 'cheminformatics', 'sequence-alignment'].includes(tag)),
-  },
-  {
-    title: 'Decision systems and applied analysis',
-    description: 'How analytical evidence connects to interventions and operational choices.',
-    match: (post: CollectionEntry<'blog'>) => post.data.tags.some((tag) => ['sports-analytics', 'classification'].includes(tag)),
+    title: 'Foundations: earlier applied work',
+    description: 'Notes from 2020 and 2022 on reproducible workflows and reviewable feature engineering, presented with their current limitations.',
+    match: (post: CollectionEntry<'blog'>) => post.data.section === 'foundations',
   },
 ];
 
@@ -37,7 +32,7 @@ if (remainder.length) {
   groups.push({ title: 'Technical implementation', description: 'Practical notes on building and operating analytical systems.', match: () => true, posts: remainder });
 }
 
-const formatDate = (date: Date) => date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+const formatDate = (date: Date) => date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
 ---
 
 {groups.map((group) => (
@@ -54,7 +49,7 @@ const formatDate = (date: Date) => date.toLocaleDateString('en-US', { year: 'num
             <h3>{post.data.title}</h3>
             <p>{post.data.description}</p>
           </div>
-          <span aria-hidden="true">→</span>
+          <span class="archive-arrow" aria-hidden="true">→</span>
         </a>
       ))}
     </div>
