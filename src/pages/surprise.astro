@@ -3,22 +3,13 @@ import Base from '../layouts/Base.astro';
 import SurpriseMe from '../components/SurpriseMe.jsx';
 ---
 
-<Base title="Surprise Me | James Young">
-  <Fragment slot="sidebar">
-    <div class="nav-section">
-      <h2 class="nav-section-title">Navigation</h2>
-      <ul class="nav-list">
-        <li>
-          <a href="/foretodata/" class="nav-link">
-            <span class="num">&larr;</span>
-            <span>Back to Home</span>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </Fragment>
-
-  <div class="content-wrapper">
+<Base
+  title="Surprise Me | ForetoData Lab"
+  description="A small terminal-inspired ForetoData easter egg."
+  mode="lab"
+  noindex={true}
+>
+  <div class="shell">
     <SurpriseMe client:load />
   </div>
 </Base>

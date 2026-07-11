@@ -1,0 +1,59 @@
+---
+import Base from '../layouts/Base.astro';
+import DiscoveryDiagram from '../components/DiscoveryDiagram.astro';
+import { sitePath } from '../utils/paths';
+---
+
+<Base
+  title="Research | James Young"
+  description="James Young's research program in machine-learning-guided functional discovery and engineering in undercharacterized microbial systems."
+>
+  <header class="page-hero">
+    <div class="shell">
+      <span class="page-path">ForetoData / research</span>
+      <h1>ML-guided functional discovery and engineering.</h1>
+      <div class="page-intro">
+        <span class="section-kicker">Research program</span>
+        <p>Undercharacterized microbial systems provide the scientific setting; comparative evidence, protein representation, multi-omic integration, and experimental prioritization provide the methodological spine.</p>
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="shell research-grid">
+      <article class="editorial">
+        <p class="lead-paragraph">The program asks how machine learning can narrow biological search spaces without losing sight of the experiment that must eventually resolve uncertainty.</p>
+
+        <h2>Flagship problem: oxygen-tolerant nitrogen fixation</h2>
+        <p>Nitrogen fixation is an unusually clear test of this approach. Nitrogenase is oxygen-sensitive, while cyanobacteria produce oxygen through photosynthesis. Understanding how some organisms coordinate those processes requires functional discovery across genes, regulatory context, environmental condition, and phenotype.</p>
+        <p>Oxygen-tolerant nitrogen fixation is the flagship application. It is not the full scientific identity: the same framework can support other problems where biological function is undercharacterized and experimental capacity is constrained.</p>
+
+        <h2>A connected methodological program</h2>
+        <h3>Functional discovery</h3>
+        <p>Begin with a biological function and the evidence required to distinguish a promising candidate from a convenient correlation.</p>
+        <h3>Environmental and condition-specific biology</h3>
+        <p>Expression and phenotype depend on context. Condition-specific transcriptomic and proteomic evidence helps define when a mechanism is relevant.</p>
+        <h3>Sequence and protein representation</h3>
+        <p>Comparative genomics and protein-language-model representations make it possible to reason across related genes and proteins even when annotation is incomplete.</p>
+        <h3>Multi-omic integration</h3>
+        <p>No single data layer settles the question. The task is to combine partially informative evidence while keeping its provenance visible.</p>
+        <h3>Experimental prioritization</h3>
+        <p>The output is a smaller, defensible set of candidates and a clear account of why each candidate is worth testing.</p>
+        <h3>Iterative model-and-experiment cycles</h3>
+        <p>Active learning treats experimental results as the beginning of the next round. The goal is not a one-time ranking but a more efficient learning system.</p>
+        <h3>Protein learning and engineering</h3>
+        <p>For protein-property questions, the same logic moves from sequence representation through candidate selection to validation planning.</p>
+
+        <div class="text-links">
+          <a class="text-link" href={sitePath('publications')}>Publications <span aria-hidden="true">→</span></a>
+          <a class="text-link" href={sitePath('work/oxic-nitrogen-fixation')}>Flagship case study <span aria-hidden="true">→</span></a>
+        </div>
+      </article>
+      <div>
+        <DiscoveryDiagram />
+        <div class="disclosure">Computational rankings are presented as hypotheses and prioritization tools unless experimental validation is explicitly documented.</div>
+      </div>
+    </div>
+  </section>
+</Base>
+

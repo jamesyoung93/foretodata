@@ -139,6 +139,10 @@ function SplitFlapText({ text, startDelay = 0, charDelay = 30, flipsPerChar = 6 
 
   useEffect(() => {
     if (!text) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setDisplay(text);
+      return;
+    }
     const chars = text.split('');
     const settled = new Array(chars.length).fill(false);
     const current = new Array(chars.length).fill(' ');

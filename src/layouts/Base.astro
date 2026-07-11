@@ -1,129 +1,113 @@
 ---
 import '../styles/global.css';
-import ViewToggle from '../components/ViewToggle.jsx';
 import SoundToggle from '../components/SoundToggle.jsx';
+import { profile } from '../data/site';
+import { sitePath } from '../utils/paths';
 
 interface Props {
   title?: string;
+  description?: string;
+  canonicalPath?: string;
+  mode?: 'editorial' | 'lab';
+  noindex?: boolean;
 }
 
-const { title = "James Young | Technology, Innovation, & Transformation" } = Astro.props;
+const {
+  title = `${profile.name} | Scientific Machine Learning & Biological Discovery`,
+  description = `${profile.summary} Work spanning computational biology, scientific machine learning, and operational decision systems.`,
+  canonicalPath,
+  mode = 'editorial',
+  noindex = false,
+} = Astro.props;
+
+const currentPath = Astro.url.pathname;
+const canonicalUrl = new URL(canonicalPath ? sitePath(canonicalPath) : currentPath, Astro.site);
+const socialImage = new URL(sitePath('og.png'), Astro.site);
+const navItems = [
+  { label: 'Work', href: sitePath('work'), match: '/work' },
+  { label: 'Research', href: sitePath('research'), match: '/research' },
+  { label: 'Publications', href: sitePath('publications'), match: '/publications' },
+  { label: 'Writing', href: sitePath('writing'), match: '/writing' },
+  { label: 'About', href: sitePath('about'), match: '/about' },
+];
 ---
 
-<!DOCTYPE html>
-<html lang="en" class="dark">
+<!doctype html>
+<html lang="en" data-mode={mode}>
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="James Young - Technology application, solution, and transformation. Building ML systems that drive measurable business outcomes." />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="author" content={profile.name} />
+    {noindex && <meta name="robots" content="noindex,follow" />}
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" type="image/svg+xml" href={sitePath('favicon.svg')} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ForetoData" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:alt" content="James Young — scientific machine learning, biological discovery, and decision systems" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
     <title>{title}</title>
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" as="style" />
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/foretodata/favicon.svg" />
-
-    <!-- 3Dmol.js for molecular visualization -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.0.1/3Dmol-min.js"></script>
-
-    <!-- Three.js for 3D Waddington landscape visualization -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   </head>
+  <body class:list={{ 'lab-body': mode === 'lab' }}>
+    <a class="skip-link" href="#main-content">Skip to content</a>
 
-  <body>
-    <!-- Scanline overlay for CRT effect -->
-    <div class="scanline-overlay"></div>
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="identity" href={sitePath()} aria-label="James Young, home">
+          <span class="platform-mark">ForetoData / field notes</span>
+          <span class="identity-name">James Young</span>
+          <span class="identity-descriptor">{profile.descriptor}</span>
+        </a>
 
-    <!-- Subtle vignette -->
-    <div class="vignette-overlay"></div>
-
-    <div class="site-wrapper">
-      <!-- Left Sidebar / Navigation -->
-      <aside class="sidebar">
-        <header class="sidebar-header">
-          <a href="/foretodata/" class="hover-highlight nav-sound-link">
-            <div class="site-title-row">
-              <span class="arrow">▸</span>
-              <h1 class="site-title">James Young</h1>
-            </div>
-            <p class="site-subtitle">Technology, Innovation, & Transformation</p>
-          </a>
-        </header>
-
-        <ViewToggle client:load />
-
-        <SoundToggle client:load />
-
-        <nav>
-          <slot name="sidebar" />
+        <nav class="primary-nav" aria-label="Primary navigation">
+          {navItems.map((item) => (
+            <a
+              href={item.href}
+              aria-current={currentPath.includes(item.match) ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          ))}
         </nav>
 
-        <footer class="sidebar-footer">
-          <div class="footer-links">
-            <a
-              href="https://www.linkedin.com/in/jamesyoungsd/"
-              class="hover-highlight nav-sound-link"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              LinkedIn
-            </a>
-            <a
-              href="https://foretodata.substack.com/"
-              class="hover-highlight nav-sound-link"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Substack
-            </a>
-            <a href="/foretodata/about" class="hover-highlight nav-sound-link">About</a>
-            <a href="/foretodata/publications" class="hover-highlight nav-sound-link">Publications</a>
-            <a href="/foretodata/posts" class="hover-highlight nav-sound-link">Posts</a>
-            <a href="/foretodata/surprise" class="hover-highlight nav-sound-link">Surprise</a>
-          </div>
-          <div class="terminal-prompt">
-            <span class="dollar">$</span> foretodata.com
-            <span class="cursor">▋</span>
-          </div>
-        </footer>
-      </aside>
+        <div class="mode-tools">
+          {mode === 'lab' ? (
+            <>
+              <a class="mode-link" href={sitePath()}><span aria-hidden="true">←</span> Editorial</a>
+              <SoundToggle client:load compact={true} />
+            </>
+          ) : (
+            <a class="mode-link" href={sitePath('lab')}><span aria-hidden="true">⌁</span> Lab Mode</a>
+          )}
+        </div>
+      </div>
+    </header>
 
-      <!-- Main Content -->
-      <main class="main-content">
-        <slot />
-      </main>
-    </div>
+    <main id="main-content">
+      <slot />
+    </main>
 
-    <!-- Initialize sound effects for navigation links -->
-    <script>
-      import soundManager, { playClick, playHover, initSound } from '../utils/soundManager.js';
-
-      // Initialize sounds after DOM is ready
-      document.addEventListener('DOMContentLoaded', () => {
-        initSound();
-
-        // Attach sounds to footer nav links
-        document.querySelectorAll('.nav-sound-link').forEach(link => {
-          link.addEventListener('mouseenter', () => playHover());
-          link.addEventListener('click', () => playClick());
-        });
-
-        // Attach sounds to sidebar nav links (EXPLORE and QUICK LINKS sections)
-        document.querySelectorAll('.nav-link').forEach(link => {
-          link.addEventListener('mouseenter', () => playHover());
-          link.addEventListener('click', () => playClick());
-        });
-      });
-
-      // Ensure audio context can start after first interaction
-      document.addEventListener('click', () => {
-        initSound();
-        soundManager.resume();
-      }, { once: true });
-    </script>
+    <footer class="site-footer">
+      <div class="shell footer-grid">
+        <div>
+          <strong>{profile.name}</strong>
+          <p>ForetoData is an independent platform for scientific and analytical work.</p>
+        </div>
+        <nav aria-label="Footer navigation">
+          <a href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
+          <a href={sitePath('about#independent-work')}>Independent work</a>
+          <a href={sitePath('lab')}>Lab Mode</a>
+        </nav>
+      </div>
+    </footer>
   </body>
 </html>
+

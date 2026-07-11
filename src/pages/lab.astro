@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import LabExplorer from '../components/LabExplorer.jsx';
+import { profile } from '../data/site';
+import { sitePath } from '../utils/paths';
+---
+
+<Base
+  title="Lab Mode | James Young"
+  description="An optional terminal-inspired exploration layer for James Young's scientific machine-learning, biological discovery, and decision-system work."
+  mode="lab"
+>
+  <section class="lab-shell">
+    <div class="shell lab-terminal">
+      <div class="terminal-bar">
+        <span>foretodata://lab</span>
+        <span>audio: opt-in · motion: preference-aware</span>
+      </div>
+      <div class="terminal-content">
+        <span class="lab-prompt">$ whoami</span>
+        <h1>{profile.name}</h1>
+        <p class="lab-intro">{profile.descriptor}. Lab Mode preserves the original site’s command-line character as a secondary exploration layer; the underlying work records remain shared with Editorial Mode.</p>
+
+        <nav class="lab-command-nav" aria-label="Lab navigation">
+          <a href={sitePath('work')}>./work</a>
+          <a href={sitePath('research')}>./research</a>
+          <a href={sitePath('publications')}>./publications</a>
+          <a href={sitePath('writing')}>./writing</a>
+          <a href={sitePath('surprise')}>./surprise-me</a>
+        </nav>
+
+        <LabExplorer client:load basePath={import.meta.env.BASE_URL} />
+      </div>
+    </div>
+  </section>
+</Base>
+

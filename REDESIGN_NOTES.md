@@ -1,0 +1,114 @@
+# ForetoData scientific-editorial redesign notes
+
+## Audit summary
+
+The repository is an Astro 4 static site with React islands and Tailwind. `astro.config.mjs` defines `site: https://jamesyoung93.github.io`, `base: /foretodata`, and static output. GitHub Pages deployment is handled by `.github/workflows/deploy.yml` and runs only for pushes to `main` or a manual workflow dispatch. No deployment configuration was changed in a way that publishes this branch.
+
+The original public route set was small: home, About, Publications, Posts, individual post pages, and Surprise Me. Content came from Astro’s blog collection, hard-coded publication markup, and a hard-coded React accomplishment array. The default shell was a fixed dark terminal sidebar. A “Classic” toggle changed colors but retained the terminal information architecture.
+
+The original homepage hydrated a large animated visualization and a project filter. It loaded 3Dmol and Three.js globally, used continuous animation, and repeated the same projects under multiple filter categories. Several illustrative and project metrics could be mistaken for employer or client outcomes. Sound was already opt-in, which was retained. SEO consisted primarily of a title and one generic description, and internal links were manually hard-coded to `/foretodata/`.
+
+Mobile CSS existed, but the fixed sidebar and wide visualizations were tightly coupled to the original design. The strongest reusable elements were the writing collection, publication record, sound manager, Surprise Me interaction, green terminal accent, command language, and the general idea of technical exploration.
+
+## Intended audience and positioning
+
+The primary audiences are biotechnology founders, scientists, investors, attorneys, executives, collaborators, and current professional colleagues arriving through a warm referral or search.
+
+The desired positioning is senior scientific and analytical judgment across two connected domains:
+
+1. Biological discovery: computational biology, gene and protein function, multi-omics, protein representations, active learning, and experimental prioritization.
+2. Decision systems: causal inference, forecasting, resource allocation, measurement, adoption, and operational implementation.
+
+Biological discovery is primary. Decision systems demonstrate the ability to move analytical work into consequential use. External advisory work is visible but intentionally understated.
+
+## Brand architecture
+
+James Young is the primary visible identity. “ForetoData” is a secondary field-notes platform and possible future studio identity. The site does not imply a team, agency infrastructure, broad service capacity, or institutional scale.
+
+The principal message is: “Machine learning for biological discovery and consequential decisions.” The unifying idea is turning complex data into prioritized action.
+
+## Information architecture
+
+Primary navigation is conventional: Work, Research, Publications, Writing, and About. Independent work appears near the bottom of the homepage and within About. Lab Mode is discoverable as a secondary utility rather than a primary identity.
+
+The homepage order is hero, credibility summary, selected work, current research, approach, independent work, selected writing, and a minimal footer. Three primary case studies appear once each, followed by one secondary professional-experience record.
+
+## Visual-system rationale
+
+The default system uses a warm off-white paper surface, charcoal text, deep green and restrained navy accents, Georgia for editorial display typography, system sans-serif for body text, and monospace only for metadata and Lab Mode. Thin rules, a broad grid, figure captions, generous whitespace, and restrained panels evoke a scientific publication and analytical memorandum.
+
+The balance is intentionally approximately 70% editorial restraint, 20% structured technical information, and 10% terminal character. The terminal character is concentrated in labels, paths, the favicon, and Lab Mode.
+
+## Content model and component changes
+
+`src/data/site.ts` is the shared source for profile copy, approach principles, case studies, and publication groups. Editorial cards, detail routes, and Lab Mode import the same case-study objects.
+
+Added components:
+
+- `CaseStudyCard.astro` for consistent selected-work summaries.
+- `DiscoveryDiagram.astro` for a lightweight, accessible, explicitly conceptual research workflow.
+- `WritingArchive.astro` for subject-based archive groups.
+- `LabExplorer.jsx` for accessible project filtering and terminal diagrams.
+
+The old filter, three-dimensional molecular/landscape visualizations, animated hero, and theme toggle were removed after their useful ideas were translated into Lab Mode. They were tightly coupled to the prior design, duplicated project data, carried unsupported illustrative metrics, required global third-party scripts, and added motion and performance costs. The stale generated CSS file under `public/_astro/` was also removed.
+
+## What was retained
+
+- Astro’s static architecture, React integration, Tailwind integration, package lock, and GitHub Pages workflow.
+- The `/foretodata/` base-path configuration.
+- All seven writing entries and their existing detail URLs.
+- The publication record, reorganized into connected programs.
+- The opt-in sound manager and sound control.
+- Surprise Me as a Lab Mode easter egg.
+- Terminal paths, command labels, ASCII diagrams, green accent, and interactive exploration in Lab Mode.
+- The existing terminal favicon as a small continuity marker.
+
+## Lab Mode
+
+Lab Mode is a dedicated `/lab` route rather than the default shell or a color toggle. It provides command navigation, three lightweight analytical diagrams, a keyboard-native project filter, an explicit return to Editorial Mode, an opt-in sound control, and access to Surprise Me.
+
+The mode does not maintain separate case-study content. It reads the same data as Work and links to the same canonical case-study pages. No sound starts automatically. Motion-reduction preferences are respected globally, and Surprise Me bypasses its split-flap animation when reduced motion is requested.
+
+## Important content decisions
+
+- Nitrogen fixation is the flagship application inside a broader functional-discovery program.
+- The FOX gene work is presented as computational prioritization with a published evidence link, not as completed experimental validation.
+- Rubisco active learning is described as a workflow and linked to its 2026 publication in *AI Chemistry*.
+- Independent advisory work is generalized, client-free, metric-free, and framed around scientific judgment and feasibility.
+- Employer-specific commercial systems and outcomes were removed from public case-study copy. Decision systems are presented as transferable professional experience, not an offered pharma consulting service.
+- No inquiry form or scheduling tool was added; LinkedIn remains the contact path.
+- No service packages, rates, availability promises, income claims, or revenue claims are published.
+- The obsolete Kaggle link in the NFL post was removed after returning 404. The NIST AI RMF link was corrected.
+
+## Social preview
+
+`public/og.png` is a bespoke scientific-editorial card matching the final palette and positioning. It contains the verified labels “James Young,” “Scientific Machine Learning,” “Biological Discovery,” “Decision Systems,” and “ForetoData.” Metadata is generated in `Base.astro` for Open Graph and X/Twitter cards.
+
+## Screenshots
+
+Review captures are stored outside the public site at `review/screenshots/`:
+
+- `homepage-editorial-desktop.png` and `homepage-editorial-mobile.png`
+- `homepage-lab-desktop.png` and `homepage-lab-mobile.png`
+- `case-study-desktop.png` and `case-study-mobile.png`
+- `research-desktop.png` and `research-mobile.png`
+- `publications-desktop.png` and `publications-mobile.png`
+- `about-desktop.png` and `about-mobile.png`
+- `writing-desktop.png` and `writing-mobile.png`
+
+Captures use 1440×1000 and 390×844 viewports and record the first viewport of each page.
+
+## Known limitations and content decisions
+
+- Reconfirm whether “Beyond nif: protein-family modeling reveals the accessory systems of cyanobacterial diazotrophy” is still in submission immediately before any production publication.
+- James approved the seniority and degree wording: “A senior applied machine-learning and data-science leader with a PhD in Biological Sciences, specializing in molecular biology.”
+- Independent work now uses experience-based “I have advised” language and avoids overt availability or defensive disclaimers.
+- Employer names, unsupported performance metrics, the NSF award amount, and honors remain omitted as deliberate positioning decisions.
+- The browser automation surface could not synthesize a reliable end-to-end Tab sequence, so a short manual keyboard pass is still recommended before merge.
+- External publisher sites sometimes reject automated HEAD requests even when DOI redirects are valid; those links should receive a final human click-through review.
+
+## Future compatibility
+
+Stage 2 can add a discreet Advisory page, approved evidence, defined problem categories, and a restrained inquiry form without changing the primary content model. The current `Scientific ML advisory` domain can feed that page.
+
+Stage 3 can elevate ForetoData to the primary brand, add a team or specialist network, and expand institutional capabilities only after the organization exists. The current separation between person identity, platform label, shared work data, and routes supports that evolution without implying it today.

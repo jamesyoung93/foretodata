@@ -15,7 +15,7 @@ class SoundManager {
     if (this.initialized) return;
 
     try {
-      this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      this.audioContext = new window.AudioContext();
       this.initialized = true;
 
       // Load preference from localStorage
@@ -103,9 +103,6 @@ class SoundManager {
     this.lastHoverTime = now;
 
     this.resume();
-
-    const ctx = this.audioContext;
-    const time = ctx.currentTime;
 
     // Just a subtle noise tick, no tonal element
     this.addNoiseBurst(0.06, 0.012);

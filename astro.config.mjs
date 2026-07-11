@@ -7,4 +7,5 @@ export default defineConfig({
   base: '/foretodata',
   integrations: [react(), tailwind()],
   output: 'static',
+  devToolbar: { enabled: false },
 });

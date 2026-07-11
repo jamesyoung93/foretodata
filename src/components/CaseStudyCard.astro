@@ -1,0 +1,22 @@
+---
+import type { CaseStudy } from '../data/site';
+import { sitePath } from '../utils/paths';
+
+interface Props {
+  study: CaseStudy;
+  index: number;
+}
+
+const { study, index } = Astro.props;
+---
+
+<a class="case-card" href={sitePath(`work/${study.slug}`)}>
+  <div>
+    <span class="case-domain">{study.domain}</span>
+    <span class="case-number">0{index + 1}</span>
+  </div>
+  <h3>{study.title}</h3>
+  <p class="question">{study.question}</p>
+  <span class="card-action">Read case study <span aria-hidden="true">→</span></span>
+</a>
+
