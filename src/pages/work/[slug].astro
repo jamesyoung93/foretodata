@@ -31,18 +31,18 @@ const { study } = Astro.props;
 
   <section class="section">
     <div class="shell case-detail-grid">
-      <aside class="case-index" aria-label="Case study sections">
+      <aside class="case-index" aria-label={`${study.recordType} sections`}>
         <span class="meta-label">In this record</span>
         <a href="#question">The question</a>
         <a href="#context">Context</a>
         <a href="#difficulty">Why it was difficult</a>
         <a href="#approach">Approach</a>
         <a href="#outcome">Outcome</a>
-        <a href="#role">James’s role</a>
+        <a href="#role">James' role</a>
         {study.evidence && <a href="#evidence">Evidence</a>}
       </aside>
       <article class="case-detail">
-        <span class="section-kicker">Case study</span>
+        <span class="section-kicker">{study.recordType}</span>
         <h2 id="question">The question</h2>
         <p class="lead-paragraph">{study.question}</p>
 
@@ -62,7 +62,7 @@ const { study } = Astro.props;
         <h2 id="outcome">Outcome or resulting capability</h2>
         <p>{study.outcome}</p>
 
-        <h2 id="role">James’s role</h2>
+        <h2 id="role">James' role</h2>
         <p>{study.role}</p>
 
         {study.evidence && (
@@ -72,7 +72,6 @@ const { study } = Astro.props;
           </div>
         )}
 
-        {study.confidentiality && <p class="disclosure">{study.confidentiality}</p>}
 
         <div class="text-links">
           <a class="text-link" href={sitePath('work')}><span aria-hidden="true">←</span> All selected work</a>

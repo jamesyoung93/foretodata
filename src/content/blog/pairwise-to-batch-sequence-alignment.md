@@ -3,9 +3,12 @@ title: "From Pairwise to Batch Sequence Alignment in R"
 date: 2022-06-15
 description: "Building a practical bioinformatics pipeline from single alignments to parallelized batch processing to a Shiny app."
 tags: ["bioinformatics", "r", "sequence-alignment"]
+section: "selected"
 ---
 
-Sequence alignment is fundamental to bioinformatics. Determining how many base pairs or amino acids line up between two sequences tells you about evolutionary relationships, functional similarity, and specimen identity. But the gap between "align two sequences" and "align thousands against a reference database" is mostly an engineering problem.
+> Originally published in June 2022. Package choices and endpoints reflect the implementation at that time.
+
+Sequence alignment is fundamental to bioinformatics. Similarity between nucleotide or amino-acid sequences can provide evidence about evolutionary relatedness and possible functional similarity. Comparison with an appropriate reference can also support specimen identification. The gap between "align two sequences" and "align thousands against a reference database" is mostly an engineering problem.
 
 ## Five levels of alignment
 
@@ -21,20 +24,24 @@ One unknown sequence against 229 reference sequences, run serially. About a minu
 
 ### Level 3: Multiple queries vs. database
 
-Five unknowns against all 229 references. About four minutes serially. This is where it starts to feel slow.
+Five query sequences against all 229 references took about 4.28 minutes in the original serial run.
 
 ### Level 4: Parallelized
 
-Using `doParallel` to distribute alignments across cores. Same work, fraction of the time. Necessary once your database or query set grows.
+Using `doParallel` reduced the same run to about 1.42 minutes on the test machine. The result showed the value of parallel execution, although a production pipeline should set resource limits rather than consume every available core.
 
 ### Level 5: Shiny app
 
-Wrapped the whole pipeline in a Shiny application. Non-technical users drag and drop their sequences, get results back automatically. No command line, no R installation, no debugging package versions.
+The final stage wrapped the pipeline in a Shiny interface so a user could provide sequences and review results without working directly in the analysis code.
 
 ## The data
 
 Open-source influenza sequences from fludb.org, pulled via API. After filtering for complete genomes: 229 swine influenza sequences across H1N1, H1N2, and H3N2 subtypes.
 
+## What this test shows
+
+The query sequences in the demonstration were also present in the reference set. The 100% matches provide an end-to-end sanity check that the workflow can recover known matches. They do not establish performance on genuinely unknown specimens. A validation study would need held-out or independently identified sequences.
+
 ## Trade-offs
 
-Running alignment locally gives you privacy and control over sensitive genomic data. Web-based tools like BLAST are faster for one-off queries against massive databases, but you're sending your sequences to an external server. For internal research on proprietary sequences, local compute with a good parallelization strategy is the better fit.
+Running alignments locally can be useful when sequences should remain inside a controlled environment. Services such as BLAST are convenient for one-off searches against large public databases, while a local pipeline offers more control over data handling, dependencies, and repeatable batch processing.

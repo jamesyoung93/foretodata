@@ -3,6 +3,7 @@ title: "Predicting DNA Properties with Bioinformatics and Interpretable ML"
 date: 2022-06-16
 description: "Using k-mer features to predict DNAse I hypersensitivity with interpretable models in R."
 tags: ["bioinformatics", "interpretable-ml", "genomics"]
+hidden: true
 ---
 
 Most bioinformatics workflows rely on alignment-based methods like BLAST to infer function from sequence similarity. That works well when you have close homologs in the database. When you don't, you need a different approach.

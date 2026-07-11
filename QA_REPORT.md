@@ -4,11 +4,11 @@ Review date: 2026-07-11 (America/New_York)
 
 ## Build, type-check, lint, and tests
 
-- Production build: passed with 20 static HTML pages.
+- Production build: passed with 22 static HTML pages after the second editorial pass and compatibility review.
 - Astro type-check: passed with zero errors. Legacy unused-component hints were resolved before finalization.
 - Lint: no standalone lint script exists in the preserved repository. `astro check` is the repository-native static diagnostic.
 - Automated tests: no unit-test framework existed. A dependency-free static route/link checker was added at `scripts/check-site.mjs` and is available through `npm run check:routes`.
-- Deployment: not run. No merge was performed.
+- Deployment: the initial redesign was merged and deployed through PR #42. The second editorial pass remains local pending publication approval.
 
 ## Routes and internal links
 
@@ -16,7 +16,7 @@ Review date: 2026-07-11 (America/New_York)
 - It rejects root-relative paths that escape the GitHub Pages base.
 - The checked build produced no missing internal targets.
 - `/posts` is preserved as a `noindex` compatibility route with canonical `/writing`.
-- Existing `/posts/[slug]` routes and `/surprise` remain available.
+- Five selected `/posts/[slug]` articles remain available. Four retired post URLs and the retired advisory URL render `noindex` compatibility notices instead of 404 responses. `/surprise` also remains available.
 
 ## External links
 
@@ -27,7 +27,7 @@ External references were checked with concurrent HTTP requests and targeted brow
 - Nature, arXiv, Open PRAIRIE, Scholar, Substack, OWASP, OpenAI, Anthropic, and the Cell Reports DOI resolved.
 - Wiley and MDPI DOI destinations rejected automated HEAD requests with 403 after a valid redirect; retain for human click-through review.
 - LinkedIn rejects HEAD with 405 but remains the existing public profile URL.
-- The bioRxiv DOI could not be conclusively checked by the automated client; retain for manual review.
+- Both 2026 bioRxiv DOI links resolved to official preprint pages with HTTP 200. MDPI continues to reject automated clients with 403 even though the official DOI records are valid.
 - All newly supplied Google Scholar publication-record links returned HTTP 200 during the 2026-07-11 content update.
 
 ## Mobile and responsive review
@@ -45,7 +45,7 @@ Cards, publication rows, diagrams, case-study navigation, footer links, and Lab 
 - Skip link: first in the document and revealed on focus.
 - Focus: a high-contrast 3px orange focus indicator is applied globally with `:focus-visible`.
 - Controls: Lab Mode filters and sound controls are native buttons with accessible names and pressed state where applicable. Project cards and navigation are native links.
-- Lab filter behavior: browser click testing reduced four records to the two Biological discovery records and updated `aria-pressed`.
+- Lab filter behavior: browser click testing reduced three records to the two Biological discovery records and updated `aria-pressed`.
 - Images/diagrams: the research diagram has a useful accessible description and a caption that labels it conceptual. Decorative ASCII is hidden from assistive interpretation where appropriate.
 - Contrast calculations: charcoal on paper 14.64:1; muted body copy on paper 5.48:1; deep-green links on paper 9.12:1; Lab secondary text 9.72:1; Lab green 13.54:1; Lab primary text 15.08:1.
 - Keyboard limitation: the browser automation surface did not synthesize a reliable sequential Tab traversal. Native controls, DOM order, skip link, focus styles, and button semantics were reviewed, but a brief human Tab/Shift+Tab pass remains recommended before merge.
@@ -76,9 +76,9 @@ Browser inspection confirmed each reviewed route has a unique title, description
 
 ### Biotechnology founder
 
-The specialization is legible in the hero within one sentence. A founder can identify candidate prioritization, scientific-AI feasibility, experimental translation, and method/vendor review as plausible referral questions. Senior judgment is conveyed through problem framing rather than sales claims. The independent-work section is low on the page and has no scheduling or pricing language.
+The specialization is legible in the hero within one sentence. A founder can identify candidate prioritization, experimental translation, and functional discovery as core strengths. Senior judgment is conveyed through problem framing and published work rather than service claims.
 
-Fix applied: replaced generic accomplishment filters with scientific questions and added a restrained confidentiality disclosure.
+Fix applied: removed independent-advisory positioning and generic confidentiality boilerplate. Three published open papers now follow Selected Work on the homepage.
 
 ### Senior scientist
 
@@ -88,25 +88,25 @@ Fix applied: removed illustrative enzyme-performance metrics. The Rubisco workfl
 
 ### Investor or attorney
 
-The site demonstrates diligence-oriented reasoning through feasibility assessment, evidence provenance, uncertainty, stopping rules, and decision framing. Confidential work is generalized, and evidence links are separated from hypotheses and outcomes.
+The site demonstrates diligence-oriented reasoning through evidence provenance, uncertainty, stopping rules, and decision framing. Published claims link to their records, and unpublished status is stated directly.
 
-Fix applied: removed client/employer names and unattributed commercial metrics from work records; added `CONTENT_REVIEW.md` for unresolved statements.
+Fix applied: removed client and employer names, unattributed commercial metrics, and generic confidentiality language from work records.
 
 ### Corporate executive
 
 The site presents strategic analytical leadership through decision rights, operating constraints, adoption, measurement, and iteration. It does not offer commercial-pharma consulting and does not resemble a side-business sales funnel.
 
-Fix applied: the About page now distinguishes professional experience from externally offered work and compresses technical skills into a secondary profile.
+Fix applied: About now connects scientific depth, operational judgment, and translation without introducing a separate advisory narrative.
 
 ### Current employer or colleague
 
-No employer endorsement is implied in the redesigned public copy. Internal platforms, brands, and commercial results are absent. Consulting language is limited, conflict-aware, and biotechnology/research focused.
+No employer endorsement is implied in the redesigned public copy. Internal platforms, brands, and commercial results are absent. The site does not present an external advisory offer.
 
-Resolution: James approved the advisory scope and requested historical, experience-based language. The site now says “I have advised,” omits overt availability language, and avoids a defensive commercial-pharma disclaimer.
+Resolution: the second editorial pass removed the advisory content, homepage and About sections, and footer link. The prior route now contains only a `noindex` compatibility notice.
 
 ## Screenshots
 
-Fourteen non-public review captures are stored in `review/screenshots/`, with desktop and mobile versions for Editorial homepage, Lab homepage, case study, Research, Publications, About, and Writing. See `REDESIGN_NOTES.md` for the exact filenames.
+Fourteen non-public captures from the initial redesign remain in `review/screenshots/`. Browser review was repeated at 1440x1000 and 390x844 for the changed homepage and Writing layouts during the second pass, with additional mobile checks for Publications and About.
 
 ## Remaining limitations
 

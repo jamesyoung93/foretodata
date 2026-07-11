@@ -1,23 +1,15 @@
 ---
-import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import CaseStudyCard from '../components/CaseStudyCard.astro';
 import DiscoveryDiagram from '../components/DiscoveryDiagram.astro';
-import { approachPrinciples, caseStudies, profile } from '../data/site';
+import { approachPrinciples, caseStudies, profile, publicationPrograms } from '../data/site';
 import { sitePath } from '../utils/paths';
 
 const featured = caseStudies.filter((study) => study.featured);
-const secondary = caseStudies.find((study) => !study.featured);
-const selectedSlugs = [
-  'predicting-dna-properties-bioinformatics',
-  'causal-inference-practical-guide',
-  'interpretable-ml-business',
-];
-const posts = (await getCollection('blog'))
-  .filter((post) => selectedSlugs.includes(post.slug))
-  .sort((a, b) => selectedSlugs.indexOf(a.slug) - selectedSlugs.indexOf(b.slug));
-
-const formatDate = (date: Date) => date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
+const featuredPublications = publicationPrograms
+  .flatMap((program) => program.publications)
+  .filter((publication) => publication.featureRank)
+  .sort((a, b) => (a.featureRank ?? 99) - (b.featureRank ?? 99));
 ---
 
 <Base>
@@ -35,7 +27,7 @@ const formatDate = (date: Date) => date.toLocaleDateString('en-US', { year: 'num
       <aside class="hero-note" aria-label="Practice focus">
         <span class="meta-label">Unifying idea</span>
         <p><strong>Turning complex data into prioritized action.</strong></p>
-        <p>Biological discovery is the primary domain. Decision systems provide evidence of translating models into consequential use.</p>
+        <p>Biological discovery is the primary domain. Decision systems show how models can support recurring operational choices.</p>
       </aside>
     </div>
   </section>
@@ -45,7 +37,7 @@ const formatDate = (date: Date) => date.toLocaleDateString('en-US', { year: 'num
       <div class="section-heading">
         <span class="section-kicker">01 / Perspective</span>
         <div>
-          <h2 id="credibility-heading">Scientific depth, analytical judgment, operational consequence.</h2>
+          <h2 id="credibility-heading">Scientific depth, analytical judgment, applied leadership.</h2>
         </div>
       </div>
       <div class="credibility-grid">
@@ -64,11 +56,6 @@ const formatDate = (date: Date) => date.toLocaleDateString('en-US', { year: 'num
           <strong>Applied machine-learning leadership</strong>
           <p>Forecasting, causal inference, targeting, resource allocation, and implementation.</p>
         </div>
-        <div class="credibility-item">
-          <span class="meta-label">Independent work</span>
-          <strong>Selective biotechnology advisory</strong>
-          <p>Narrowly scoped scientific and technical questions, typically through relevant introductions.</p>
-        </div>
       </div>
     </div>
   </section>
@@ -79,31 +66,49 @@ const formatDate = (date: Date) => date.toLocaleDateString('en-US', { year: 'num
         <span class="section-kicker">02 / Selected work</span>
         <div>
           <h2 id="work-heading">Questions where search, evidence, and decisions meet.</h2>
-          <p>Each case is framed around the underlying question, the constraints that made it difficult, and the role of computation in changing what could be considered next.</p>
+          <p>Each item states the underlying question, the constraints, the analytical choices, and what the work made possible.</p>
         </div>
       </div>
       <div class="case-grid">
         {featured.map((study, index) => <CaseStudyCard study={study} index={index} />)}
       </div>
-      {secondary && (
-        <a class="secondary-work" href={sitePath(`work/${secondary.slug}`)}>
-          <div>
-            <strong>{secondary.title}</strong>
-            <p>{secondary.summary}</p>
-          </div>
-          <span aria-hidden="true">→</span>
-        </a>
-      )}
-      <p class="disclosure">Representative work is summarized at a high level. Some details and results have been generalized to protect confidential information.</p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="open-research-heading">
+    <div class="shell">
+      <div class="section-heading">
+        <span class="section-kicker">03 / Open research</span>
+        <div>
+          <h2 id="open-research-heading">Recent machine-learning publications, available in full.</h2>
+          <p>Peer-reviewed work provides the strongest record of current methods, claims, and evidence.</p>
+        </div>
+      </div>
+      <div class="writing-list">
+        {featuredPublications.map((publication) => (
+          <a class="writing-row" href={publication.href} target="_blank" rel="noopener noreferrer">
+            <span class="archive-meta">{publication.citation}</span>
+            <div>
+              <h3>{publication.title}</h3>
+              <p>{publication.accessLabel}</p>
+            </div>
+            <span class="archive-arrow" aria-hidden="true">↗</span>
+          </a>
+        ))}
+      </div>
+      <div class="text-links">
+        <a class="text-link" href={sitePath('publications')}>All publications <span aria-hidden="true">→</span></a>
+        <a class="text-link" href={sitePath('writing')}>Earlier technical writing <span aria-hidden="true">→</span></a>
+      </div>
     </div>
   </section>
 
   <section class="section" aria-labelledby="research-heading">
     <div class="shell research-grid">
       <div>
-        <span class="section-kicker">03 / Current research</span>
+        <span class="section-kicker">04 / Current research</span>
         <h2 id="research-heading">ML-guided functional discovery in undercharacterized microbial systems.</h2>
-        <p class="lede">Oxygen-tolerant nitrogen fixation in cyanobacteria is a flagship biological application—not the boundary of the program.</p>
+        <p class="lede">Oxygen-tolerant nitrogen fixation in cyanobacteria is the flagship application within a broader research program.</p>
         <p>The broader method connects comparative genomics, condition-specific multi-omics, protein representations, candidate prioritization, active learning, and experimental validation planning.</p>
         <div class="text-links">
           <a class="text-link" href={sitePath('research')}>Explore the research program <span aria-hidden="true">→</span></a>
@@ -116,7 +121,7 @@ const formatDate = (date: Date) => date.toLocaleDateString('en-US', { year: 'num
   <section class="section" aria-labelledby="approach-heading">
     <div class="shell">
       <div class="section-heading">
-        <span class="section-kicker">04 / Approach</span>
+        <span class="section-kicker">05 / Approach</span>
         <div><h2 id="approach-heading">The model is one part of the reasoning system.</h2></div>
       </div>
       <div class="approach-grid">
@@ -127,50 +132,6 @@ const formatDate = (date: Date) => date.toLocaleDateString('en-US', { year: 'num
             <p>{principle.text}</p>
           </article>
         ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="independent-work" aria-labelledby="independent-heading">
-    <div class="shell quiet-panel">
-      <span class="section-kicker">05 / Independent work</span>
-      <h2 id="independent-heading">Independent advisory work on narrowly scoped scientific-AI questions.</h2>
-      <p>Outside my primary role, I have advised biotechnology and research teams on problems in computational biology and scientific machine learning.</p>
-      <ul class="question-list">
-        <li>Can the available data support a useful predictive or prioritization system?</li>
-        <li>Which proteins, genes, pathways, variants, strains, or conditions should be tested first?</li>
-        <li>How should computational predictions become a practical validation plan?</li>
-        <li>How should an organization evaluate an internal or vendor-proposed AI approach before a larger investment?</li>
-      </ul>
-      <p>This work has typically developed through existing relationships and relevant introductions, with scope shaped carefully around existing professional commitments.</p>
-      <div class="text-links">
-        <a class="text-link" href={profile.linkedin} target="_blank" rel="noopener noreferrer">Connect on LinkedIn <span aria-hidden="true">↗</span></a>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="writing-heading">
-    <div class="shell">
-      <div class="section-heading">
-        <span class="section-kicker">06 / Selected writing</span>
-        <div>
-          <h2 id="writing-heading">Notes on models, evidence, and what happens next.</h2>
-        </div>
-      </div>
-      <div class="writing-list">
-        {posts.map((post) => (
-          <a class="writing-row" href={sitePath(`posts/${post.slug}`)}>
-            <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
-            <div>
-              <h3>{post.data.title}</h3>
-              <p>{post.data.description}</p>
-            </div>
-            <span aria-hidden="true">→</span>
-          </a>
-        ))}
-      </div>
-      <div class="text-links">
-        <a class="text-link" href={sitePath('writing')}>Complete writing archive <span aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>

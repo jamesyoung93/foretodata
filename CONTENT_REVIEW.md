@@ -1,17 +1,18 @@
 # Non-public content review
 
-This file is not imported by the site and is not copied to `public/`. James reviewed the flagged items in conversation on 2026-07-11. The table records the resulting decisions.
+This file is not imported by the site and is not copied to `public/`. James reviewed the flagged items in conversation on 2026-07-11, including a second editorial pass on advisory positioning and the writing archive. The table records the latest decisions.
 
 | Review area | Decision | Resolution in the site |
 | --- | --- | --- |
 | Degree and seniority | Approved: “A senior applied machine-learning and data-science leader with a PhD in Biological Sciences, specializing in molecular biology.” | Exact wording now appears on About; the homepage credential summary uses “PhD in Biological Sciences.” |
 | Scientific Reports contribution wording | Keep the role concise without naming or emphasizing individual collaborators. | The case study says James led data curation, methodology, software, formal analysis, and the initial manuscript draft, and contributed to visualization and biological interpretation. |
-| Rubisco title and status | Title may be public; the work is published. Author lines are unnecessary on the portfolio. | Updated to `AI Chemistry 1(2), 7 (2026)` with a scholarly-record link. The case study no longer calls it a manuscript in revision. |
+| Rubisco title and status | Title may be public; the work is published. Author lines are unnecessary on the portfolio. | Updated to `AI Chemistry 1(2), 7 (2026)` with the official open-paper DOI. The case study no longer calls it a manuscript in revision. |
 | Pangenomics title and status | Replace the prior working title with “Beyond nif: protein-family modeling reveals the accessory systems of cyanobacterial diazotrophy”; status is “In submission.” | Updated in the functional-discovery publication program. Recheck the status immediately before any later production publication because submission state can change. |
 | Publication authors | Do not list author lines on individual entries; readers can inspect the linked record. | Removed authors from the public publication data model and page presentation. |
 | Publication record | Use the current Google Scholar record supplied by James. | Added the 2026 AI Chemistry paper, two 2026 bioRxiv records, the 2026 Resources, Environment and Sustainability paper, and the 2018 Proceedings record; retained and corrected the existing publication entries. |
-| Independent advisory tense | Prefer historical/experience-based language such as “I have advised,” without aggressively announcing availability or listing prohibitions. | Homepage and About now say James has advised biotechnology and research teams. The direct “Relevant introductions are welcome” and strong conflict disclaimer were replaced with neutral relationship-and-scope language. |
-| Advisory scope | Structural biology, scientific ML, technical strategy, method review, candidate prioritization, model evaluation, experimental translation, and feasibility assessment are acceptable. | Existing generalized scope remains. Client identities, metrics, systems, and results remain omitted. |
+| Independent advisory positioning | Remove it as a public positioning pillar. | The homepage card and section, About section, footer link, and advisory content were removed. The prior URL now serves only a `noindex` compatibility notice. |
+| Confidentiality boilerplate | Remove the generic “details and results have been generalized” language. | Disclosure paragraphs and the case-study confidentiality field were removed. Scientific validation status remains where it adds substantive meaning. |
+| Writing archive | Curate for tenure rather than republishing all historical posts. | Five essays remain public across Selected technical essays and Foundations. See `ARCHIVE_REVIEW.md` for the full 20-PDF audit. |
 | Decision-systems framing | Approved. | Retained the generalized targeting, forecasting, causal inference, measurement, resource-allocation, and operational-workflow language. |
 | Commercial-pharma disclaimer | Unnecessary. | Removed from About rather than replacing it with another defensive disclaimer. |
 | Employer-specific claims | Keep removed. | Pfizer, UCB, NetApp, employer systems, brand references, and internal-platform descriptions remain absent from public work records. |
@@ -47,4 +48,3 @@ This file is not imported by the site and is not copied to `public/`. James revi
 ## Remaining publication-time check
 
 Only one volatile item remains: reconfirm whether “Beyond nif” is still “In submission” immediately before merging or deploying. No other content decision from this review remains open.
-
