@@ -81,7 +81,7 @@ const navItems = [
         <div class="mode-tools">
           {mode === 'lab' ? (
             <>
-              <a class="mode-link" href={sitePath()}><span aria-hidden="true">←</span> Editorial</a>
+              <a class="mode-link" href={sitePath()}><span aria-hidden="true">←</span> Home</a>
               <SoundToggle client:load compact={true} />
             </>
           ) : (
@@ -99,7 +99,6 @@ const navItems = [
       <div class="shell footer-grid">
         <div>
           <strong>{profile.name}</strong>
-          <p>ForetoData collects scientific, analytical, and technical work.</p>
         </div>
         <nav aria-label="Footer navigation">
           <a href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>

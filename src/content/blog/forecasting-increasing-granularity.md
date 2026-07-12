@@ -3,10 +3,7 @@ title: "Forecasting at Increasing Granularity"
 date: 2023-01-30
 description: "What changes when one aggregate forecast becomes thousands of product, geography, and segment forecasts."
 tags: ["forecasting", "time-series", "decision-systems", "model-evaluation"]
-section: "selected"
 ---
-
-> This essay was originally published in January 2023. It has been edited for clarity and current terminology while preserving the practical lessons from the original analysis.
 
 An aggregate forecast can look stable while the series beneath it are sparse, volatile, and difficult to maintain. That difference matters when a planning process moves from one total to thousands of product, geography, and segment forecasts.
 
@@ -35,7 +32,7 @@ Evaluation should therefore be reported by level and by series type. A single av
 
 A hierarchy creates a coherence problem. The country forecasts may not add up to the worldwide forecast, and district forecasts may not add up to their country totals.
 
-The original article described a simple top-down adjustment: scale the lower-level forecasts so they sum to a higher-level forecast. This can be useful when the aggregate series carries a stronger signal, but it does not guarantee better accuracy for every lower-level series.
+A simple top-down adjustment scales the lower-level forecasts so they sum to a higher-level forecast. This can be useful when the aggregate series carries a stronger signal, but it does not guarantee better accuracy for every lower-level series.
 
 It is one member of a broader family of reconciliation methods. Bottom-up, top-down, and optimal reconciliation approaches such as MinT make different assumptions about where the reliable information sits. The method should be tested through backtesting rather than chosen by intuition alone.
 

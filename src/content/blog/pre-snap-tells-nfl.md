@@ -3,7 +3,6 @@ title: "Pre-Snap Tells and Offensive Predictability in the NFL"
 date: 2025-01-07
 description: "An exploratory classification study of pre-snap formation predictability and its association with on-field performance."
 tags: ["sports-analytics", "machine-learning", "classification", "observational-analysis"]
-section: "selected"
 ---
 
 > This is an exploratory observational analysis. It identifies associations worth testing and does not estimate a causal effect of formation predictability.
@@ -16,7 +15,7 @@ I used 2022 NFL tracking data to train classifiers on player positioning and for
 
 Each play in the tracking data includes the x and y coordinates of all 22 players before the snap. The models used those positions and related formation features to classify run versus pass.
 
-The original model reported a training AUC of about 0.788 and a test AUC of about 0.774. The close values suggest that the classifier retained useful signal on the held-out data without a large train-test gap.
+The classifier achieved a training AUC of about 0.788 and a test AUC of about 0.774. The close values suggest that it retained useful signal on the held-out data without a large train-test gap.
 
 Teams whose plays were easier to classify were described as having more transparent formations. Lower predictability meant the pre-snap alignment disclosed less about the play type.
 

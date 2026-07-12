@@ -1,26 +1,5 @@
 ---
-import Base from '../../layouts/Base.astro';
-import { sitePath } from '../../utils/paths';
+import Redirect from '../../layouts/Redirect.astro';
 ---
 
-<Base
-  title="Archived note | James Young"
-  description="This earlier exploratory note is no longer part of the selected ForetoData writing archive."
-  canonicalPath="writing"
-  noindex={true}
->
-  <header class="page-hero">
-    <div class="shell">
-      <span class="page-path">ForetoData / writing / archived</span>
-      <h1>Earlier note archived</h1>
-      <div class="page-intro">
-        <span class="section-kicker">2022 exploratory work</span>
-        <p>This note is no longer part of the selected public archive. Writing now collects reviewed technical work with its evidence, context, and limitations stated directly.</p>
-      </div>
-      <div class="text-links">
-        <a class="text-link" href={sitePath('writing')}>Writing archive <span aria-hidden="true">→</span></a>
-        <a class="text-link" href={sitePath('publications')}>Recent research <span aria-hidden="true">→</span></a>
-      </div>
-    </div>
-  </header>
-</Base>
+<Redirect to="writing" label="Writing" />
