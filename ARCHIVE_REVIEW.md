@@ -6,7 +6,7 @@ This non-public note records the editorial review of the 20 original blog-post P
 
 ## Public archive strategy
 
-Recent peer-reviewed and open-access research leads the homepage and Publications page. Earlier writing appears in a subordinate archive that establishes continuity of practice without presenting every historical post as current guidance.
+Recent peer-reviewed and open-access research leads the homepage and Publications page. Writing is limited to three technical essays that reinforce the current scientific and analytical positioning.
 
 ### Selected technical essays
 
@@ -16,12 +16,12 @@ Recent peer-reviewed and open-access research leads the homepage and Publication
 | Forecasting at Increasing Granularity | Reconstructed as clean HTML | Strong evidence of hierarchical forecasting judgment, reconciliation, compute constraints, and missing-versus-zero reasoning. Terminology and claims were updated. |
 | From Pairwise to Batch Sequence Alignment in R | Retained and revised | Connects bioinformatics, pipeline scaling, measured runtime, local data handling, and a user-facing interface. Validation limits are now explicit. |
 
-### Foundations: earlier applied work
+### Removed after final positioning review
 
 | Piece | Public treatment | Reason |
 | --- | --- | --- |
-| Efficient, Automated, and Reproducible Data Workflows in R Using drake | Reconstructed as a historical note | Shows reproducibility, dependency-graph, caching, and recovery instincts dating to 2020. The page states that `targets` superseded `drake`. |
-| Predicting Drug Toxicity with Cheminformatics and Machine Learning | Retained and reframed | Useful as a feature-engineering prototype. Unsupported model-performance implications were removed. |
+| Efficient, Automated, and Reproducible Data Workflows in R Using drake | Removed from public output | The historical framing and superseded toolchain subtract from the current message. The prior URL redirects to Writing. |
+| Predicting Drug Toxicity with Cheminformatics and Machine Learning | Removed from public output | The prototype is less persuasive than the current research record. The prior URL redirects to Writing. |
 
 ## Kept out of the public archive
 

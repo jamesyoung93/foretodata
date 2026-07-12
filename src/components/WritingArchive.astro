@@ -7,51 +7,24 @@ interface Props {
 }
 
 const { posts } = Astro.props;
-const definitions = [
-  {
-    title: 'Selected technical essays',
-    description: 'Applied analyses selected for the technical judgment they document.',
-    match: (post: CollectionEntry<'blog'>) => post.data.section === 'selected',
-  },
-  {
-    title: 'Foundations: earlier applied work',
-    description: 'Notes from 2020 and 2022 on reproducible workflows and reviewable feature engineering, presented with their current limitations.',
-    match: (post: CollectionEntry<'blog'>) => post.data.section === 'foundations',
-  },
-];
-
-const assigned = new Set<string>();
-const groups = definitions.map((definition) => {
-  const groupPosts = posts.filter((post) => !assigned.has(post.slug) && definition.match(post));
-  groupPosts.forEach((post) => assigned.add(post.slug));
-  return { ...definition, posts: groupPosts };
-}).filter((group) => group.posts.length > 0);
-
-const remainder = posts.filter((post) => !assigned.has(post.slug));
-if (remainder.length) {
-  groups.push({ title: 'Technical implementation', description: 'Practical notes on building and operating analytical systems.', match: () => true, posts: remainder });
-}
-
 const formatDate = (date: Date) => date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
 ---
 
-{groups.map((group) => (
-  <section class="program-section">
-    <div class="program-heading">
-      <h2>{group.title}</h2>
-      <p>{group.description}</p>
-    </div>
-    <div class="archive-list">
-      {group.posts.map((post) => (
-        <a class="archive-item" href={sitePath(`posts/${post.slug}`)}>
-          <span class="archive-meta">{formatDate(post.data.date)}</span>
-          <div>
-            <h3>{post.data.title}</h3>
-            <p>{post.data.description}</p>
-          </div>
-          <span class="archive-arrow" aria-hidden="true">→</span>
-        </a>
-      ))}
-    </div>
-  </section>
-))}
+<section class="program-section">
+  <div class="program-heading">
+    <h2>Technical essays</h2>
+    <p>Sequence analysis, hierarchical forecasting, and observational classification.</p>
+  </div>
+  <div class="archive-list">
+    {posts.map((post) => (
+      <a class="archive-item" href={sitePath(`posts/${post.slug}`)}>
+        <span class="archive-meta">{formatDate(post.data.date)}</span>
+        <div>
+          <h3>{post.data.title}</h3>
+          <p>{post.data.description}</p>
+        </div>
+        <span class="archive-arrow" aria-hidden="true">→</span>
+      </a>
+    ))}
+  </div>
+</section>

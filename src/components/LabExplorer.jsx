@@ -69,7 +69,7 @@ export default function LabExplorer({ basePath = '/foretodata/' }) {
               <span className="lab-prompt">./{study.slug}</span>
               <h3>{study.title}</h3>
               <p>{study.question}</p>
-              <a href={toPath(`work/${study.slug}`)}>open record →</a>
+              <a href={toPath(`work/${study.slug}`)}>view work →</a>
             </article>
           ))}
         </div>

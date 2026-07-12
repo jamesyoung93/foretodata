@@ -3,10 +3,7 @@ title: "From Pairwise to Batch Sequence Alignment in R"
 date: 2022-06-15
 description: "Building a practical bioinformatics pipeline from single alignments to parallelized batch processing to a Shiny app."
 tags: ["bioinformatics", "r", "sequence-alignment"]
-section: "selected"
 ---
-
-> Originally published in June 2022. Package choices and endpoints reflect the implementation at that time.
 
 Sequence alignment is fundamental to bioinformatics. Similarity between nucleotide or amino-acid sequences can provide evidence about evolutionary relatedness and possible functional similarity. Comparison with an appropriate reference can also support specimen identification. The gap between "align two sequences" and "align thousands against a reference database" is mostly an engineering problem.
 
@@ -20,7 +17,7 @@ Two hand-selected sequences aligned with `msaClustalOmega()`. Two H1N1 flu seque
 
 ### Level 2: One query vs. database
 
-One unknown sequence against 229 reference sequences, run serially. About a minute. Now you can answer "what is this sequence closest to?"
+One unknown sequence against 229 reference sequences, run serially. About a minute. The result identifies the closest reference to the query.
 
 ### Level 3: Multiple queries vs. database
 

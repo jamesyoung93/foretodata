@@ -1,0 +1,27 @@
+---
+import { sitePath } from '../utils/paths';
+
+interface Props {
+  to: string;
+  label: string;
+}
+
+const { to, label } = Astro.props;
+const destination = sitePath(to);
+const canonicalUrl = new URL(destination, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <meta http-equiv="refresh" content={`0;url=${destination}`} />
+    <link rel="canonical" href={canonicalUrl} />
+    <title>{label} | James Young</title>
+  </head>
+  <body>
+    <a href={destination}>{label}</a>
+  </body>
+</html>

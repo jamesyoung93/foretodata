@@ -1,6 +1,6 @@
 # ForetoData redesign QA report
 
-Review date: 2026-07-11 (America/New_York)
+Review date: 2026-07-12 (America/New_York)
 
 ## Build, type-check, lint, and tests
 
@@ -8,15 +8,15 @@ Review date: 2026-07-11 (America/New_York)
 - Astro type-check: passed with zero errors. Legacy unused-component hints were resolved before finalization.
 - Lint: no standalone lint script exists in the preserved repository. `astro check` is the repository-native static diagnostic.
 - Automated tests: no unit-test framework existed. A dependency-free static route/link checker was added at `scripts/check-site.mjs` and is available through `npm run check:routes`.
-- Deployment: the initial redesign was merged and deployed through PR #42. The second editorial pass remains local pending publication approval.
+- Deployment: GitHub Pages deploys merges to `main`; production status is verified after each release.
 
 ## Routes and internal links
 
 - The generated-site checker validates every HTML `href` and `src` beneath `/foretodata/`.
 - It rejects root-relative paths that escape the GitHub Pages base.
 - The checked build produced no missing internal targets.
-- `/posts` is preserved as a `noindex` compatibility route with canonical `/writing`.
-- Five selected `/posts/[slug]` articles remain available. Four retired post URLs and the retired advisory URL render `noindex` compatibility notices instead of 404 responses. `/surprise` also remains available.
+- `/posts` is preserved as a `noindex` redirect with canonical `/writing`.
+- Three `/posts/[slug]` essays remain available. Six retired post URLs redirect to Writing, and the retired advisory URL redirects to Work. `/surprise` also remains available.
 
 ## External links
 
@@ -102,7 +102,7 @@ Fix applied: About now connects scientific depth, operational judgment, and tran
 
 No employer endorsement is implied in the redesigned public copy. Internal platforms, brands, and commercial results are absent. The site does not present an external advisory offer.
 
-Resolution: the second editorial pass removed the advisory content, homepage and About sections, and footer link. The prior route now contains only a `noindex` compatibility notice.
+Resolution: the editorial passes removed the advisory content, homepage and About sections, and footer link. The prior route redirects to Work.
 
 ## Screenshots
 

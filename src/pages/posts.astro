@@ -1,33 +1,6 @@
 ---
-import { getCollection } from 'astro:content';
-import Base from '../layouts/Base.astro';
-import WritingArchive from '../components/WritingArchive.astro';
-
-const posts = (await getCollection('blog'))
-  .filter((post) => !post.data.hidden)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+import Redirect from '../layouts/Redirect.astro';
 ---
 
-<Base
-  title="Writing | James Young"
-  description="Selected technical essays by James Young on bioinformatics, forecasting, reproducible data workflows, model evaluation, and decision systems."
-  canonicalPath="writing"
-  noindex={true}
->
-  <header class="page-hero">
-    <div class="shell">
-      <span class="page-path">ForetoData / posts / preserved route</span>
-      <h1>Writing</h1>
-      <div class="page-intro">
-        <span class="section-kicker">Legacy route</span>
-        <p>This route remains available for existing links. The canonical archive now lives at Writing.</p>
-      </div>
-    </div>
-  </header>
-  <section class="section">
-    <div class="shell">
-      <WritingArchive posts={posts} />
-    </div>
-  </section>
-</Base>
+<Redirect to="writing" label="Writing" />
 

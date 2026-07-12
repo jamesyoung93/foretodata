@@ -1,26 +1,5 @@
 ---
-import Base from '../../layouts/Base.astro';
-import { sitePath } from '../../utils/paths';
+import Redirect from '../../layouts/Redirect.astro';
 ---
 
-<Base
-  title="Retired work page | James Young"
-  description="This earlier ForetoData work page has been retired."
-  canonicalPath="work"
-  noindex={true}
->
-  <header class="page-hero">
-    <div class="shell">
-      <span class="page-path">ForetoData / work / retired</span>
-      <h1>Earlier work page retired</h1>
-      <div class="page-intro">
-        <span class="section-kicker">Compatibility notice</span>
-        <p>This page is no longer part of the selected work collection. The current collection focuses on reviewed research and applied-practice records.</p>
-      </div>
-      <div class="text-links">
-        <a class="text-link" href={sitePath('work')}>Selected work <span aria-hidden="true">→</span></a>
-        <a class="text-link" href={sitePath('publications')}>Recent research <span aria-hidden="true">→</span></a>
-      </div>
-    </div>
-  </header>
-</Base>
+<Redirect to="work" label="Selected work" />

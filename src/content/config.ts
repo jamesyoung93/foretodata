@@ -7,7 +7,6 @@ const blog = defineCollection({
     date: z.coerce.date(),
     description: z.string(),
     tags: z.array(z.string()),
-    section: z.enum(['selected', 'foundations']).default('selected'),
     hidden: z.boolean().default(false),
   }),
 });

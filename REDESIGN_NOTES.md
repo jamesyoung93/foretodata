@@ -47,7 +47,7 @@ Added components:
 
 - `CaseStudyCard.astro` for consistent selected-work summaries.
 - `DiscoveryDiagram.astro` for a lightweight, accessible, explicitly conceptual research workflow.
-- `WritingArchive.astro` for selected technical essays and foundation notes.
+- `WritingArchive.astro` for the three retained technical essays.
 - `LabExplorer.jsx` for accessible project filtering and terminal diagrams.
 
 The old filter, three-dimensional molecular/landscape visualizations, animated hero, and theme toggle were removed after their useful ideas were translated into Lab Mode. They were tightly coupled to the prior design, duplicated project data, carried unsupported illustrative metrics, required global third-party scripts, and added motion and performance costs. The stale generated CSS file under `public/_astro/` was also removed.
@@ -56,7 +56,7 @@ The old filter, three-dimensional molecular/landscape visualizations, animated h
 
 - Astro’s static architecture, React integration, Tailwind integration, package lock, and GitHub Pages workflow.
 - The `/foretodata/` base-path configuration.
-- Five reviewed writing entries, plus `noindex` archive notices at four retired post URLs.
+- Three technical essays, with retired post URLs preserved as `noindex` redirects.
 - The publication record, reorganized into connected programs.
 - The opt-in sound manager and sound control.
 - Surprise Me as a Lab Mode easter egg.
