@@ -4,16 +4,22 @@ import { sitePath } from '../utils/paths';
 
 interface Props {
   posts: CollectionEntry<'blog'>[];
+  heading?: string;
+  description?: string;
 }
 
-const { posts } = Astro.props;
+const {
+  posts,
+  heading = 'Earlier technical notes',
+  description = 'Selected analyses in forecasting, sequence alignment, and observational classification.',
+} = Astro.props;
 const formatDate = (date: Date) => date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
 ---
 
 <section class="program-section">
   <div class="program-heading">
-    <h2>Technical essays</h2>
-    <p>Sequence analysis, hierarchical forecasting, and observational classification.</p>
+    <h2>{heading}</h2>
+    <p>{description}</p>
   </div>
   <div class="archive-list">
     {posts.map((post) => (

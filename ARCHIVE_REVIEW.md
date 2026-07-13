@@ -1,4 +1,4 @@
-# Writing archive review
+# Insights and earlier-notes review
 
 Review date: 2026-07-11
 
@@ -6,22 +6,30 @@ This non-public note records the editorial review of the 20 original blog-post P
 
 ## Public archive strategy
 
-Recent peer-reviewed and open-access research leads the homepage and Publications page. Writing is limited to three technical essays that reinforce the current scientific and analytical positioning.
+Recent peer-reviewed research leads the homepage and Publications page. The Insights page now leads with current essays that reflect senior thinking across trustworthy AI, scientific machine learning, decision systems, and analytical communication. Earlier technical work remains available through a separate, low-prominence archive.
 
-### Selected technical essays
+### Current insights
+
+| Essay | Public treatment |
+| --- | --- |
+| Fluent and Wrong Can Look Exactly Like Fluent and Right | Featured Substack essay on governed analytics, verification, causal boundaries, and refusal. |
+| The Evolution of Research and Insight Generation: From Hypotheses to Outcomes | Featured Substack essay connecting experimental science, predictive ML, causal inference, active learning, and outcomes. |
+| I Built a Tool That Turns Sentences Into a Consulting-Quality Slide Deck | Featured Substack essay on analytical communication systems and implementation. |
+
+### Earlier technical notes
 
 | Piece | Public treatment | Reason |
 | --- | --- | --- |
-| Pre-Snap Tells and Offensive Predictability in the NFL | Retained and revised | Concrete feature engineering, classification, held-out AUC, and exploratory observational analysis. Causal language was removed. |
-| Forecasting at Increasing Granularity | Reconstructed as clean HTML | Strong evidence of hierarchical forecasting judgment, reconciliation, compute constraints, and missing-versus-zero reasoning. Terminology and claims were updated. |
-| From Pairwise to Batch Sequence Alignment in R | Retained and revised | Connects bioinformatics, pipeline scaling, measured runtime, local data handling, and a user-facing interface. Validation limits are now explicit. |
+| Pre-Snap Tells and Offensive Predictability in the NFL | Available in the earlier-notes archive | Concrete feature engineering, classification, held-out AUC, and exploratory observational analysis. Causal language was removed. |
+| Forecasting at Increasing Granularity | Available in the earlier-notes archive | Strong evidence of hierarchical forecasting judgment, reconciliation, compute constraints, and missing-versus-zero reasoning. Terminology and claims were updated. |
+| From Pairwise to Batch Sequence Alignment in R | Available in the earlier-notes archive | Connects bioinformatics, pipeline scaling, measured runtime, local data handling, and a user-facing interface. Validation limits are explicit. |
 
 ### Removed after final positioning review
 
 | Piece | Public treatment | Reason |
 | --- | --- | --- |
-| Efficient, Automated, and Reproducible Data Workflows in R Using drake | Removed from public output | The historical framing and superseded toolchain subtract from the current message. The prior URL redirects to Writing. |
-| Predicting Drug Toxicity with Cheminformatics and Machine Learning | Removed from public output | The prototype is less persuasive than the current research record. The prior URL redirects to Writing. |
+| Efficient, Automated, and Reproducible Data Workflows in R Using drake | Removed from public output | The historical framing and superseded toolchain subtract from the current message. The prior URL redirects to Insights. |
+| Predicting Drug Toxicity with Cheminformatics and Machine Learning | Removed from public output | The prototype is less persuasive than the current research record. The prior URL redirects to Insights. |
 
 ## Kept out of the public archive
 

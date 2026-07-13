@@ -219,6 +219,34 @@ export const approachPrinciples = [
   },
 ];
 
+export type Insight = {
+  title: string;
+  description: string;
+  published: string;
+  href: string;
+};
+
+export const featuredInsights: Insight[] = [
+  {
+    title: 'Fluent and Wrong Can Look Exactly Like Fluent and Right',
+    description: 'A working AI analytics demo built around governed definitions, reproducible evidence, causal boundaries, and refusal when a claim cannot be verified.',
+    published: 'July 2026',
+    href: 'https://foretodata.substack.com/p/fluent-and-wrong-can-look-exactly',
+  },
+  {
+    title: 'The Evolution of Research and Insight Generation: From Hypotheses to Outcomes',
+    description: 'A framework connecting hypothesis-driven science, predictive modeling, causal inference, and active learning to measurable outcomes.',
+    published: 'April 2026',
+    href: 'https://foretodata.substack.com/p/the-evolution-of-research-and-insight',
+  },
+  {
+    title: 'I Built a Tool That Turns Sentences Into a Consulting-Quality Slide Deck',
+    description: 'A practical system for translating narrative input into structured slide decks while preserving judgment about argument, evidence, and communication.',
+    published: 'March 2026',
+    href: 'https://foretodata.substack.com/p/i-built-a-tool-that-turns-sentences',
+  },
+];
+
 export const profile = {
   name: 'James Young',
   descriptor: 'Scientific Machine Learning · Biological Discovery · Decision Systems',
@@ -227,4 +255,5 @@ export const profile = {
   linkedin: 'https://www.linkedin.com/in/jamesyoungsd/',
   scholar: 'https://scholar.google.com/citations?user=EyrW6pEAAAAJ&hl=en',
   substack: 'https://foretodata.substack.com/',
+  substackArchive: 'https://foretodata.substack.com/archive',
 };

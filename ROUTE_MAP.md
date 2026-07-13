@@ -10,7 +10,7 @@ All public routes are generated beneath the GitHub Pages base path `/foretodata/
 | `/about` | Biography, employer claims, method inventory | Rewritten in place |
 | `/publications` | Flat publication list | Reorganized in place |
 | `/posts` | Flat writing list | Preserved as a legacy alias |
-| `/posts/[slug]` | Seven writing detail pages | Curated; three remain essays and the retired URLs redirect to `/writing` |
+| `/posts/[slug]` | Earlier writing detail pages | Curated; three remain technical notes and the retired URLs redirect to `/writing` |
 | `/surprise` | Terminal quote easter egg | Preserved as part of Lab Mode |
 
 ## New and current routes
@@ -25,9 +25,10 @@ All public routes are generated beneath the GitHub Pages base path `/foretodata/
 | `/work/independent-scientific-ml-advisory` | Redirect for retired advisory content | Preserved as a `noindex` redirect to `/work` |
 | `/research` | Connected research program | New |
 | `/publications` | Publications grouped by research program | Canonical, preserved |
-| `/writing` | Three technical essays | Canonical |
-| `/posts` | Compatibility redirect | Preserved as a `noindex` redirect to `/writing` |
-| `/posts/[slug]` | Three essays plus six retired paths | Curated; retired paths redirect to `/writing` |
+| `/writing` | Insights landing page with three current Substack essays | Canonical |
+| `/writing/archive` | Three earlier technical notes | New archive route |
+| `/posts` | Compatibility redirect | Preserved as a `noindex` redirect to Insights at `/writing` |
+| `/posts/[slug]` | Three technical notes plus six retired paths | Curated; retired paths redirect to Insights at `/writing` |
 | `/about` | Narrative professional profile | Canonical, preserved |
 | `/lab` | Optional terminal-inspired exploration layer | New |
 | `/surprise` | Lab Mode easter egg | Preserved, `noindex` |
@@ -40,12 +41,13 @@ No runtime redirect dependency was added. Astro generates static, base-aware red
 
 `src/utils/paths.ts` builds internal URLs from `import.meta.env.BASE_URL`. Astro configuration remains `base: /foretodata`. The generated route checker rejects root-relative references that escape the base and verifies generated local targets.
 
-Canonical and social URLs use the configured Astro site plus the base-aware path. Assets and redirects use the same path helper. Three articles remain at `/foretodata/posts/[slug]`; six retired post paths redirect to Writing.
+Canonical and social URLs use the configured Astro site plus the base-aware path. Assets and redirects use the same path helper. Three technical notes remain at `/foretodata/posts/[slug]`; six retired post paths redirect to Insights.
 
 ## Compatibility concerns
 
 - GitHub Pages may normalize trailing slashes; generated pages use directory-style output and work with or without the visible trailing slash.
 - Direct client-side routing was not introduced. Every public page is a static HTML file.
-- The `/posts` compatibility route redirects to Writing.
-- Retired-detail routes use `noindex` and canonical URLs for the Work or Writing destination.
+- The `/posts` compatibility route redirects to Insights.
+- Retired-detail routes use `noindex` and canonical URLs for the Work or Insights destination.
+- The route checker explicitly asserts the Insights page, earlier-notes archive, three retained notes, and all retired post redirects.
 - A future custom-domain migration should update `site` and `base` together and rerun `npm run check:routes`.

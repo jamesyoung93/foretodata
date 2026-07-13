@@ -6,6 +6,20 @@ const base = '/foretodata/';
 const failures = [];
 let htmlCount = 0;
 let referenceCount = 0;
+const expectedRoutes = [
+  'writing',
+  'writing/archive',
+  'posts',
+  'posts/forecasting-increasing-granularity',
+  'posts/pairwise-to-batch-sequence-alignment',
+  'posts/pre-snap-tells-nfl',
+  'posts/causal-inference-practical-guide',
+  'posts/interpretable-ml-business',
+  'posts/llm-production-lessons',
+  'posts/predicting-dna-properties-bioinformatics',
+  'posts/predicting-drug-toxicity-cheminformatics',
+  'posts/reproducible-r-workflows-drake',
+];
 
 function walk(directory) {
   return readdirSync(directory).flatMap((name) => {
@@ -46,6 +60,13 @@ for (const file of walk(dist).filter((path) => path.endsWith('.html'))) {
     if (target && !existsSync(target)) {
       failures.push(`${file}: missing target for ${url}`);
     }
+  }
+}
+
+for (const route of expectedRoutes) {
+  const target = join(dist, ...route.split('/'), 'index.html');
+  if (!existsSync(target)) {
+    failures.push(`expected preserved route is missing: /${route}`);
   }
 }
 
