@@ -26,8 +26,8 @@ The build includes `astro check`. The route checker validates generated internal
 
 ## Content and structure
 
-- `src/data/site.ts` — shared case-study, publication, positioning, and profile content
-- `src/content/blog/` — writing archive
+- `src/data/site.ts` — shared case-study, publication, featured-insight, positioning, and profile content
+- `src/content/blog/` — earlier technical notes preserved behind the Insights page
 - `src/pages/` — static Astro routes
 - `src/layouts/Base.astro` — shared navigation, metadata, and mode-aware shell
 - `src/styles/global.css` — editorial and Lab Mode visual systems

@@ -1,10 +1,10 @@
 # ForetoData redesign QA report
 
-Review date: 2026-07-12 (America/New_York)
+Review date: 2026-07-13 (America/New_York)
 
 ## Build, type-check, lint, and tests
 
-- Production build: passed with 22 static HTML pages after the second editorial pass and compatibility review.
+- Production build: passed with 23 static HTML pages after the Insights pass and compatibility review.
 - Astro type-check: passed with zero errors. Legacy unused-component hints were resolved before finalization.
 - Lint: no standalone lint script exists in the preserved repository. `astro check` is the repository-native static diagnostic.
 - Automated tests: no unit-test framework existed. A dependency-free static route/link checker was added at `scripts/check-site.mjs` and is available through `npm run check:routes`.
@@ -15,8 +15,9 @@ Review date: 2026-07-12 (America/New_York)
 - The generated-site checker validates every HTML `href` and `src` beneath `/foretodata/`.
 - It rejects root-relative paths that escape the GitHub Pages base.
 - The checked build produced no missing internal targets.
+- The checker explicitly asserts the Insights page, earlier-notes archive, three retained notes, and six retired post redirects so an unlinked preserved route cannot disappear silently.
 - `/posts` is preserved as a `noindex` redirect with canonical `/writing`.
-- Three `/posts/[slug]` essays remain available. Six retired post URLs redirect to Writing, and the retired advisory URL redirects to Work. `/surprise` also remains available.
+- `/writing` is the current Insights landing page and `/writing/archive` contains the three earlier technical notes. Six retired post URLs redirect to Insights, and the retired advisory URL redirects to Work. `/surprise` also remains available.
 
 ## External links
 
@@ -29,19 +30,22 @@ External references were checked with concurrent HTTP requests and targeted brow
 - LinkedIn rejects HEAD with 405 but remains the existing public profile URL.
 - Both 2026 bioRxiv DOI links resolved to official preprint pages with HTTP 200. MDPI continues to reject automated clients with 403 even though the official DOI records are valid.
 - All newly supplied Google Scholar publication-record links returned HTTP 200 during the 2026-07-11 content update.
+- The three featured Substack essays and the Substack archive CTA were verified against their live canonical URLs during the 2026-07-13 Insights pass.
 
 ## Mobile and responsive review
 
-Browser review used 1440×1000 desktop and 390×844 mobile viewports for the homepage in both modes, one case study, Research, Publications, About, and Writing.
+Browser review used 1440×1000 desktop and 390×844 mobile viewports for the homepage in both modes, one case study, Research, Publications, About, and the original Writing page. The 2026-07-13 pass repeated focused desktop and mobile review for Insights and the earlier-notes archive.
 
 The first mobile pass found a two-pixel horizontal overflow caused by `100vw` including the browser scrollbar. The navigation width was changed to its containing block. All seven reviewed mobile routes subsequently reported `scrollWidth === clientWidth` (375 CSS pixels in the browser surface).
 
 Cards, publication rows, diagrams, case-study navigation, footer links, and Lab Mode controls collapse to single-column layouts at small widths. No critical content depends on hover.
 
+The Insights page rendered three equal cards on desktop and a single-column card stack on mobile. Both Insights and the earlier-notes archive reported `scrollWidth === clientWidth`; all titles, summaries, and calls to action remained within their containers.
+
 ## Accessibility review
 
 - Semantic landmarks: header/banner, primary navigation, main, named regions, article elements, asides, and footer are present.
-- Heading hierarchy: every reviewed route has exactly one H1; section/article headings follow without skipped levels after corrections to Writing and Lab Mode cards.
+- Heading hierarchy: every reviewed route has exactly one H1. Insights has three H2 essay titles; the earlier-notes archive has one H2 followed by three H3 note titles.
 - Skip link: first in the document and revealed on focus.
 - Focus: a high-contrast 3px orange focus indicator is applied globally with `:focus-visible`.
 - Controls: Lab Mode filters and sound controls are native buttons with accessible names and pressed state where applicable. Project cards and navigation are native links.
@@ -61,6 +65,8 @@ Cards, publication rows, diagrams, case-study navigation, footer links, and Lab 
 ## Metadata and social preview
 
 Browser inspection confirmed each reviewed route has a unique title, description, canonical URL, Open Graph title, exactly one H1, and base-aware metadata.
+
+Insights uses the stable canonical `/foretodata/writing/` URL while presenting the current public label and metadata as “Insights.”
 
 `public/og.png` is a site-specific social card. `Base.astro` supplies Open Graph and X/Twitter large-card metadata with absolute URLs derived from the configured site and base path. Compatibility and easter-egg routes use `noindex` where appropriate.
 
@@ -106,7 +112,7 @@ Resolution: the editorial passes removed the advisory content, homepage and Abou
 
 ## Screenshots
 
-Fourteen non-public captures from the initial redesign remain in `review/screenshots/`. Browser review was repeated at 1440x1000 and 390x844 for the changed homepage and Writing layouts during the second pass, with additional mobile checks for Publications and About.
+Fourteen non-public captures from the initial redesign remain in `review/screenshots/`. Browser review was repeated at 1440x1000 and 390x844 for the changed homepage and Writing layouts during the second pass, with additional mobile checks for Publications and About. The Insights pass was inspected in the connected browser at the same desktop and mobile sizes.
 
 ## Remaining limitations
 

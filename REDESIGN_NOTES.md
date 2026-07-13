@@ -29,7 +29,7 @@ The principal message is: “Machine learning for biological discovery and opera
 
 ## Information architecture
 
-Primary navigation is conventional: Work, Research, Publications, Writing, and About. Lab Mode is discoverable as a secondary utility rather than a primary identity.
+Primary navigation is conventional: Work, Research, Publications, Insights, and About. Lab Mode is discoverable as a secondary utility rather than a primary identity.
 
 The homepage order is hero, credibility summary, three selected work records, recent open research, current research, approach, and a minimal footer.
 
@@ -47,7 +47,7 @@ Added components:
 
 - `CaseStudyCard.astro` for consistent selected-work summaries.
 - `DiscoveryDiagram.astro` for a lightweight, accessible, explicitly conceptual research workflow.
-- `WritingArchive.astro` for the three retained technical essays.
+- `WritingArchive.astro` for the separate earlier-notes archive.
 - `LabExplorer.jsx` for accessible project filtering and terminal diagrams.
 
 The old filter, three-dimensional molecular/landscape visualizations, animated hero, and theme toggle were removed after their useful ideas were translated into Lab Mode. They were tightly coupled to the prior design, duplicated project data, carried unsupported illustrative metrics, required global third-party scripts, and added motion and performance costs. The stale generated CSS file under `public/_astro/` was also removed.
@@ -56,7 +56,7 @@ The old filter, three-dimensional molecular/landscape visualizations, animated h
 
 - Astro’s static architecture, React integration, Tailwind integration, package lock, and GitHub Pages workflow.
 - The `/foretodata/` base-path configuration.
-- Three technical essays, with retired post URLs preserved as `noindex` redirects.
+- Three earlier technical notes, with retired post URLs preserved as `noindex` redirects.
 - The publication record, reorganized into connected programs.
 - The opt-in sound manager and sound control.
 - Surprise Me as a Lab Mode easter egg.
@@ -74,7 +74,7 @@ The mode does not maintain separate case-study content. It reads the same data a
 - Nitrogen fixation is the flagship application inside a broader functional-discovery program.
 - The FOX gene work is presented as computational prioritization with a published evidence link, not as completed experimental validation.
 - Rubisco active learning is described as a workflow and linked to its 2026 publication in *AI Chemistry*.
-- Recent open papers lead the homepage; earlier writing is a curated record of technical development rather than a current-content feed.
+- The Insights page leads with three current Substack essays on trustworthy AI, research and insight generation, and analytical communication. Earlier technical notes remain available through a separate archive link.
 - Employer-specific commercial systems and outcomes were removed from public case-study copy. Decision systems are presented as transferable professional experience, not an offered pharma consulting service.
 - No inquiry form or scheduling tool was added; LinkedIn remains the contact path.
 - No service packages, rates, availability promises, income claims, or revenue claims are published.

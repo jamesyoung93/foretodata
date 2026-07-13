@@ -1,34 +1,47 @@
 ---
-import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import WritingArchive from '../components/WritingArchive.astro';
+import { featuredInsights, profile } from '../data/site';
 import { sitePath } from '../utils/paths';
-
-const posts = (await getCollection('blog'))
-  .filter((post) => !post.data.hidden)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
 <Base
-  title="Writing | James Young"
-  description="Technical essays by James Young on bioinformatics, forecasting, model evaluation, and decision systems."
+  title="Insights | James Young"
+  description="Essays by James Young on trustworthy AI, decision systems, scientific machine learning, and measurable outcomes."
 >
   <header class="page-hero">
     <div class="shell">
-      <span class="page-path">ForetoData / writing</span>
-      <h1>Writing</h1>
+      <span class="page-path">ForetoData / insights</span>
+      <h1>Insights</h1>
       <div class="page-intro">
-        <span class="section-kicker">Technical essays</span>
-        <p>Applied analyses in bioinformatics, forecasting, model evaluation, and analytical decision systems.</p>
-      </div>
-      <div class="text-links">
-        <a class="text-link" href={sitePath('publications')}>Recent open-access research <span aria-hidden="true">→</span></a>
+        <span class="section-kicker">Essays</span>
+        <p>Trustworthy AI, decision systems, scientific machine learning, and moving analytical work from prediction to measurable outcomes.</p>
       </div>
     </div>
   </header>
-  <section class="section">
+  <section class="section" aria-label="Featured essays">
     <div class="shell">
-      <WritingArchive posts={posts} />
+      <div class="insight-grid">
+        {featuredInsights.map((insight) => (
+          <a class="insight-card" href={insight.href} target="_blank" rel="noopener noreferrer">
+            <div class="insight-card-meta">
+              <span>{insight.published}</span>
+              <span aria-hidden="true">↗</span>
+            </div>
+            <h2>{insight.title}</h2>
+            <p>{insight.description}</p>
+            <span class="card-action">Read on Substack <span aria-hidden="true">↗</span></span>
+          </a>
+        ))}
+      </div>
+
+      <div class="insight-actions">
+        <a class="text-link" href={profile.substackArchive} target="_blank" rel="noopener noreferrer">
+          Read all essays and subscribe on Substack <span aria-hidden="true">↗</span>
+        </a>
+        <a class="archive-link" href={sitePath('writing/archive')}>
+          Earlier technical notes, 2022–2025 <span aria-hidden="true">→</span>
+        </a>
+      </div>
     </div>
   </section>
 </Base>
