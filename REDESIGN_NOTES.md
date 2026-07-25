@@ -1,4 +1,10 @@
-# ForetoData scientific-editorial redesign notes
+# ForetoData systems-synthesis redesign notes
+
+## July 2026 synthesis revision
+
+The first editorial redesign successfully removed unsupported metrics, duplicated project data, and an overly dominant terminal shell, but it narrowed the public story too far. It made biological discovery primary and represented decision systems only through generalized principles, leaving newer software and product capabilities invisible.
+
+The current revision keeps the scientific credibility and editorial restraint while changing the organizing thesis: James repeatedly represents complex domains as outcomes, controllable levers, observed context, constraints, and uncertainty; simulates interventions; selects a feasible decision; and builds the feedback loop that improves the next one. Decision systems, interactive intelligence, and scientific discovery are now parallel capability lanes. TreeMMM, Insight Harness, private local-LLM development, and AI2Analytics provide concrete system evidence before the scientific case studies and publication record.
 
 ## Audit summary
 
@@ -14,24 +20,25 @@ Mobile CSS existed, but the fixed sidebar and wide visualizations were tightly c
 
 The primary audiences are biotechnology founders, scientists, investors, attorneys, executives, collaborators, and current professional colleagues arriving through a warm referral or search.
 
-The desired positioning is senior scientific and analytical judgment across two connected domains:
+The desired positioning is senior analytical and product judgment across three connected capability lanes:
 
-1. Biological discovery: computational biology, gene and protein function, multi-omics, protein representations, active learning, and experimental prioritization.
-2. Decision systems: causal inference, forecasting, resource allocation, measurement, adoption, and operational implementation.
+1. Decision systems: response modeling, causal inference, scenario simulation, constrained optimization, measurement, and operational implementation.
+2. Interactive intelligence: private local LLMs, governed natural-language analytics, adaptive analytical pipelines, and inspectable AI-enabled tools.
+3. Scientific discovery: computational biology, gene and protein function, multi-omics, protein representations, active learning, and experimental prioritization.
 
-Biological discovery is primary. Decision systems demonstrate the ability to move analytical work into recurring operational choices. Independent advisory is no longer a public positioning pillar.
+No one domain is declared primary. Scientific work provides unusually strong evidence of depth; decision and interactive systems provide the more immediately marketable capability surface. Independent advisory remains outside the public positioning.
 
 ## Brand architecture
 
 James Young is the primary visible identity. “ForetoData” is a secondary field-notes platform and possible future studio identity. The site does not imply a team, agency infrastructure, broad service capacity, or institutional scale.
 
-The principal message is: “Machine learning for biological discovery and operational decisions.” The unifying idea is turning complex data into prioritized action.
+The principal message is: “I build extensible intelligence for complex decisions.” The unifying operating pattern is “Represent → Simulate → Decide → Learn.”
 
 ## Information architecture
 
 Primary navigation is conventional: Work, Research, Publications, Insights, and About. Lab Mode is discoverable as a secondary utility rather than a primary identity.
 
-The homepage order is hero, credibility summary, three selected work records, recent open research, current research, approach, and a minimal footer.
+The homepage order is hero, organizational horizon, interactive systems lens, three capability lanes, six systems in practice, recent open research, scientific-discovery program, operating pattern, and a minimal footer.
 
 ## Visual-system rationale
 
@@ -75,14 +82,15 @@ The mode does not maintain separate case-study content. It reads the same data a
 - The FOX gene work is presented as computational prioritization with a published evidence link, not as completed experimental validation.
 - Rubisco active learning is described as a workflow and linked to its 2026 publication in *AI Chemistry*.
 - The Insights page leads with three current Substack essays on trustworthy AI, research and insight generation, and analytical communication. Earlier technical notes remain available through a separate archive link.
-- Employer-specific commercial systems and outcomes were removed from public case-study copy. Decision systems are presented as transferable professional experience, not an offered pharma consulting service.
+- Employer-specific commercial systems and outcomes remain removed from public case-study copy. Decision systems are now evidenced through transferable architecture and public software rather than employer-specific claims.
+- Private local-LLM work is described through verified implementation capabilities without linking a private repository or naming a model whose README and code may diverge.
 - No inquiry form or scheduling tool was added; LinkedIn remains the contact path.
 - No service packages, rates, availability promises, income claims, or revenue claims are published.
 - The obsolete Kaggle link in the NFL post was removed after returning 404. The NIST AI RMF link was corrected.
 
 ## Social preview
 
-`public/og.png` is a bespoke scientific-editorial card matching the final palette and positioning. It contains the verified labels “James Young,” “Scientific Machine Learning,” “Biological Discovery,” “Decision Systems,” and “ForetoData.” Metadata is generated in `Base.astro` for Open Graph and X/Twitter cards.
+`public/og-systems.png` is a bespoke analytical-editorial card matching the final palette and positioning. It contains “James Young,” “I build decision systems for complex domains,” the three capability lanes, and the four-stage operating pattern. Metadata is generated in `Base.astro` for Open Graph and X/Twitter cards.
 
 ## Screenshots
 

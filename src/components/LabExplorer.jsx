@@ -6,19 +6,19 @@ const domains = ['All', ...new Set(caseStudies.map((study) => study.domain))];
 
 const asciiPanels = [
   {
-    label: 'BIOLOGICAL SEARCH',
-    art: `sequence ─┬─ context\n          ├─ expression ─▶ rank ─▶ test\n          └─ protein`,
-    note: 'Evidence converges on a smaller experimental set.',
-  },
-  {
-    label: 'ACTIVE LEARNING',
-    art: `known ● ●      ? ? ?\n       ╲        ╱\n        model ──▶ next batch\n       ╱        ╲\nlearned ◇ ◇    validate`,
-    note: 'Choose the next experiment for information as well as score.',
-  },
-  {
     label: 'DECISION SYSTEM',
-    art: `signal ─▶ estimate\n            │\nconstraint ─┼─▶ action ─▶ measure\n            │                │\ncontext ────┘       iterate ◀─┘`,
-    note: 'Models become useful when embedded in a measurement loop.',
+    art: `outcome  ◀── response model\n                 ▲\ncontext ────────┼──── scenario\n                 │\nlevers  ────────┴──── optimize ──▶ act`,
+    note: 'Separate what can be changed from what must be observed.',
+  },
+  {
+    label: 'INTERACTIVE INTELLIGENCE',
+    art: `question ─▶ translate ─▶ governed tool\n                              │\nlocal model ─▶ retrieve ──────┤\n                              ▼\n                      evidence artifact`,
+    note: 'Use language as the interface while keeping truth in the system.',
+  },
+  {
+    label: 'SCIENTIFIC SEARCH',
+    art: `sequence ─┬─ context\n          ├─ expression ─▶ rank ─▶ test\n          └─ structure          │\n                     learn ◀────┘`,
+    note: 'Choose the next experiment for information as well as score.',
   },
 ];
 
