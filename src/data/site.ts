@@ -1,7 +1,7 @@
 export type CaseStudy = {
   slug: string;
   recordType: 'Case study' | 'Practice record';
-  domain: 'Biological discovery' | 'Decision systems';
+  domain: 'Decision systems' | 'Interactive intelligence' | 'Scientific discovery';
   title: string;
   question: string;
   summary: string;
@@ -16,9 +16,117 @@ export type CaseStudy = {
 
 export const caseStudies: CaseStudy[] = [
   {
+    slug: 'operational-decision-systems',
+    recordType: 'Case study',
+    domain: 'Decision systems',
+    title: 'Scenario simulation and constrained allocation',
+    question: 'Given a complex system of controllable levers, observed context, and hard constraints, which feasible intervention is most likely to improve the outcome?',
+    summary: 'A reusable decision architecture that moves from response modeling through scenario simulation to bounded resource allocation and measurement.',
+    context: 'Many operating problems share the same hidden structure: outcomes emerge from interacting variables, only some variables are controllable, historical allocation is confounded with opportunity, and the final recommendation must obey real capacity and policy constraints.',
+    difficulty: [
+      'A strong prediction does not, by itself, identify what should be changed.',
+      'Response can be nonlinear, heterogeneous, and shaped by interactions between levers.',
+      'Simulated interventions become misleading when they move beyond the support of observed data.',
+      'The final plan has to be feasible, reviewable, and measurable after deployment.',
+    ],
+    approach: [
+      'Represented each problem as outcomes, controllable levers, observed context, constraints, and uncertainty.',
+      'Estimated response surfaces with temporal validation and diagnostics for interaction, support, and stability.',
+      'Simulated feasible scenarios before committing resources, keeping counterfactuals inside observed support.',
+      'Converted modeled response into constrained allocations, then attached a measurement plan to the intervention.',
+    ],
+    outcome: 'The resulting systems produce reviewable plans rather than passive scores. TreeMMM is a public implementation of this pattern for nonlinear response, interaction discovery, scenario curves, and bounded budget reallocation on customer-level panels, with a feature-parity R companion.',
+    role: 'James designed and built the modeling, interpretation, simulation, and allocation workflow, drawing on applied work across targeting, forecasting, causal measurement, and resource optimization.',
+    evidence: {
+      label: 'TreeMMM — open-source Python package and benchmark',
+      href: 'https://github.com/jamesyoung93/treemmm',
+    },
+    featured: true,
+  },
+  {
+    slug: 'governed-interactive-analytics',
+    recordType: 'Case study',
+    domain: 'Interactive intelligence',
+    title: 'Natural-language analytics with deterministic answers',
+    question: 'How can people explore complex data conversationally without allowing a language model to invent the numbers?',
+    summary: 'An interactive decision-intelligence workbench where the LLM translates intent, governed engines compute, and every answer carries provenance.',
+    context: 'Natural language makes analytical systems easier to use, but fluent responses can hide unstable definitions, unsupported causal claims, and irreproducible calculations. The interface needs to be flexible without moving the source of truth into the model.',
+    difficulty: [
+      'Questions must resolve to governed metrics, dimensions, data versions, and comparison rules.',
+      'Descriptive, diagnostic, predictive, and causal requests require different evidence boundaries.',
+      'The system must refuse unsupported work clearly instead of improvising a plausible answer.',
+      'Users need an interactive experience without losing traceability or reproducibility.',
+    ],
+    approach: [
+      'Restricted the LLM to validated intent translation and optional phrasing rather than calculation.',
+      'Routed approved intents into deterministic descriptive, retrieval, cohort, and causal engines.',
+      'Stamped outputs with source, variant, data version, evidence tier, code, and a stable result hash.',
+      'Built monitoring, persona views, causal-design workflows, and an independent golden set into the same interface.',
+    ],
+    outcome: 'Insight Harness combines natural-language exploration, interactive drill-down, monitoring, correct refusals, registered causal designs, and downloadable provenance-stamped artifacts in one governed analytical interface.',
+    role: 'James designed and implemented the product architecture, semantic layer, deterministic engines, provenance contract, evaluation harness, and interactive workbench.',
+    evidence: {
+      label: 'Insight Harness — open-source decision-intelligence workbench',
+      href: 'https://github.com/jamesyoung93/insight_harness',
+    },
+    featured: true,
+  },
+  {
+    slug: 'private-local-intelligence',
+    recordType: 'Case study',
+    domain: 'Interactive intelligence',
+    title: 'Private, on-device LLM document intelligence',
+    question: 'How can people reason over sensitive and very long documents without sending the material to a cloud model?',
+    summary: 'An offline desktop assistant combining quantized local inference, hardware-aware acceleration, and recursive document analysis.',
+    context: 'Sensitive documents often cannot leave the device, while useful document analysis can exceed a local model’s context window. A practical product has to solve privacy, inference, document processing, and interaction design together.',
+    difficulty: [
+      'Local inference has to perform across different CPU and GPU configurations.',
+      'Long documents require a structured analysis strategy rather than simple prompt truncation.',
+      'The application must make model state, memory, and analysis depth understandable to non-specialists.',
+      'Privacy depends on the full application boundary, not only the model weights.',
+    ],
+    approach: [
+      'Built a desktop application around a local llama.cpp runtime and quantized model inference.',
+      'Added hardware-aware acceleration with safe CPU fallback and a localhost-only model service.',
+      'Implemented recursive map-and-reduce document analysis for material beyond the context window.',
+      'Designed explicit fast and thorough modes, configurable conversation memory, and local PDF workflows.',
+    ],
+    outcome: 'The resulting application provides private chat and document reasoning without API keys or cloud processing, while remaining usable as a packaged desktop product.',
+    role: 'James conceived and built the end-to-end application, including the desktop interface, local model runtime integration, document-analysis workflow, packaging, and privacy boundaries.',
+    featured: true,
+  },
+  {
+    slug: 'adaptive-analytics-platform',
+    recordType: 'Case study',
+    domain: 'Interactive intelligence',
+    title: 'LLM-guided analytical pipelines that adapt to unfamiliar data',
+    question: 'How can a validated analytical method travel across teams, brands, regions, and schemas without being rebuilt by hand each time?',
+    summary: 'A framework that separates stable analytical logic from changing data environments, using an LLM for discovery and adaptation while deterministic templates perform the analysis.',
+    context: 'Reusable analytical pipelines often fail at the last mile. The core method remains valid, but table names, schemas, reference files, and operating assumptions change from one deployment to the next.',
+    difficulty: [
+      'The system has to discover relevant data and map it to explicit pipeline requirements.',
+      'Missing or mismatched inputs require adaptation without silently changing the analytical contract.',
+      'Generated preprocessing code needs review, validation, and bounded repair when execution fails.',
+      'Each deployment should preserve useful decisions so the next one starts with more context.',
+    ],
+    approach: [
+      'Declared reusable pipeline stages, typed configuration, and explicit data requirements.',
+      'Used an LLM to survey available data, map likely fields, and ask structured questions for unresolved inputs.',
+      'Generated reviewable preprocessing adapters with execution checks and traceback-informed repair.',
+      'Recorded decisions and reusable context while keeping the underlying modeling, scoring, and optimization deterministic.',
+    ],
+    outcome: 'AI2Analytics turns one-off analytical notebooks into adaptable systems that can discover, configure, transform, execute, and accumulate reusable organizational knowledge.',
+    role: 'James designed and implemented the framework, including discovery, conversational configuration, code generation, reusable templates, decision memory, scenario scoring, and constrained optimization.',
+    evidence: {
+      label: 'AI2Analytics — open-source adaptive analytics framework',
+      href: 'https://github.com/jamesyoung93/AI2Analytics',
+    },
+    featured: true,
+  },
+  {
     slug: 'oxic-nitrogen-fixation',
     recordType: 'Case study',
-    domain: 'Biological discovery',
+    domain: 'Scientific discovery',
     title: 'Multi-omic discovery for oxic nitrogen fixation',
     question: 'Which undercharacterized genes should be prioritized for experiments on oxygen-tolerant nitrogen fixation?',
     summary: 'A candidate-prioritization program integrating condition-specific multi-omics, comparative genomics, and interpretable machine learning.',
@@ -45,7 +153,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: 'rubisco-active-learning',
     recordType: 'Case study',
-    domain: 'Biological discovery',
+    domain: 'Scientific discovery',
     title: 'Protein-language-model search for Rubisco variants',
     question: 'How can a large protein sequence space be narrowed to a small, informative set of variants for experimental consideration?',
     summary: 'Protein-language-model representations and active learning used as a disciplined search strategy for candidate selection.',
@@ -69,28 +177,47 @@ export const caseStudies: CaseStudy[] = [
     },
     featured: true,
   },
+];
+
+export const capabilityLanes = [
   {
-    slug: 'operational-decision-systems',
-    recordType: 'Practice record',
-    domain: 'Decision systems',
-    title: 'Operating principles for decision systems',
-    question: 'What makes an analytical system usable in recurring operational decisions?',
-    summary: 'Principles drawn from applied work across targeting, forecasting, causal inference, measurement, and resource allocation.',
-    context: 'In applied settings, model performance is only one part of the system. Recommendations must fit decision rights, capacity constraints, measurement plans, and the way people actually work.',
-    difficulty: [
-      'Predictive signals do not automatically identify effective interventions.',
-      'Resource-allocation choices combine uncertainty with multi-team and multi-product constraints.',
-      'A model can be technically sound and still fail if its outputs are not interpretable or adoptable.',
-    ],
-    approach: [
-      'Started with the decision, intervention, and counterfactual rather than the estimator.',
-      'Used forecasting and causal methods where they matched the identification and planning problem.',
-      'Designed reviewable outputs and measurement loops for technical and non-technical stakeholders.',
-      'Treated deployment, adoption, and iteration as part of the analytical system.',
-    ],
-    outcome: 'Across these settings, the recurring lesson has been to treat decision rights, measurement, adoption, and iteration as part of the analytical design.',
-    role: 'James has led and contributed to applied data-science work across forecasting, targeting, causal measurement, and operational implementation.',
-    featured: true,
+    index: '01',
+    title: 'Decision systems',
+    promise: 'Find the levers that can change an outcome.',
+    text: 'Response modeling, causal inference, scenario simulation, and constrained optimization for resource allocation, process design, forecasting, and measurement.',
+    extension: 'From one forecast to an adaptive planning and measurement system.',
+  },
+  {
+    index: '02',
+    title: 'Interactive intelligence',
+    promise: 'Make complex systems usable without hiding their boundaries.',
+    text: 'Private local LLMs, governed natural-language analytics, adaptive analytical pipelines, and tools that turn expert workflows into inspectable interfaces.',
+    extension: 'From one assistant to a private, governed workflow and knowledge layer.',
+  },
+  {
+    index: '03',
+    title: 'Scientific discovery',
+    promise: 'Choose the next experiment, not just the next prediction.',
+    text: 'Protein language models, multi-omics, comparative genomics, active learning, and candidate prioritization for expensive biological search spaces.',
+    extension: 'From one model to a continuous experiment-selection and learning loop.',
+  },
+];
+
+export const organizationNeeds = [
+  {
+    audience: 'Startups',
+    title: 'Prove value now without building a dead-end prototype.',
+    text: 'Start with one urgent decision or workflow, then extend the same architecture across new data, models, users, and products as the company learns.',
+  },
+  {
+    audience: 'Enterprises',
+    title: 'Move AI into operations without losing control.',
+    text: 'Connect models to governed data, permissioned tools, real constraints, provenance, and feedback so intelligence can scale across teams instead of remaining a collection of pilots.',
+  },
+  {
+    audience: 'Research institutes',
+    title: 'Turn scarce experiments into compounding knowledge.',
+    text: 'Unify multimodal evidence, candidate search, interactive reasoning, and experiment selection so each result improves the next scientific decision.',
   },
 ];
 
@@ -204,18 +331,23 @@ export const publicationPrograms: { id: string; title: string; description: stri
 export const approachPrinciples = [
   {
     index: '01',
-    title: 'Start with the decision or experiment',
-    text: 'Define what will be chosen, tested, or changed. Then decide what evidence would be sufficient to act.',
+    title: 'Represent',
+    text: 'Define the outcome, observed state, controllable levers, constraints, and uncertainty before choosing a model.',
   },
   {
     index: '02',
-    title: 'Constrain the search space',
-    text: 'Use scientific context, operating constraints, and prior evidence before adding model complexity.',
+    title: 'Simulate',
+    text: 'Estimate how plausible interventions propagate through the system, keeping assumptions and support visible.',
   },
   {
     index: '03',
-    title: 'Design for the next cycle',
-    text: 'Make validation, interpretation, adoption, and iteration part of the system from the beginning.',
+    title: 'Decide',
+    text: 'Choose an experiment, intervention, or allocation that is feasible under the constraints people actually face.',
+  },
+  {
+    index: '04',
+    title: 'Learn',
+    text: 'Measure what happened, update the representation, and make the next decision better than the last.',
   },
 ];
 
@@ -249,9 +381,9 @@ export const featuredInsights: Insight[] = [
 
 export const profile = {
   name: 'James Young',
-  descriptor: 'Scientific Machine Learning · Biological Discovery · Decision Systems',
-  headline: 'Machine learning for biological discovery and operational decisions.',
-  summary: 'I build analytical systems that narrow complex search spaces, prioritize experiments and interventions, and translate data into decisions.',
+  descriptor: 'Decision Systems · Interactive AI · Scientific Machine Learning',
+  headline: 'I build extensible intelligence for complex decisions.',
+  summary: 'I help startups, enterprises, and research institutes move beyond one-off models and analyses by building adaptive systems that represent complex environments, simulate options, recommend the next action, and learn from what happens.',
   linkedin: 'https://www.linkedin.com/in/jamesyoungsd/',
   scholar: 'https://scholar.google.com/citations?user=EyrW6pEAAAAJ&hl=en',
   substack: 'https://foretodata.substack.com/',

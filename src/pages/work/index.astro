@@ -2,20 +2,19 @@
 import Base from '../../layouts/Base.astro';
 import CaseStudyCard from '../../components/CaseStudyCard.astro';
 import { caseStudies } from '../../data/site';
-import { sitePath } from '../../utils/paths';
 ---
 
 <Base
   title="Selected Work | James Young"
-  description="Selected scientific machine-learning, biological discovery, and operational decision-system work by James Young."
+  description="Selected decision systems, interactive AI products, adaptive analytical platforms, and scientific machine-learning work by James Young."
 >
   <header class="page-hero">
     <div class="shell">
       <span class="page-path">ForetoData / work</span>
-      <h1>Selected work</h1>
+      <h1>Complex systems, turned into decision products.</h1>
       <div class="page-intro">
-        <span class="section-kicker">Question → evidence → decision</span>
-        <p>The work spans biological candidate prioritization, protein search, and operational decision systems.</p>
+        <span class="section-kicker">Represent → simulate → decide → learn</span>
+        <p>The domains range from resource allocation and governed analytics to local LLMs and biological discovery. Each record starts with the decision the system is meant to improve.</p>
       </div>
     </div>
   </header>
@@ -23,17 +22,8 @@ import { sitePath } from '../../utils/paths';
   <section class="section">
     <div class="shell">
       <div class="case-grid">
-        {caseStudies.slice(0, 3).map((study, index) => <CaseStudyCard study={study} index={index} />)}
+        {caseStudies.map((study, index) => <CaseStudyCard study={study} index={index} />)}
       </div>
-      {caseStudies.slice(3).map((study) => (
-        <a class="secondary-work" href={sitePath(`work/${study.slug}`)}>
-          <div>
-            <strong>{study.title}</strong>
-            <p>{study.summary}</p>
-          </div>
-          <span aria-hidden="true">→</span>
-        </a>
-      ))}
     </div>
   </section>
 </Base>
