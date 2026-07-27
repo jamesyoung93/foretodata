@@ -13,8 +13,8 @@ interface Props {
 }
 
 const {
-  title = `${profile.name} | Decision Systems, Interactive AI & Scientific ML`,
-  description = `${profile.summary} Work spanning decision systems, private and governed AI, analytical products, and scientific discovery.`,
+  title = `${profile.name} | Decision & Optimization Systems`,
+  description = `${profile.name} builds decision and optimization systems for complex systems across operations, AI-enabled work, and scientific research.`,
   canonicalPath,
   mode = 'editorial',
   noindex = false,
@@ -22,7 +22,7 @@ const {
 
 const currentPath = Astro.url.pathname;
 const canonicalUrl = new URL(canonicalPath ? sitePath(canonicalPath) : currentPath, Astro.site);
-const socialImage = new URL(sitePath('og-systems.png'), Astro.site);
+const socialImage = new URL(sitePath('og-systems-v2.png'), Astro.site);
 const navItems = [
   { label: 'Work', href: sitePath('work'), match: '/work' },
   { label: 'Research', href: sitePath('research'), match: '/research' },
@@ -49,7 +49,7 @@ const navItems = [
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={socialImage} />
-    <meta property="og:image:alt" content="James Young — decision systems, interactive AI, and scientific machine learning" />
+    <meta property="og:image:alt" content="James Young — decision and optimization systems for complex systems" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
@@ -62,9 +62,9 @@ const navItems = [
     <header class="site-header">
       <div class="shell header-inner">
         <a class="identity" href={sitePath()} aria-label="James Young, home">
-          <span class="platform-mark">ForetoData / field notes</span>
+          <span class="platform-mark">ForetoData</span>
           <span class="identity-name">James Young</span>
-          <span class="identity-descriptor">{profile.descriptor}</span>
+          <span class="identity-descriptor">Decision and optimization systems for complex systems</span>
         </a>
 
         <nav class="primary-nav" aria-label="Primary navigation">
@@ -99,6 +99,7 @@ const navItems = [
       <div class="shell footer-grid">
         <div>
           <strong>{profile.name}</strong>
+          <p>Decision and optimization systems for complex systems.</p>
         </div>
         <nav aria-label="Footer navigation">
           <a href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>

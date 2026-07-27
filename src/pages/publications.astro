@@ -1,19 +1,25 @@
 ---
 import Base from '../layouts/Base.astro';
 import { profile, publicationPrograms } from '../data/site';
+
+const programContexts: Record<string, string> = {
+  'functional-discovery': 'Evidence for finding biological mechanisms when function is uncertain, signals are spread across data sources, and experiments are limited.',
+  'protein-learning': 'Evidence for using learned protein representations to compare a large search space and choose more informative variants to test.',
+  'comparative-biology': 'Evidence for combining biological measurements across organisms, molecular layers, and collaborators to answer questions no single dataset can resolve.',
+};
 ---
 
 <Base
   title="Publications | James Young"
-  description="Publications by James Young across functional discovery and nitrogen fixation, protein learning, comparative genomics, and computational biology."
+  description="Peer-reviewed evidence behind James Young's work on choosing better experiments in complex biological systems."
 >
   <header class="page-hero">
     <div class="shell">
       <span class="page-path">ForetoData / publications</span>
-      <h1>Publications</h1>
+      <h1>Research evidence for better experiments.</h1>
       <div class="page-intro">
-        <span class="section-kicker">Research programs</span>
-        <p>Three connected programs: discovering function in undercharacterized systems, learning across protein sequence space, and integrating broader biological evidence.</p>
+        <span class="section-kicker">Map → Compare → Choose → Learn</span>
+        <p>These publications test the scientific foundations of the larger decision framework: organize incomplete evidence, narrow the search space, choose what to test, and use results to improve the next experiment.</p>
       </div>
       <div class="text-links">
         <a class="text-link" href={profile.scholar} target="_blank" rel="noopener noreferrer">Google Scholar <span aria-hidden="true">↗</span></a>
@@ -27,7 +33,7 @@ import { profile, publicationPrograms } from '../data/site';
         <section class="program-section" id={program.id}>
           <div class="program-heading">
             <h2>{program.title}</h2>
-            <p>{program.description}</p>
+            <p>{programContexts[program.id] ?? program.description}</p>
           </div>
           <div class="publication-list">
             {program.publications.map((publication) => (

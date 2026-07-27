@@ -24,7 +24,7 @@ const { study } = Astro.props;
       <h1>{study.title}</h1>
       <div class="page-intro">
         <span class="section-kicker">{study.domain}</span>
-        <p class="lede">{study.question}</p>
+        <p class="lede">{study.summary}</p>
       </div>
     </div>
   </header>
@@ -33,41 +33,41 @@ const { study } = Astro.props;
     <div class="shell case-detail-grid">
       <aside class="case-index" aria-label={`${study.recordType} sections`}>
         <span class="meta-label">Overview</span>
-        <a href="#question">The question</a>
-        <a href="#context">Context</a>
-        <a href="#difficulty">Why it was difficult</a>
-        <a href="#approach">Approach</a>
-        <a href="#outcome">Outcome</a>
-        <a href="#role">James' role</a>
-        {study.evidence && <a href="#evidence">Evidence</a>}
+        <a href="#decision">Decision to improve</a>
+        <a href="#context">What shapes the outcome</a>
+        <a href="#difficulty">Constraints and uncertainty</a>
+        <a href="#approach">How the system works</a>
+        <a href="#outcome">What it enables</a>
+        <a href="#role">What I built</a>
+        {study.evidence && <a href="#evidence">Supporting evidence</a>}
       </aside>
       <article class="case-detail">
         <span class="section-kicker">{study.recordType}</span>
-        <h2 id="question">The question</h2>
+        <h2 id="decision">Decision to improve</h2>
         <p class="lead-paragraph">{study.question}</p>
 
-        <h2 id="context">Context</h2>
+        <h2 id="context">What shapes the outcome</h2>
         <p>{study.context}</p>
 
-        <h2 id="difficulty">Why the problem was difficult</h2>
+        <h2 id="difficulty">Constraints and uncertainty</h2>
         <ul class="clean-list">
           {study.difficulty.map((item) => <li>{item}</li>)}
         </ul>
 
-        <h2 id="approach">Approach</h2>
+        <h2 id="approach">How the system works</h2>
         <ol class="clean-list">
           {study.approach.map((item) => <li>{item}</li>)}
         </ol>
 
-        <h2 id="outcome">Outcome or resulting capability</h2>
+        <h2 id="outcome">What this system enables</h2>
         <p>{study.outcome}</p>
 
-        <h2 id="role">James' role</h2>
+        <h2 id="role">What I built</h2>
         <p>{study.role}</p>
 
         {study.evidence && (
           <div class="evidence-box" id="evidence">
-            <span class="meta-label">Evidence</span>
+            <span class="meta-label">Supporting evidence</span>
             <p><a href={study.evidence.href} target="_blank" rel="noopener noreferrer">{study.evidence.label} <span aria-hidden="true">↗</span></a></p>
           </div>
         )}

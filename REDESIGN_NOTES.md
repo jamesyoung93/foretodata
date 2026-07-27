@@ -1,10 +1,18 @@
-# ForetoData systems-synthesis redesign notes
+# ForetoData systems-synthesis and language redesign notes
+
+## July 2026 plain-language integration revision
+
+The current revision makes the underlying idea explicit in ordinary language: “I build decision and optimization systems for complex systems.” The site now uses one recurring loop—“Map → Simulate → Optimize → Learn”—instead of renaming the idea as extensible intelligence, decision infrastructure, decision architecture, or an operating pattern.
+
+Decision and optimization are the core capability. Private and governed AI is the interface layer that makes complex systems easier to use without moving calculations or evidence into the language model. Scientific research is a demanding application domain where limited experiments, incomplete evidence, and uncertainty make the same decision framework especially visible.
+
+The homepage now progresses from proposition, to method, to application areas, to systems built, and finally to published evidence. Technical terms remain in case studies and research pages after the reader understands the decision, constraint, and practical outcome.
 
 ## July 2026 synthesis revision
 
 The first editorial redesign successfully removed unsupported metrics, duplicated project data, and an overly dominant terminal shell, but it narrowed the public story too far. It made biological discovery primary and represented decision systems only through generalized principles, leaving newer software and product capabilities invisible.
 
-The current revision keeps the scientific credibility and editorial restraint while changing the organizing thesis: James repeatedly represents complex domains as outcomes, controllable levers, observed context, constraints, and uncertainty; simulates interventions; selects a feasible decision; and builds the feedback loop that improves the next one. Decision systems, interactive intelligence, and scientific discovery are now parallel capability lanes. TreeMMM, Insight Harness, private local-LLM development, and AI2Analytics provide concrete system evidence before the scientific case studies and publication record.
+That synthesis revision kept the scientific credibility and editorial restraint while broadening the organizing thesis. It introduced TreeMMM, Insight Harness, private local-LLM development, and AI2Analytics as concrete system evidence before the scientific case studies and publication record. The later plain-language revision clarified the hierarchy among those capabilities.
 
 ## Audit summary
 
@@ -20,11 +28,11 @@ Mobile CSS existed, but the fixed sidebar and wide visualizations were tightly c
 
 The primary audiences are biotechnology founders, scientists, investors, attorneys, executives, collaborators, and current professional colleagues arriving through a warm referral or search.
 
-The desired positioning is senior analytical and product judgment across three connected capability lanes:
+The desired positioning is senior analytical and product judgment expressed through one system:
 
-1. Decision systems: response modeling, causal inference, scenario simulation, constrained optimization, measurement, and operational implementation.
-2. Interactive intelligence: private local LLMs, governed natural-language analytics, adaptive analytical pipelines, and inspectable AI-enabled tools.
-3. Scientific discovery: computational biology, gene and protein function, multi-omics, protein representations, active learning, and experimental prioritization.
+1. Core capability: map a complex system, simulate realistic options, optimize a feasible action, and learn from the result.
+2. Interface layer: use private local LLMs, governed conversational analytics, and adaptable tools to make the system usable without giving up evidence, privacy, or human approval.
+3. Application areas: operational resource decisions, AI-enabled knowledge work, and scientific experiment selection.
 
 No one domain is declared primary. Scientific work provides unusually strong evidence of depth; decision and interactive systems provide the more immediately marketable capability surface. Independent advisory remains outside the public positioning.
 
@@ -32,13 +40,13 @@ No one domain is declared primary. Scientific work provides unusually strong evi
 
 James Young is the primary visible identity. “ForetoData” is a secondary field-notes platform and possible future studio identity. The site does not imply a team, agency infrastructure, broad service capacity, or institutional scale.
 
-The principal message is: “I build extensible intelligence for complex decisions.” The unifying operating pattern is “Represent → Simulate → Decide → Learn.”
+The principal message is: “I build decision and optimization systems for complex systems.” The unifying operating pattern is “Map → Simulate → Optimize → Learn.”
 
 ## Information architecture
 
 Primary navigation is conventional: Work, Research, Publications, Insights, and About. Lab Mode is discoverable as a secondary utility rather than a primary identity.
 
-The homepage order is hero, organizational horizon, interactive systems lens, three capability lanes, six systems in practice, recent open research, scientific-discovery program, operating pattern, and a minimal footer.
+The homepage order is hero, how the method works, where it applies, systems built, published evidence, and a minimal footer.
 
 ## Visual-system rationale
 
@@ -90,7 +98,7 @@ The mode does not maintain separate case-study content. It reads the same data a
 
 ## Social preview
 
-`public/og-systems.png` is a bespoke analytical-editorial card matching the final palette and positioning. It contains “James Young,” “I build decision systems for complex domains,” the three capability lanes, and the four-stage operating pattern. Metadata is generated in `Base.astro` for Open Graph and X/Twitter cards.
+`public/og-systems-v2.png` is a bespoke analytical-editorial card matching the final palette and positioning. It contains “James Young,” “I build decision and optimization systems for complex systems,” the application contexts, and “Map → Simulate → Optimize → Learn.” Metadata is generated in `Base.astro` for Open Graph and X/Twitter cards.
 
 ## Screenshots
 

@@ -10,16 +10,16 @@ const posts = (await getCollection('blog'))
 ---
 
 <Base
-  title="Earlier Technical Notes | James Young"
-  description="Selected earlier technical notes by James Young on forecasting, sequence alignment, and observational classification."
+  title="Earlier Applied Analyses | James Young"
+  description="Earlier analyses by James Young showing how evidence, modeling choices, and constraints shape real-world decisions."
 >
   <header class="page-hero">
     <div class="shell">
       <span class="page-path">ForetoData / insights / earlier notes</span>
-      <h1>Earlier technical notes</h1>
+      <h1>Earlier notes on modeling real-world decisions.</h1>
       <div class="page-intro">
         <span class="section-kicker">2022–2025</span>
-        <p>Selected analyses in forecasting, sequence alignment, and observational classification.</p>
+        <p>Applied examples of mapping a problem, choosing an analytical approach, and interpreting what the results can—and cannot—support.</p>
       </div>
       <div class="text-links">
         <a class="text-link" href={sitePath('writing')}><span aria-hidden="true">←</span> Current insights</a>
@@ -31,8 +31,8 @@ const posts = (await getCollection('blog'))
     <div class="shell">
       <WritingArchive
         posts={posts}
-        heading="Selected notes"
-        description="Methods, technical decisions, and analytical reasoning across three applied analyses."
+        heading="Applied analyses"
+        description="Forecasting, sequence comparison, and observational classification presented through the decisions each analysis was meant to inform."
       />
     </div>
   </section>

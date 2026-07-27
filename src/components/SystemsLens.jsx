@@ -3,36 +3,36 @@ import { useState } from 'react';
 const systems = [
   {
     id: 'decision',
-    label: 'Decision systems',
-    question: 'Where should constrained resources move, and what change should that produce?',
-    outcome: 'Measurable operational or commercial response',
-    levers: ['budget', 'cadence', 'channel mix', 'capacity'],
-    context: ['baseline opportunity', 'market dynamics', 'access', 'prior allocation'],
-    constraints: ['coverage', 'policy', 'capacity', 'observed support'],
-    engine: 'Response model → scenario simulation → constrained optimizer',
-    decision: 'A feasible allocation, expected impact, and measurement plan',
+    label: 'Decision and optimization systems',
+    question: 'How should limited resources be allocated to produce the best result?',
+    outcome: 'More impact from the resources available',
+    levers: ['where the budget goes', 'timing', 'channel mix', 'capacity'],
+    context: ['starting conditions', 'market changes', 'access', 'past performance'],
+    constraints: ['total budget', 'coverage requirements', 'policy', 'available capacity'],
+    engine: 'Estimate likely outcomes, compare scenarios, and choose the best feasible allocation',
+    decision: 'An allocation plan, expected result, and way to measure what happens',
   },
   {
     id: 'intelligence',
-    label: 'Interactive intelligence',
-    question: 'How can a person explore, reason, and act without losing the source of truth?',
-    outcome: 'A useful answer, analysis, or completed workflow',
-    levers: ['model choice', 'retrieval scope', 'tool permissions', 'interface'],
-    context: ['data authority', 'privacy', 'device resources', 'user intent'],
-    constraints: ['provenance', 'latency', 'approval', 'allowed actions'],
-    engine: 'Intent translation → governed or local tools → verified artifact',
-    decision: 'An answer or action with evidence and boundaries attached',
+    label: 'Private and governed AI',
+    question: 'How can someone answer a complex question or complete a task without losing privacy, control, or source evidence?',
+    outcome: 'A useful answer or completed task that can be checked',
+    levers: ['model', 'information sources', 'tool access', 'interface'],
+    context: ['source data', 'privacy needs', 'device limits', 'user goal'],
+    constraints: ['approved actions', 'response time', 'evidence requirements', 'human approval'],
+    engine: 'Understand the request, use approved local or governed tools, and verify the result',
+    decision: 'A supported answer or action with its sources and limits made clear',
   },
   {
     id: 'science',
-    label: 'Scientific discovery',
-    question: 'Which candidate or experiment will produce the most useful next piece of evidence?',
-    outcome: 'Validated knowledge or improved biological function',
-    levers: ['candidate', 'variant', 'condition', 'assay design'],
-    context: ['sequence', 'structure', 'multi-omics', 'prior experiments'],
-    constraints: ['assay capacity', 'cost', 'uncertainty', 'biological plausibility'],
-    engine: 'Representation → active search → candidate prioritization',
-    decision: 'The next experiment, its rationale, and what remains uncertain',
+    label: 'Scientific decision systems',
+    question: 'Which candidate or experiment is most likely to produce useful new evidence?',
+    outcome: 'A more informative experiment and faster learning',
+    levers: ['candidate', 'variant', 'condition', 'experiment design'],
+    context: ['sequence', 'structure', 'biological evidence', 'past experiments'],
+    constraints: ['experiment capacity', 'cost', 'uncertainty', 'biological plausibility'],
+    engine: 'Bring the evidence together, compare candidates, and prioritize the most useful test',
+    decision: 'The next experiment, why it is worth running, and what remains uncertain',
   },
 ];
 
@@ -55,10 +55,10 @@ export default function SystemsLens() {
     <div className="systems-lens">
       <div className="lens-toolbar">
         <div>
-          <span className="meta-label">Interactive systems lens</span>
-          <p>Choose a domain. The variables change; the decision architecture persists.</p>
+          <span className="meta-label">See the method in different settings</span>
+          <p>Choose an area. The details change, but the four-step process stays the same.</p>
         </div>
-        <div className="lens-switcher" aria-label="Choose a system to examine">
+        <div className="lens-switcher" aria-label="Choose an area to examine">
           {systems.map((item) => (
             <button
               type="button"
@@ -74,35 +74,35 @@ export default function SystemsLens() {
 
       <div className="lens-panel" key={system.id}>
         <div className="lens-question">
-          <span className="meta-label">Decision question</span>
+          <span className="meta-label">Decision to improve</span>
           <strong>{system.question}</strong>
         </div>
 
         <div className="lens-map">
           <article className="lens-outcome">
-            <span className="meta-label">Desired outcome</span>
+            <span className="meta-label">What success looks like</span>
             <strong>{system.outcome}</strong>
           </article>
 
           <div className="lens-variables">
-            <VariableGroup label="Controllable levers" values={system.levers} kind="lever" />
-            <VariableGroup label="Observed context" values={system.context} kind="context" />
-            <VariableGroup label="Constraints" values={system.constraints} kind="constraint" />
+            <VariableGroup label="What you can change" values={system.levers} kind="lever" />
+            <VariableGroup label="What you need to account for" values={system.context} kind="context" />
+            <VariableGroup label="What limits the choice" values={system.constraints} kind="constraint" />
           </div>
 
           <article className="lens-engine">
-            <span className="meta-label">Reasoning engine</span>
+            <span className="meta-label">How options are evaluated</span>
             <strong>{system.engine}</strong>
           </article>
 
           <article className="lens-decision">
-            <span className="meta-label">Decision product</span>
+            <span className="meta-label">Recommended next step</span>
             <strong>{system.decision}</strong>
           </article>
         </div>
 
-        <div className="lens-cycle" aria-label="Represent, simulate, decide, and learn">
-          {['Represent', 'Simulate', 'Decide', 'Learn'].map((stage, index) => (
+        <div className="lens-cycle" aria-label="Map the system, simulate options, optimize the action, and learn from results">
+          {['Map the system', 'Simulate options', 'Optimize the action', 'Learn from results'].map((stage, index) => (
             <span key={stage}>
               <b>0{index + 1}</b>
               {stage}
@@ -111,7 +111,7 @@ export default function SystemsLens() {
         </div>
       </div>
 
-      <p className="lens-caption">Conceptual map. A deployed system requires domain-specific data, validation, and decision rights.</p>
+      <p className="lens-caption">The method is consistent; each implementation is built around the data, constraints, and authority of the people making the decision.</p>
     </div>
   );
 }
