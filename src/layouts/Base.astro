@@ -13,8 +13,8 @@ interface Props {
 }
 
 const {
-  title = `${profile.name} | Decision & Optimization Systems`,
-  description = `${profile.name} builds decision and optimization systems for complex systems across operations, AI-enabled work, and scientific research.`,
+  title = `${profile.name} | Decision Systems for Complex Domains`,
+  description = `${profile.name} builds decision systems for complex domains through interactive AI, scientific machine learning, simulation, and optimization.`,
   canonicalPath,
   mode = 'editorial',
   noindex = false,
@@ -22,7 +22,7 @@ const {
 
 const currentPath = Astro.url.pathname;
 const canonicalUrl = new URL(canonicalPath ? sitePath(canonicalPath) : currentPath, Astro.site);
-const socialImage = new URL(sitePath('og-systems-v2.png'), Astro.site);
+const socialImage = new URL(sitePath('og-decision-systems-v3.png'), Astro.site);
 const navItems = [
   { label: 'Work', href: sitePath('work'), match: '/work' },
   { label: 'Research', href: sitePath('research'), match: '/research' },
@@ -49,7 +49,7 @@ const navItems = [
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={socialImage} />
-    <meta property="og:image:alt" content="James Young — decision and optimization systems for complex systems" />
+    <meta property="og:image:alt" content="James Young — decision systems for complex domains" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
@@ -64,7 +64,7 @@ const navItems = [
         <a class="identity" href={sitePath()} aria-label="James Young, home">
           <span class="platform-mark">ForetoData</span>
           <span class="identity-name">James Young</span>
-          <span class="identity-descriptor">Decision and optimization systems for complex systems</span>
+          <span class="identity-descriptor">Decision systems for complex domains</span>
         </a>
 
         <nav class="primary-nav" aria-label="Primary navigation">
@@ -99,7 +99,7 @@ const navItems = [
       <div class="shell footer-grid">
         <div>
           <strong>{profile.name}</strong>
-          <p>Decision and optimization systems for complex systems.</p>
+          <p>Decision systems for complex domains.</p>
         </div>
         <nav aria-label="Footer navigation">
           <a href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>

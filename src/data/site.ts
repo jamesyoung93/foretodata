@@ -1,7 +1,7 @@
 export type CaseStudy = {
   slug: string;
   recordType: 'Case study' | 'Practice record';
-  domain: 'Decision and optimization systems' | 'Private and governed AI' | 'Scientific decision systems';
+  domain: 'Decision systems' | 'Interactive AI' | 'Scientific machine learning';
   title: string;
   question: string;
   summary: string;
@@ -18,10 +18,10 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: 'operational-decision-systems',
     recordType: 'Case study',
-    domain: 'Decision and optimization systems',
+    domain: 'Decision systems',
     title: 'Optimizing resources under real-world constraints',
     question: 'How should limited resources be allocated when outcomes depend on many interacting factors and the final plan must obey real constraints?',
-    summary: 'A reusable system for mapping what drives an outcome, testing possible allocations, choosing the best feasible plan, and measuring what happens next.',
+    summary: 'A reusable decision system for representing what drives an outcome, simulating possible allocations, choosing the best feasible plan, and learning from what happens next.',
     context: 'Teams often need to decide where limited time, money, or capacity will have the greatest effect. The challenge is that outcomes depend on interacting factors, only some can be changed, past allocation may not reveal true opportunity, and every recommendation must fit real policy and capacity limits.',
     difficulty: [
       'Predicting an outcome does not automatically show which action will improve it.',
@@ -30,7 +30,7 @@ export const caseStudies: CaseStudy[] = [
       'The recommended allocation must be feasible, explainable, and measurable after it is put into practice.',
     ],
     approach: [
-      'Mapped the desired outcome, what the team could change, what it needed to account for, and the constraints on any plan.',
+      'Represented the desired outcome, what the team could change, what it needed to account for, and the constraints on any plan.',
       'Estimated how outcomes responded to different actions, using temporal validation and diagnostics for interactions, data support, and stability.',
       'Simulated realistic scenarios before resources were committed and kept proposed changes within the range supported by the data.',
       'Optimized the allocation under real constraints, then paired the plan with a way to measure results and improve the next decision.',
@@ -46,7 +46,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: 'governed-interactive-analytics',
     recordType: 'Case study',
-    domain: 'Private and governed AI',
+    domain: 'Interactive AI',
     title: 'Conversational analytics with answers you can verify',
     question: 'How can people ask questions in everyday language and still trust where every number and conclusion came from?',
     summary: 'A governed analytics workbench where an LLM interprets the question, tested analytical engines produce the answer, and every result includes its evidence.',
@@ -74,7 +74,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: 'private-local-intelligence',
     recordType: 'Case study',
-    domain: 'Private and governed AI',
+    domain: 'Interactive AI',
     title: 'Private AI for sensitive, long documents',
     question: 'How can people analyze sensitive, very long documents without sending the material to a cloud service?',
     summary: 'An offline desktop assistant that keeps documents and model inference on the user’s device while breaking long material into a structured, reviewable analysis.',
@@ -98,7 +98,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: 'adaptive-analytics-platform',
     recordType: 'Case study',
-    domain: 'Private and governed AI',
+    domain: 'Interactive AI',
     title: 'Analytics that adapt to each organization’s data',
     question: 'How can a proven analytical and optimization method work across teams, brands, regions, and data structures without being rebuilt by hand each time?',
     summary: 'A framework that keeps the validated analysis stable while using an LLM to understand each new data environment and create the adapters needed to run it.',
@@ -126,10 +126,10 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: 'oxic-nitrogen-fixation',
     recordType: 'Case study',
-    domain: 'Scientific decision systems',
+    domain: 'Scientific machine learning',
     title: 'Choosing which genes to test for oxygen-tolerant nitrogen fixation',
     question: 'Which undercharacterized genes should researchers test next to understand how some cyanobacteria fix nitrogen in the presence of oxygen?',
-    summary: 'A scientific decision system that combines multiple sources of biological evidence to rank gene candidates for scarce experimental time and resources.',
+    summary: 'A decision system using scientific machine learning to combine biological evidence and rank gene candidates for scarce experimental time and resources.',
     context: 'Nitrogenase is sensitive to oxygen, yet some cyanobacteria coordinate oxygen-producing photosynthesis with nitrogen fixation. Researchers must choose a small set of genes to test from a much larger search space where many functions remain uncertain and few positive examples are established.',
     difficulty: [
       'Only a small number of confirmed examples are available to guide a genome-wide search.',
@@ -153,10 +153,10 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: 'rubisco-active-learning',
     recordType: 'Case study',
-    domain: 'Scientific decision systems',
+    domain: 'Scientific machine learning',
     title: 'Choosing which protein variants to test next',
     question: 'How can researchers choose a small, informative set of Rubisco variants from a protein sequence space too large to test exhaustively?',
-    summary: 'A scientific decision system that uses protein representations and active learning to balance promising candidates with experiments that will reduce uncertainty.',
+    summary: 'A decision system using scientific machine learning to balance promising protein candidates with experiments that will reduce uncertainty.',
     context: 'Protein engineering offers far more possible sequences than a laboratory can test. Measurements are expensive, biological constraints matter, and the best next experiment may be the one that teaches the most rather than the one with the highest predicted performance.',
     difficulty: [
       'The possible sequence space is too large for exhaustive laboratory screening.',
@@ -182,21 +182,21 @@ export const caseStudies: CaseStudy[] = [
 export const capabilityLanes = [
   {
     index: '01',
-    title: 'Decision and optimization systems',
+    title: 'Decision systems',
     promise: 'Choose the best feasible action, not just the most likely outcome.',
-    text: 'Map what shapes an outcome, simulate realistic options, and optimize what to do under real constraints. The technical foundation can include response modeling, causal inference, forecasting, and constrained optimization.',
+    text: 'Represent what shapes an outcome, simulate realistic options, and decide what to do under real constraints. The technical foundation can include response modeling, causal inference, forecasting, and constrained optimization.',
     extension: 'From a one-time prediction to a system that plans, measures, and improves.',
   },
   {
     index: '02',
-    title: 'Private and governed AI',
+    title: 'Interactive AI',
     promise: 'Make AI useful without giving up privacy, control, or trust.',
     text: 'Use local LLMs, governed conversational analytics, and adaptable pipelines to make complex work easier while keeping calculations, evidence, and sensitive data under control.',
     extension: 'From a standalone assistant to a private, verifiable decision workflow.',
   },
   {
     index: '03',
-    title: 'Scientific decision systems',
+    title: 'Scientific machine learning',
     promise: 'Use limited experiments where they can teach the most.',
     text: 'Combine biological evidence to rank candidates, balance performance with uncertainty, and choose what to test next. The methods include protein language models, multi-omics, comparative genomics, and active learning.',
     extension: 'From a ranked prediction to a continuous experiment-and-learning loop.',
@@ -207,7 +207,7 @@ export const organizationNeeds = [
   {
     audience: 'Startups',
     title: 'Solve one valuable decision now and build from it.',
-    text: 'Map an urgent decision, test the options, and deliver a usable first system that can expand across new data, models, users, and products as the company learns.',
+    text: 'Represent an urgent decision, simulate the options, and deliver a usable first system that can expand across new data, models, users, and products as the company learns.',
   },
   {
     audience: 'Enterprises',
@@ -331,7 +331,7 @@ export const publicationPrograms: { id: string; title: string; description: stri
 export const approachPrinciples = [
   {
     index: '01',
-    title: 'Map',
+    title: 'Represent',
     text: 'Name the outcome, what can be changed, what must be accounted for, the constraints, and what remains uncertain.',
   },
   {
@@ -341,13 +341,13 @@ export const approachPrinciples = [
   },
   {
     index: '03',
-    title: 'Optimize',
+    title: 'Decide',
     text: 'Choose the best feasible experiment, intervention, or allocation under the constraints people actually face.',
   },
   {
     index: '04',
     title: 'Learn',
-    text: 'Measure what happened, update the map of the system, and make the next decision better than the last.',
+    text: 'Measure what happened, update the representation of the system, and make the next decision better than the last.',
   },
 ];
 
@@ -381,9 +381,9 @@ export const featuredInsights: Insight[] = [
 
 export const profile = {
   name: 'James Young',
-  descriptor: 'Decision and optimization systems for complex systems',
-  headline: 'I build decision and optimization systems for complex systems.',
-  summary: 'I map what shapes an outcome, separate what can be controlled from what cannot, simulate possible actions, and optimize the best feasible next step. I apply that approach across operations, private and governed AI, and scientific experiments, then use each result to improve the next decision.',
+  descriptor: 'Decision systems for complex domains',
+  headline: 'I build decision systems for complex domains.',
+  summary: 'I represent the variables, constraints, and uncertainty that shape an outcome; separate what can be controlled from what cannot; simulate possible actions; and decide on the best feasible next step. Each result improves the next decision.',
   linkedin: 'https://www.linkedin.com/in/jamesyoungsd/',
   scholar: 'https://scholar.google.com/citations?user=EyrW6pEAAAAJ&hl=en',
   substack: 'https://foretodata.substack.com/',
