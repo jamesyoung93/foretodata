@@ -264,12 +264,15 @@ select {
 }
 
 .hero-system-figure {
+  width: min(100%, 520px);
   margin: 0;
+  justify-self: end;
 }
 
 .hero-system-canvas {
   position: relative;
-  min-height: clamp(390px, 43vw, 530px);
+  min-height: 0;
+  aspect-ratio: 0.95;
   overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--rule) 80%, transparent);
   background:
@@ -277,6 +280,16 @@ select {
     linear-gradient(90deg, rgba(23, 32, 29, 0.035) 1px, transparent 1px),
     rgba(255, 255, 255, 0.13);
   background-size: 32px 32px;
+}
+
+.hero-system-canvas img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: right center;
 }
 
 .hero-system-node,
@@ -1715,6 +1728,10 @@ html[data-mode='lab'] .mode-link {
     grid-template-columns: 1fr;
   }
 
+  .hero-system-figure {
+    justify-self: center;
+  }
+
   .lens-toolbar {
     grid-template-columns: 1fr;
   }
@@ -1809,7 +1826,7 @@ html[data-mode='lab'] .mode-link {
   }
 
   .hero-system-canvas {
-    min-height: 340px;
+    min-height: 0;
   }
 
   .section-heading,
