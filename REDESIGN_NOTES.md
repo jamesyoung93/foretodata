@@ -1,12 +1,12 @@
 # ForetoData systems-synthesis and language redesign notes
 
-## July 2026 plain-language integration revision
+## July 2026 decision-systems refinement
 
-The current revision makes the underlying idea explicit in ordinary language: “I build decision and optimization systems for complex systems.” The site now uses one recurring loop—“Map → Simulate → Optimize → Learn”—instead of renaming the idea as extensible intelligence, decision infrastructure, decision architecture, or an operating pattern.
+The current revision makes the umbrella explicit in ordinary language: “I build decision systems for complex domains.” It connects three capabilities—Decision systems · Interactive AI · Scientific machine learning—through one recurring loop: “Represent → Simulate → Decide → Learn.”
 
-Decision and optimization are the core capability. Private and governed AI is the interface layer that makes complex systems easier to use without moving calculations or evidence into the language model. Scientific research is a demanding application domain where limited experiments, incomplete evidence, and uncertainty make the same decision framework especially visible.
+Optimization remains an important method inside decision systems rather than carrying the public positioning. Private and governed AI remains a promise within Interactive AI: make complex systems easier to use while protecting sensitive material, preserving evidence, and keeping consequential decisions under human control. Scientific machine learning shows how the same system works when experiments are limited, evidence is incomplete, and uncertainty matters.
 
-The homepage now progresses from proposition, to method, to application areas, to systems built, and finally to published evidence. Technical terms remain in case studies and research pages after the reader understands the decision, constraint, and practical outcome.
+The homepage now progresses from proposition, to method, to connected capabilities, to systems built, and finally to published evidence. Technical terms remain in case studies and research pages after the reader understands the decision, constraint, and practical outcome.
 
 ## July 2026 synthesis revision
 
@@ -30,9 +30,11 @@ The primary audiences are biotechnology founders, scientists, investors, attorne
 
 The desired positioning is senior analytical and product judgment expressed through one system:
 
-1. Core capability: map a complex system, simulate realistic options, optimize a feasible action, and learn from the result.
-2. Interface layer: use private local LLMs, governed conversational analytics, and adaptable tools to make the system usable without giving up evidence, privacy, or human approval.
-3. Application areas: operational resource decisions, AI-enabled knowledge work, and scientific experiment selection.
+1. Umbrella: “I build decision systems for complex domains.”
+2. Connected capabilities: Decision systems · Interactive AI · Scientific machine learning.
+3. Operating loop: Represent → Simulate → Decide → Learn.
+
+Optimization is a method used to improve decisions once the domain has been represented and feasible actions can be compared. Private local LLMs, governed conversational analytics, and adaptable tools sit within Interactive AI, where privacy, evidence, and human approval are product requirements.
 
 No one domain is declared primary. Scientific work provides unusually strong evidence of depth; decision and interactive systems provide the more immediately marketable capability surface. Independent advisory remains outside the public positioning.
 
@@ -40,7 +42,7 @@ No one domain is declared primary. Scientific work provides unusually strong evi
 
 James Young is the primary visible identity. “ForetoData” is a secondary field-notes platform and possible future studio identity. The site does not imply a team, agency infrastructure, broad service capacity, or institutional scale.
 
-The principal message is: “I build decision and optimization systems for complex systems.” The unifying operating pattern is “Map → Simulate → Optimize → Learn.”
+The principal message is: “I build decision systems for complex domains.” The capability trio is “Decision systems · Interactive AI · Scientific machine learning.” The unifying operating pattern is “Represent → Simulate → Decide → Learn.”
 
 ## Information architecture
 
@@ -98,7 +100,7 @@ The mode does not maintain separate case-study content. It reads the same data a
 
 ## Social preview
 
-`public/og-systems-v2.png` is a bespoke analytical-editorial card matching the final palette and positioning. It contains “James Young,” “I build decision and optimization systems for complex systems,” the application contexts, and “Map → Simulate → Optimize → Learn.” Metadata is generated in `Base.astro` for Open Graph and X/Twitter cards.
+`public/og-decision-systems-v3.png` is the high-resolution analytical-editorial card matching the current palette and positioning. It contains “James Young,” “I build decision systems for complex domains,” “Decision systems · Interactive AI · Scientific machine learning,” and “Represent → Simulate → Decide → Learn.” Metadata is generated in `Base.astro` for Open Graph and X/Twitter cards.
 
 ## Screenshots
 

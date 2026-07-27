@@ -6,7 +6,7 @@ const domains = ['All', ...new Set(caseStudies.map((study) => study.domain))];
 
 const asciiPanels = [
   {
-    label: 'MAP',
+    label: 'REPRESENT',
     art: `desired outcome\n      ▲\n      ├──── what can change\n      ├──── what must be accounted for\n      └──── constraints + uncertainty`,
     note: 'Make the outcome, choices, context, and limits explicit.',
   },
@@ -16,7 +16,7 @@ const asciiPanels = [
     note: 'Compare realistic actions before committing resources.',
   },
   {
-    label: 'OPTIMIZE → LEARN',
+    label: 'DECIDE → LEARN',
     art: `options + constraints ──▶ best feasible action\n                                  │\nupdated system ◀── measured result ◀─┘`,
     note: 'Choose what can be carried out, then use the result to improve the next decision.',
   },
@@ -34,7 +34,7 @@ export default function LabExplorer({ basePath = '/foretodata/' }) {
 
   return (
     <>
-      <div className="lab-figure" aria-label="Map, simulate, optimize, and learn">
+      <div className="lab-figure" aria-label="Represent, simulate, decide, and learn">
         {asciiPanels.map((panel) => (
           <section className="lab-figure-panel" key={panel.label}>
             <span className="lab-prompt">// {panel.label}</span>

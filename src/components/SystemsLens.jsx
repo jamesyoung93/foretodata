@@ -3,7 +3,7 @@ import { useState } from 'react';
 const systems = [
   {
     id: 'decision',
-    label: 'Decision and optimization systems',
+    label: 'Decision systems',
     question: 'How should limited resources be allocated to produce the best result?',
     outcome: 'More impact from the resources available',
     levers: ['where the budget goes', 'timing', 'channel mix', 'capacity'],
@@ -14,7 +14,7 @@ const systems = [
   },
   {
     id: 'intelligence',
-    label: 'Private and governed AI',
+    label: 'Interactive AI',
     question: 'How can someone answer a complex question or complete a task without losing privacy, control, or source evidence?',
     outcome: 'A useful answer or completed task that can be checked',
     levers: ['model', 'information sources', 'tool access', 'interface'],
@@ -25,7 +25,7 @@ const systems = [
   },
   {
     id: 'science',
-    label: 'Scientific decision systems',
+    label: 'Scientific machine learning',
     question: 'Which candidate or experiment is most likely to produce useful new evidence?',
     outcome: 'A more informative experiment and faster learning',
     levers: ['candidate', 'variant', 'condition', 'experiment design'],
@@ -55,8 +55,8 @@ export default function SystemsLens() {
     <div className="systems-lens">
       <div className="lens-toolbar">
         <div>
-          <span className="meta-label">See the method in different settings</span>
-          <p>Choose an area. The details change, but the four-step process stays the same.</p>
+          <span className="meta-label">See the method in different domains</span>
+          <p>Choose a domain. The details change, but the four-step decision loop stays the same.</p>
         </div>
         <div className="lens-switcher" aria-label="Choose an area to examine">
           {systems.map((item) => (
@@ -101,8 +101,8 @@ export default function SystemsLens() {
           </article>
         </div>
 
-        <div className="lens-cycle" aria-label="Map the system, simulate options, optimize the action, and learn from results">
-          {['Map the system', 'Simulate options', 'Optimize the action', 'Learn from results'].map((stage, index) => (
+        <div className="lens-cycle" aria-label="Represent, simulate, decide, and learn">
+          {['Represent', 'Simulate', 'Decide', 'Learn'].map((stage, index) => (
             <span key={stage}>
               <b>0{index + 1}</b>
               {stage}
