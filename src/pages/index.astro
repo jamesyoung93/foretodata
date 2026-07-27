@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import CaseStudyCard from '../components/CaseStudyCard.astro';
 import DiscoveryDiagram from '../components/DiscoveryDiagram.astro';
 import SystemsLens from '../components/SystemsLens.jsx';
-import { approachPrinciples, capabilityLanes, caseStudies, organizationNeeds, profile, publicationPrograms } from '../data/site';
+import { capabilityLanes, caseStudies, profile, publicationPrograms } from '../data/site';
 import { sitePath } from '../utils/paths';
 
 const featured = caseStudies.filter((study) => study.featured);
@@ -14,57 +14,36 @@ const featuredPublications = publicationPrograms
 ---
 
 <Base
-  title="James Young | Decision Systems, Interactive AI & Scientific ML"
-  description="James Young builds extensible intelligence for complex decisions: adaptive decision systems, private and governed AI, interactive tools, and scientific machine learning."
+  title="James Young | Decision and Optimization Systems"
+  description="James Young builds decision and optimization systems for complex systems across operations, private and governed AI, and scientific research."
 >
   <section class="hero">
     <div class="shell hero-grid">
       <div>
-        <span class="eyebrow">Extensible decision infrastructure for startups, enterprises, and research institutes</span>
+        <span class="eyebrow">Across operations, AI-enabled work, and scientific research</span>
         <h1>{profile.headline}</h1>
         <p class="lede">{profile.summary}</p>
-        <p class="hero-principle">Private where required. Interactive where useful. Governed wherever the stakes demand it.</p>
+        <p class="hero-principle">Map what shapes the outcome. Simulate what could happen. Optimize the best feasible action. Learn from the result.</p>
         <div class="text-links">
-          <a class="text-link" href="#selected-work">See systems in practice <span aria-hidden="true">↓</span></a>
-          <a class="text-link" href={sitePath('lab')}>Explore Lab Mode <span aria-hidden="true">→</span></a>
+          <a class="text-link" href="#selected-work">See systems in practice <span aria-hidden="true">&darr;</span></a>
+          <a class="text-link" href={sitePath('lab')}>Explore Lab Mode <span aria-hidden="true">&rarr;</span></a>
         </div>
       </div>
       <aside class="hero-note" aria-label="Practice focus">
-        <span class="meta-label">The opportunity</span>
-        <p><strong>Move from isolated AI features to compounding decision capability.</strong></p>
-        <p>Models become infrastructure when they connect to domain logic, real tools, human authority, and measurable feedback.</p>
+        <span class="meta-label">How I work</span>
+        <p><strong>Start with the decision, not the technology.</strong></p>
+        <p>Define the outcome, separate what can be controlled from what cannot, and build a practical way to compare the options.</p>
       </aside>
-    </div>
-  </section>
-
-  <section class="section horizon-section" aria-labelledby="horizon-heading">
-    <div class="shell">
-      <div class="section-heading">
-        <span class="section-kicker">01 / The horizon</span>
-        <div>
-          <h2 id="horizon-heading">From a valuable first use case to a capability that compounds.</h2>
-          <p>Access to powerful models is no longer the differentiator. The harder and more valuable work is turning intelligence into an extensible operating system for decisions, workflows, and organizational learning.</p>
-        </div>
-      </div>
-      <div class="audience-grid">
-        {organizationNeeds.map((need) => (
-          <article class="audience-card">
-            <span class="meta-label">{need.audience}</span>
-            <h3>{need.title}</h3>
-            <p>{need.text}</p>
-          </article>
-        ))}
-      </div>
     </div>
   </section>
 
   <section class="section systems-section" id="systems-lens" aria-labelledby="systems-heading">
     <div class="shell">
       <div class="section-heading">
-        <span class="section-kicker">02 / Extensible architecture</span>
+        <span class="section-kicker">01 / How it works</span>
         <div>
-          <h2 id="systems-heading">Different domains. The same underlying move.</h2>
-          <p>Make the system legible, distinguish what can be changed from what must be observed, compare plausible interventions, and turn the result into a decision.</p>
+          <h2 id="systems-heading">Map the system &rarr; Simulate options &rarr; Optimize the action &rarr; Learn from results.</h2>
+          <p>Every project begins by making the decision clear: what outcome matters, what can be changed, what must be accounted for, and what limits the choice. From there, the system can compare options and improve as new results arrive.</p>
         </div>
       </div>
       <SystemsLens client:load />
@@ -74,10 +53,10 @@ const featuredPublications = publicationPrograms
   <section class="section" aria-labelledby="capabilities-heading">
     <div class="shell">
       <div class="section-heading">
-        <span class="section-kicker">03 / What I build</span>
+        <span class="section-kicker">02 / Where it applies</span>
         <div>
-          <h2 id="capabilities-heading">A modular practice that can expand with the problem.</h2>
-          <p>Each lane can begin as a focused intervention and grow into shared infrastructure across teams, decisions, and domains.</p>
+          <h2 id="capabilities-heading">The method stays consistent. The problem and tools change.</h2>
+          <p>It can optimize resources, make private and governed AI useful, or help researchers choose the next experiment.</p>
         </div>
       </div>
       <div class="capability-grid">
@@ -92,35 +71,41 @@ const featuredPublications = publicationPrograms
           </article>
         ))}
       </div>
+      <p class="lens-caption">I work with startups, enterprises, and research institutes, beginning with one important problem and extending what proves useful.</p>
     </div>
   </section>
 
   <section class="section" id="selected-work" aria-labelledby="work-heading">
     <div class="shell">
       <div class="section-heading">
-        <span class="section-kicker">04 / Systems in practice</span>
+        <span class="section-kicker">03 / Systems built</span>
         <div>
-          <h2 id="work-heading">Systems built around real decisions.</h2>
-          <p>Resource allocation, private document intelligence, governed analytics, adaptive pipelines, and experiment selection—each designed around an action, not only a prediction.</p>
+          <h2 id="work-heading">Systems built around real choices.</h2>
+          <p>Examples include optimizing resource allocation, working privately with long documents, answering business questions with evidence, adapting analytics to new data, and deciding which experiment to run next.</p>
         </div>
       </div>
       <div class="case-grid">
         {featured.map((study, index) => <CaseStudyCard study={study} index={index} />)}
       </div>
       <div class="text-links">
-        <a class="text-link" href={sitePath('work')}>All work records <span aria-hidden="true">→</span></a>
+        <a class="text-link" href={sitePath('work')}>See all work <span aria-hidden="true">&rarr;</span></a>
       </div>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="open-research-heading">
+  <section class="section" aria-labelledby="research-heading">
     <div class="shell">
-      <div class="section-heading">
-        <span class="section-kicker">05 / Open research</span>
+      <div class="research-grid">
         <div>
-          <h2 id="open-research-heading">Machine learning where every experiment is expensive.</h2>
-          <p>Recent work integrates partial evidence, narrows large biological search spaces, exposes uncertainty, and identifies what is worth testing next.</p>
+          <span class="section-kicker">04 / Evidence</span>
+          <h2 id="research-heading">Published research shows the method in a difficult setting.</h2>
+          <p class="lede">When every experiment is slow and expensive, choosing what to test next matters.</p>
+          <p>I combine biological evidence and machine learning to narrow large search spaces, compare promising candidates, show what remains uncertain, and plan the next useful experiment.</p>
+          <div class="text-links">
+            <a class="text-link" href={sitePath('research')}>Explore the research program <span aria-hidden="true">&rarr;</span></a>
+          </div>
         </div>
+        <DiscoveryDiagram />
       </div>
       <div class="writing-list">
         {featuredPublications.map((publication) => (
@@ -130,48 +115,12 @@ const featuredPublications = publicationPrograms
               <h3>{publication.title}</h3>
               <p>{publication.accessLabel}</p>
             </div>
-            <span class="archive-arrow" aria-hidden="true">↗</span>
+            <span class="archive-arrow" aria-hidden="true">&nearr;</span>
           </a>
         ))}
       </div>
       <div class="text-links">
-        <a class="text-link" href={sitePath('publications')}>All publications <span aria-hidden="true">→</span></a>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="research-heading">
-    <div class="shell research-grid">
-      <div>
-        <span class="section-kicker">06 / Scientific discovery</span>
-        <h2 id="research-heading">A high-stakes search problem with expensive feedback.</h2>
-        <p class="lede">Oxygen-tolerant nitrogen fixation is one flagship application of a broader system for machine-learning-guided functional discovery.</p>
-        <p>Comparative genomics, condition-specific multi-omics, protein representations, active learning, and experimental planning work together to decide which candidate or variant should be tested next.</p>
-        <div class="text-links">
-          <a class="text-link" href={sitePath('research')}>Explore the research program <span aria-hidden="true">→</span></a>
-        </div>
-      </div>
-      <DiscoveryDiagram />
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="approach-heading">
-    <div class="shell">
-      <div class="section-heading">
-        <span class="section-kicker">07 / Operating pattern</span>
-        <div>
-          <h2 id="approach-heading">Build the next decision into the system from the start.</h2>
-          <p>The recurring pattern is more durable than any one model, platform, or domain.</p>
-        </div>
-      </div>
-      <div class="approach-grid">
-        {approachPrinciples.map((principle) => (
-          <article class="principle">
-            <span class="meta-label">{principle.index}</span>
-            <h3>{principle.title}</h3>
-            <p>{principle.text}</p>
-          </article>
-        ))}
+        <a class="text-link" href={sitePath('publications')}>See all publications <span aria-hidden="true">&rarr;</span></a>
       </div>
     </div>
   </section>

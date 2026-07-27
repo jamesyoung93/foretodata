@@ -6,15 +6,15 @@ import { sitePath } from '../utils/paths';
 
 <Base
   title="Research | James Young"
-  description="James Young's research program in machine-learning-guided functional discovery and engineering in undercharacterized microbial systems."
+  description="James Young builds systems that map biological evidence, compare candidates, choose valuable experiments, and learn from each result."
 >
   <header class="page-hero">
     <div class="shell">
       <span class="page-path">ForetoData / research</span>
-      <h1>ML-guided functional discovery and engineering.</h1>
+      <h1>Choosing better experiments in complex biological systems.</h1>
       <div class="page-intro">
-        <span class="section-kicker">Research program</span>
-        <p>Undercharacterized microbial systems provide the scientific setting. Comparative evidence, protein representations, multi-omic integration, and experimental prioritization provide the methods.</p>
+        <span class="section-kicker">Map → Compare → Choose → Learn</span>
+        <p>Biological discovery often means making expensive experimental choices with incomplete evidence. I build systems that clarify what is known, compare promising candidates, and identify the next experiment most likely to improve understanding.</p>
       </div>
     </div>
   </header>
@@ -22,27 +22,20 @@ import { sitePath } from '../utils/paths';
   <section class="section">
     <div class="shell research-grid">
       <article class="editorial">
-        <p class="lead-paragraph">The program asks how machine learning can narrow biological search spaces without losing sight of the experiment that must eventually resolve uncertainty.</p>
+        <p class="lead-paragraph">The goal is not simply to rank biological candidates. It is to connect computational evidence to a sequence of experiments that steadily reduces uncertainty and improves the next choice.</p>
 
-        <h2>Flagship problem: oxygen-tolerant nitrogen fixation</h2>
+        <h2>Map the biological system</h2>
         <p>Nitrogen fixation is an unusually clear test of this approach. Nitrogenase is oxygen-sensitive, while cyanobacteria produce oxygen through photosynthesis. Understanding how some organisms coordinate those processes requires functional discovery across genes, regulatory context, environmental condition, and phenotype.</p>
-        <p>Oxygen-tolerant nitrogen fixation is the flagship application. The same framework can support other problems where biological function is undercharacterized and experimental capacity is constrained.</p>
+        <p>I map the biological function, the conditions in which it matters, the available measurements, and the gaps that experiments must resolve. Oxygen-tolerant nitrogen fixation is the flagship application, but the same structure applies wherever biological function is undercharacterized and testing capacity is limited.</p>
 
-        <h2>A connected methodological program</h2>
-        <h3>Functional discovery</h3>
-        <p>Begin with a biological function and the evidence required to distinguish a promising candidate from a convenient correlation.</p>
-        <h3>Environmental and condition-specific biology</h3>
-        <p>Expression and phenotype depend on context. Condition-specific transcriptomic and proteomic evidence helps define when a mechanism is relevant.</p>
-        <h3>Sequence and protein representation</h3>
-        <p>Comparative genomics and protein-language-model representations make it possible to reason across related genes and proteins even when annotation is incomplete.</p>
-        <h3>Multi-omic integration</h3>
-        <p>No single data layer settles the question. The task is to combine partially informative evidence while keeping its provenance visible.</p>
-        <h3>Experimental prioritization</h3>
-        <p>The output is a smaller, defensible set of candidates and a clear account of why each candidate is worth testing.</p>
-        <h3>Iterative model-and-experiment cycles</h3>
-        <p>Active learning treats each experimental result as the beginning of the next round, building a more efficient learning system over time.</p>
-        <h3>Protein learning and engineering</h3>
-        <p>For protein-property questions, the same logic moves from sequence representation through candidate selection to validation planning.</p>
+        <h2>Compare the strongest candidates</h2>
+        <p>No single data source settles the question. Comparative genomics, condition-specific transcriptomics and proteomics, protein-language-model representations, and other biological evidence each reveal part of the system. Combining them makes it possible to compare candidates while keeping the origin and limits of each signal visible.</p>
+
+        <h2>Choose the next experiment</h2>
+        <p>The practical output is a smaller, defensible set of candidates and a clear reason to test each one. Optimization helps balance predicted value, uncertainty, experimental cost, and the information a result could add—not just select the highest model score.</p>
+
+        <h2>Learn from every result</h2>
+        <p>Experimental evidence updates the model of the system and changes what should be tested next. Active learning turns that feedback into a continuing cycle, whether the question involves gene function, regulatory context, or protein properties and engineering.</p>
 
         <div class="text-links">
           <a class="text-link" href={sitePath('publications')}>Publications <span aria-hidden="true">→</span></a>

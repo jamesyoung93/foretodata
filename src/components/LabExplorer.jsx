@@ -6,19 +6,19 @@ const domains = ['All', ...new Set(caseStudies.map((study) => study.domain))];
 
 const asciiPanels = [
   {
-    label: 'DECISION SYSTEM',
-    art: `outcome  ◀── response model\n                 ▲\ncontext ────────┼──── scenario\n                 │\nlevers  ────────┴──── optimize ──▶ act`,
-    note: 'Separate what can be changed from what must be observed.',
+    label: 'MAP',
+    art: `desired outcome\n      ▲\n      ├──── what can change\n      ├──── what must be accounted for\n      └──── constraints + uncertainty`,
+    note: 'Make the outcome, choices, context, and limits explicit.',
   },
   {
-    label: 'INTERACTIVE INTELLIGENCE',
-    art: `question ─▶ translate ─▶ governed tool\n                              │\nlocal model ─▶ retrieve ──────┤\n                              ▼\n                      evidence artifact`,
-    note: 'Use language as the interface while keeping truth in the system.',
+    label: 'SIMULATE',
+    art: `current state ──▶ option A ──▶ possible outcome\n              ├──▶ option B ──▶ possible outcome\n              └──▶ option C ──▶ possible outcome`,
+    note: 'Compare realistic actions before committing resources.',
   },
   {
-    label: 'SCIENTIFIC SEARCH',
-    art: `sequence ─┬─ context\n          ├─ expression ─▶ rank ─▶ test\n          └─ structure          │\n                     learn ◀────┘`,
-    note: 'Choose the next experiment for information as well as score.',
+    label: 'OPTIMIZE → LEARN',
+    art: `options + constraints ──▶ best feasible action\n                                  │\nupdated system ◀── measured result ◀─┘`,
+    note: 'Choose what can be carried out, then use the result to improve the next decision.',
   },
 ];
 
@@ -34,7 +34,7 @@ export default function LabExplorer({ basePath = '/foretodata/' }) {
 
   return (
     <>
-      <div className="lab-figure" aria-label="Conceptual analytical system diagrams">
+      <div className="lab-figure" aria-label="Map, simulate, optimize, and learn">
         {asciiPanels.map((panel) => (
           <section className="lab-figure-panel" key={panel.label}>
             <span className="lab-prompt">// {panel.label}</span>
@@ -45,9 +45,9 @@ export default function LabExplorer({ basePath = '/foretodata/' }) {
       </div>
 
       <section aria-labelledby="lab-projects">
-        <span className="lab-prompt">$ ls ./work --group=domain</span>
-        <h2 id="lab-projects">Project index</h2>
-        <div className="lab-filter" aria-label="Filter projects by domain">
+        <span className="lab-prompt">$ explore ./systems --group=domain</span>
+        <h2 id="lab-projects">Systems in practice</h2>
+        <div className="lab-filter" aria-label="Filter work by domain">
           {domains.map((item) => (
             <button
               key={item}
@@ -68,8 +68,8 @@ export default function LabExplorer({ basePath = '/foretodata/' }) {
             <article className="lab-project" key={study.slug}>
               <span className="lab-prompt">./{study.slug}</span>
               <h3>{study.title}</h3>
-              <p>{study.question}</p>
-              <a href={toPath(`work/${study.slug}`)}>view work →</a>
+              <p>{study.summary}</p>
+              <a href={toPath(`work/${study.slug}`)}>open system →</a>
             </article>
           ))}
         </div>

@@ -1,8 +1,8 @@
 # ForetoData
 
-James Young's professional portfolio for decision systems, interactive AI, and scientific machine learning.
+James Young's professional portfolio for decision and optimization systems applied across operations, AI-enabled work, and scientific research.
 
-The default experience is a restrained analytical-editorial site organized around a cross-domain operating pattern: represent, simulate, decide, and learn. An optional Lab Mode preserves the terminal-inspired character without duplicating the underlying work content.
+The default experience is a restrained analytical-editorial site organized around a cross-domain operating pattern: map, simulate, optimize, and learn. An optional Lab Mode preserves the terminal-inspired character without duplicating the underlying work content.
 
 ## Local development
 
@@ -27,7 +27,7 @@ The build includes `astro check`. The route checker validates generated internal
 ## Content and structure
 
 - `src/data/site.ts` — shared case-study, capability, publication, featured-insight, positioning, and profile content
-- `src/components/SystemsLens.jsx` — interactive comparison of the decision architecture across domains
+- `src/components/SystemsLens.jsx` — interactive comparison of the same decision-and-optimization method across different applications
 - `src/content/blog/` — earlier technical notes preserved behind the Insights page
 - `src/pages/` — static Astro routes
 - `src/layouts/Base.astro` — shared navigation, metadata, and mode-aware shell
