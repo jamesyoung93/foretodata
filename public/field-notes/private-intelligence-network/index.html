@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="An executive architecture for a private intelligence network: governed evidence, orchestrated applications, accountable decisions and institutional learning.">
+  <link rel="canonical" href="https://jamesyoung93.github.io/foretodata/field-notes/private-intelligence-network/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ForetoData">
+  <meta property="og:title" content="The Private Intelligence Network">
+  <meta property="og:description" content="An owned decision-learning system that turns evidence into action and learns from what happens next.">
+  <meta property="og:url" content="https://jamesyoung93.github.io/foretodata/field-notes/private-intelligence-network/">
+  <meta property="og:image" content="https://jamesyoung93.github.io/foretodata/field-notes/private-intelligence-network/assets/private-intelligence-horizon.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>The Private Intelligence Network</title>
+  <style>
+    :root {
+      --paper: #f5f2ea;
+      --paper-deep: #ebe5d8;
+      --ink: #202a2a;
+      --muted: #596463;
+      --forest: #294b45;
+      --forest-2: #3f665d;
+      --river: #6c8584;
+      --sand: #d8cdb8;
+      --pale-green: #dce7e2;
+      --pale-blue: #e0e9e9;
+      --rule: #a9b3ae;
+      --white: #fffefa;
+      --shadow: 0 18px 48px rgba(32, 42, 42, .10);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--paper); }
+    body { margin: 0; color: var(--ink); background: var(--paper); font: 17px/1.65 Arial, Helvetica, sans-serif; }
+    a { color: var(--forest-2); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    a:hover { color: var(--forest); }
+    .skip-link { position: fixed; left: 1rem; top: -5rem; z-index: 1000; padding: .65rem 1rem; background: var(--ink); color: white; }
+    .skip-link:focus { top: 1rem; }
+    .site-nav { position: sticky; top: 0; z-index: 50; border-bottom: 1px solid rgba(63,102,93,.24); background: rgba(245,242,234,.94); backdrop-filter: blur(14px); }
+    .nav-inner { max-width: 1240px; margin: auto; min-height: 64px; padding: .65rem 2rem; display: flex; flex-wrap: wrap; align-items: center; gap: .35rem 1rem; }
+    .brand { flex: 0 0 auto; margin-right: auto; font-size: .78rem; font-weight: 800; letter-spacing: .13em; text-decoration: none; text-transform: uppercase; color: var(--forest); }
+    .nav-links { min-width: 0; flex: 1 1 760px; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .35rem 1rem; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+    .nav-links a { color: var(--muted); font-size: .78rem; font-weight: 700; text-decoration: none; }
+    .nav-links a:hover { color: var(--forest); }
+    .hero { max-width: 1240px; margin: 0 auto; padding: 2rem 2rem 4.6rem; }
+    .hero-art { position: relative; height: clamp(235px, 34vw, 410px); overflow: hidden; border: 1px solid rgba(63,102,93,.28); box-shadow: var(--shadow); background: #d9ddd8; }
+    .hero-art img { position: absolute; left: 0; bottom: 0; width: 100%; height: auto; filter: grayscale(1) contrast(1.03); }
+    .hero-art::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(245,242,234,0) 50%, rgba(32,42,42,.14)); pointer-events: none; }
+    .hero-copy { max-width: 1020px; margin-top: 2.5rem; }
+    .eyebrow { color: var(--forest-2); font-size: .76rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+    h1, h2 { font-family: Georgia, 'Times New Roman', serif; letter-spacing: -.025em; }
+    h1 { margin: .7rem 0 1rem; max-width: 1000px; font-size: clamp(2.65rem, 6vw, 5.4rem); line-height: 1.02; }
+    .subtitle { margin: 0 0 .7rem; color: var(--forest); font-size: clamp(1.05rem, 2.2vw, 1.5rem); font-style: italic; }
+    .hero-deck { max-width: 760px; color: var(--muted); font-size: 1.04rem; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1.5rem; }
+    .button { display: inline-flex; align-items: center; min-height: 44px; padding: .62rem 1rem; border: 1px solid var(--forest-2); color: var(--forest); font-size: .86rem; font-weight: 800; text-decoration: none; }
+    .button.primary { background: var(--forest); color: white; }
+    .button:hover { background: var(--forest-2); color: white; }
+    .reading-map { max-width: 1180px; margin: -2rem auto 4rem; padding: 0 2rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .map-card { padding: 1.25rem 1.35rem; border-top: 4px solid var(--forest-2); background: var(--white); box-shadow: 0 8px 28px rgba(32,42,42,.06); }
+    .map-card b { display: block; margin-bottom: .25rem; color: var(--forest); }
+    .map-card span { color: var(--muted); font-size: .9rem; }
+    main { max-width: 1180px; margin: auto; padding: 0 2rem 7rem; }
+    .content-section { scroll-margin-top: 88px; margin: 0 auto; padding: 4.8rem 0 0; border-top: 1px solid rgba(63,102,93,.22); }
+    .content-section:first-child { padding-top: 0; border-top: 0; }
+    h2 { max-width: 930px; margin: 0 0 1.5rem; font-size: clamp(2.1rem, 4vw, 3.8rem); line-height: 1.08; }
+    h3 { margin: 2.6rem 0 .8rem; color: var(--forest); font-size: 1.45rem; }
+    p, .prose-list { max-width: 78ch; }
+    p { margin: 0 0 1.1rem; }
+    p.lede { font-size: 1.16rem; color: var(--muted); }
+    .prose-list { margin: 1.25rem 0 2rem; padding-left: 1.3rem; }
+    .prose-list li { margin-bottom: .72rem; padding-left: .3rem; }
+    code { padding: .12rem .3rem; background: var(--paper-deep); font-size: .9em; }
+    .diagram-card { margin: 2.2rem 0 3rem; border: 1px solid rgba(63,102,93,.32); background: #f7f4ec; box-shadow: var(--shadow); }
+    .diagram-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; min-height: 54px; padding: .7rem 1rem; border-bottom: 1px solid rgba(63,102,93,.22); }
+    .diagram-toolbar figcaption { margin-right: auto; color: var(--forest); font-size: .8rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .diagram-controls, .dialog-controls { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .diagram-mode, .diagram-expand, .dialog-mode { border: 1px solid var(--rule); padding: .45rem .7rem; background: transparent; color: var(--forest); font: inherit; font-size: .76rem; font-weight: 800; cursor: pointer; }
+    .diagram-mode:hover, .diagram-expand:hover, .dialog-mode:hover { background: var(--pale-green); }
+    .diagram-mode[aria-pressed="true"], .dialog-mode[aria-pressed="true"] { border-color: var(--forest); background: var(--forest); color: white; }
+    .diagram-hint { flex-basis: 100%; color: var(--muted); font-size: .76rem; line-height: 1.45; }
+    .diagram-viewport { overflow: auto; padding: 1.5rem; overscroll-behavior: contain; scrollbar-gutter: stable; }
+    .diagram-viewport svg { display: block; width: auto; min-width: 0; max-width: none; height: auto; margin: auto; }
+    .application-families { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 2rem 0 2.6rem; }
+    .application-family { min-width: 0; border: 1px solid rgba(63,102,93,.32); background: var(--white); box-shadow: 0 8px 26px rgba(32,42,42,.06); }
+    .application-family[open] { grid-column: 1 / -1; border-color: var(--forest-2); }
+    .application-family summary { min-height: 112px; padding: 1.15rem 1.25rem; display: flex; flex-direction: column; justify-content: space-between; gap: .9rem; cursor: pointer; list-style: none; border-top: 4px solid var(--forest-2); }
+    .application-family summary::-webkit-details-marker { display: none; }
+    .application-family summary::after { content: "+"; align-self: flex-end; margin-top: -2rem; color: var(--forest); font-size: 1.45rem; line-height: 1; }
+    .application-family[open] summary::after { content: "-"; }
+    .family-name { max-width: 26ch; color: var(--forest); font-family: Georgia, 'Times New Roman', serif; font-size: 1.35rem; font-weight: 700; line-height: 1.15; }
+    .family-action { color: var(--muted); font-size: .77rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+    .family-panel { padding: 0 1.25rem 1.25rem; border-top: 1px solid rgba(63,102,93,.18); }
+    .family-panel > p:first-child { margin-top: 1rem; }
+    .family-panel .table-scroll { margin: 1rem 0 0; }
+    .table-scroll { margin: 1.5rem 0 2.2rem; overflow-x: auto; border: 1px solid var(--rule); }
+    table { width: 100%; min-width: 760px; border-collapse: collapse; background: var(--white); font-size: .86rem; line-height: 1.45; }
+    th { padding: .8rem .9rem; background: var(--forest); color: white; text-align: left; }
+    td { padding: .78rem .9rem; border-top: 1px solid var(--rule); vertical-align: top; }
+    tbody tr:nth-child(even) td { background: var(--paper-deep); }
+    dialog { width: min(96vw, 1600px); max-width: none; height: min(92vh, 1100px); padding: 0; border: 1px solid var(--forest-2); background: var(--paper); color: var(--ink); box-shadow: 0 28px 90px rgba(0,0,0,.28); }
+    dialog::backdrop { background: rgba(22,31,30,.76); }
+    .dialog-bar { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; padding: .85rem 1rem; border-bottom: 1px solid var(--rule); background: var(--paper); position: sticky; top: 0; }
+    .dialog-title { margin-right: auto; color: var(--forest); font-weight: 800; }
+    .dialog-close { border: 1px solid var(--forest); background: var(--forest); color: white; padding: .5rem .8rem; cursor: pointer; }
+    .dialog-canvas { height: calc(100% - 58px); overflow: auto; padding: 2rem; background: #f7f4ec; }
+    .dialog-canvas svg { display: block; min-width: 0; max-width: none; width: auto; height: auto; margin: auto; }
+    footer { border-top: 1px solid rgba(63,102,93,.25); padding: 2.2rem 2rem 3rem; color: var(--muted); }
+    .footer-inner { max-width: 1180px; margin: auto; display: flex; justify-content: space-between; gap: 2rem; }
+    @media (max-width: 900px) {
+      .nav-inner { padding-inline: 1rem; }
+      .brand { min-width: 120px; }
+      .nav-links { flex-basis: 100%; justify-content: flex-start; }
+      .hero, main, .reading-map { padding-left: 1rem; padding-right: 1rem; }
+      .reading-map { grid-template-columns: 1fr; }
+      .application-families { grid-template-columns: 1fr; }
+      .application-family[open] { grid-column: auto; }
+      .diagram-viewport { padding: 1rem; }
+      .diagram-toolbar figcaption { flex-basis: 100%; }
+      .diagram-controls { width: 100%; }
+      .footer-inner { flex-direction: column; }
+    }
+    @media print {
+      .site-nav, .hero-actions, .diagram-controls, .diagram-hint, .application-families, dialog { display: none !important; }
+      body { font-size: 11pt; background: white; }
+      .hero { padding-top: 0; }
+      .hero-art { height: 2.6in; box-shadow: none; }
+      .map-card, .diagram-card { box-shadow: none; break-inside: avoid; }
+      .content-section { break-before: page; }
+      .content-section:first-child { break-before: auto; }
+      .diagram-viewport { overflow: visible; max-height: none !important; }
+      .diagram-viewport svg { width: 100% !important; min-width: 0 !important; max-height: 7.1in; }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <nav class="site-nav" aria-label="Primary">
+    <div class="nav-inner">
+      <a class="brand" href="../../">ForetoData Field Notes</a>
+      <div class="nav-links"><a href="#executive-summary">Summary</a><a href="#executive-business-flow">Flow</a><a href="#what-changes-when-data-becomes-evidence">Evidence</a><a href="#phased-rollout-by-design">Rollout</a><a href="#application-network-and-potential-outcomes">Applications</a><a href="#own-the-core-choose-the-boundary">Ownership</a><a href="#a-local-model-no-longer-means-a-toy">Local models</a><a href="#hardware-and-ownership-starting-points">Hardware</a><a href="#design-rules">Rules</a><a href="#evidence-notes">Notes</a></div>
+    </div>
+  </nav>
+  <header class="hero" id="top">
+    <div class="hero-art"><img src="assets/private-intelligence-horizon.png" alt="Field scouts overlooking a reflective wooded lake"></div>
+    <div class="hero-copy">
+      <div class="eyebrow">ForetoData field note &middot; 17 August 2026</div>
+      <h1>The Private Intelligence Network</h1>
+      <p class="subtitle">An owned decision-learning system — bold exploration, tied to outcomes</p>
+      <p class="hero-deck">An organization-owned system that turns evidence into a decision, carries the decision into action and learns from what happened next.</p>
+      <div class="hero-actions">
+        <a class="button primary" href="private-intelligence-network.pdf">Download the PDF</a>
+        <a class="button" href="../../">Back to ForetoData</a>
+      </div>
+    </div>
+  </header>
+  <aside class="reading-map" aria-label="Reading map">
+    <div class="map-card"><b>Enter through a decision</b><span>Name the owner, stakes and observable outcome before choosing the application.</span></div>
+    <div class="map-card"><b>Build only what it needs</b><span>Construct the evidence foundation and connections required by the first consequential decision.</span></div>
+    <div class="map-card"><b>Expand after proof</b><span>Reuse the foundation, permissions and traces only after the first decision-to-outcome loop works.</span></div>
+  </aside>
+  <main id="content"><section class="content-section" id="executive-summary">
+<h2>Executive summary</h2>
+<p class=""><strong>Illustrative decision, not a customer case study.</strong> A strategy lead has one funded investigation to place and a dozen plausible problems competing for it. The Discovery Engine assembles interviews, operating records, public signals, contrary evidence, permissions, and missing-data warnings into a ranked shortlist. The lead selects one problem; the evidence, rationale, approval, action, and eventual result remain connected so the next decision starts from what the organization learned rather than from another blank chat.</p>
+<p class="">That is the private intelligence network in miniature: an organization-owned system that turns evidence into a decision, carries the decision into action, and learns from the observed outcome. Models, applications, and interfaces can change. The governed evidence and decision record remain under organizational control.</p>
+<figure class="diagram-card" data-diagram="1">
+                    <div class="diagram-toolbar">
+                      <figcaption>The private decision-learning loop</figcaption>
+                      <div class="diagram-controls" aria-label="Diagram view controls">
+                        <button class="diagram-mode" data-mode="fit" type="button" aria-pressed="true">Fit overview</button>
+                        <button class="diagram-mode" data-mode="read" type="button" aria-pressed="false">Readable</button>
+                        <button class="diagram-expand" type="button" aria-label="Open The private decision-learning loop in a full-screen readable view">Full screen</button>
+                      </div>
+                      <div class="diagram-hint">The overview carries the executive argument. Use Readable or Full screen only when you want to inspect the labels in detail.</div>
+                    </div>
+                    <div class="diagram-viewport"><pre class="mermaid">%%{init: {"flowchart": {"useMaxWidth": true, "htmlLabels": true, "nodeSpacing": 26, "rankSpacing": 34}, "themeVariables": {"fontSize": "17px"}}}%%
+flowchart LR
+    DATA["Fragmented evidence&lt;br/&gt;and operating data"]
+    FOUNDATION["AI-ready Evidence&lt;br/&gt;&amp;amp; Data Foundation"]
+    APPS["Orchestrated applications&lt;br/&gt;new + existing"]
+    DECIDE["Governed decision&lt;br/&gt;and authorized action"]
+    OUTCOME["Observed outcome&lt;br/&gt;and learnable trace"]
+
+    DATA --&gt; FOUNDATION --&gt; APPS --&gt; DECIDE --&gt; OUTCOME
+    OUTCOME --&gt;|"improves the next cycle"| FOUNDATION</pre></div>
+                  </figure>
+</section>
+<section class="content-section" id="executive-business-flow">
+<h2>Executive business flow</h2>
+<p class="">The value center is not model output. It is the decision-to-action boundary, where analysis changes research, marketing, sales, strategy, operations, or the allocation of real resources. The system preserves how each decision was reached and what happened next. This is a functional architecture, not an all-at-once implementation plan: rollout starts with the required foundation and connections, then moves through prioritized applications one at a time.</p>
+<figure class="diagram-card" data-diagram="2">
+                    <div class="diagram-toolbar">
+                      <figcaption>Executive business flow</figcaption>
+                      <div class="diagram-controls" aria-label="Diagram view controls">
+                        <button class="diagram-mode" data-mode="fit" type="button" aria-pressed="true">Fit overview</button>
+                        <button class="diagram-mode" data-mode="read" type="button" aria-pressed="false">Readable</button>
+                        <button class="diagram-expand" type="button" aria-label="Open Executive business flow in a full-screen readable view">Full screen</button>
+                      </div>
+                      <div class="diagram-hint">The overview carries the executive argument. Use Readable or Full screen only when you want to inspect the labels in detail.</div>
+                    </div>
+                    <div class="diagram-viewport"><pre class="mermaid">%%{init: {"flowchart": {"useMaxWidth": true, "htmlLabels": true, "nodeSpacing": 30, "rankSpacing": 42, "curve": "basis", "subGraphTitleMargin": {"top": 0, "bottom": 12}}, "themeVariables": {"fontSize": "18px"}}}%%
+flowchart LR
+    S["1. Sources and operating environment&lt;br/&gt;Public evidence + internal scientific and operational data + human judgment&lt;br/&gt;Optional external tools enter only through a governed gateway"]
+
+    subgraph LOCAL["OWNED LOCAL TRUST BOUNDARY"]
+        direction LR
+        F["2. Evidence &amp; Data Foundation&lt;br/&gt;Govern, harmonize and contextualize inputs&lt;br/&gt;Create evidence products usable now and reusable later"]
+        N["3. Orchestrated Application Network&lt;br/&gt;AI-native applications + existing software&lt;br/&gt;Share context, routing and permissions"]
+        D["4. Decision-to-action boundary&lt;br/&gt;Evidence + rationale + uncertainty + alternatives&lt;br/&gt;Review leads to authorized action or deliberate no-action"]
+
+        F --&gt; N --&gt; D
+    end
+
+    L["5. Trace, evaluation and governed learning&lt;br/&gt;Capture evidence, rationale, approval, action and observed outcome&lt;br/&gt;Use the trace to improve the next decision cycle"]
+
+    S --&gt;|"controlled, permissioned intake"| F
+    D --&gt;|"action and observed outcome"| L
+    L --&gt;|"improves the next cycle"| F
+
+    classDef source fill:#e9e2d4,stroke:#9a8e78,color:#202a2a;
+    classDef foundation fill:#dce7e2,stroke:#58766d,color:#202a2a;
+    classDef application fill:#e0e9e9,stroke:#6c8584,color:#202a2a;
+    classDef decision fill:#edf2ef,stroke:#58766d,color:#202a2a;
+    classDef feedback fill:#f0eadc,stroke:#9a8e78,color:#202a2a;
+    class S source;
+    class F foundation;
+    class N application;
+    class D decision;
+    class L feedback;</pre></div>
+                  </figure>
+<h3 id="one-intelligence-core-many-surfaces">One intelligence core, many surfaces</h3>
+<div class="table-scroll"><table><thead><tr><th>Layer</th><th>Examples</th><th>Design rule</th></tr></thead><tbody><tr><td><strong>Governed core</strong></td><td>Relational data, documents, vectors, event logs, semantic layers, knowledge graphs, permissions, and traces.</td><td>Choose the representation that fits the decision; it is not the user experience.</td></tr><tr><td><strong>Delivery surfaces</strong></td><td>CRM, ERP, LIMS, dashboards, custom applications, desktop or operating-system tools, agents, and chat.</td><td>Surface intelligence where people already work.</td></tr><tr><td><strong>Durable record</strong></td><td>Evidence, transformations, decisions, approvals, actions, and outcomes.</td><td>A chat log can be interaction evidence, but it is not the canonical state.</td></tr></tbody></table></div>
+<p class="">The network is primarily under-the-hood infrastructure. Interfaces and models may change without discarding the governed intelligence or institutional memory beneath them.</p>
+</section>
+<section class="content-section" id="what-changes-when-data-becomes-evidence">
+<h2>What changes when data becomes evidence</h2>
+<p class="">Having data is not the same as having evidence ready for a consequential use. The difference is easiest to see in one deliberately simple example:</p>
+<div class="table-scroll"><table><thead><tr><th>Raw fragment</th><th>Governed evidence record</th></tr></thead><tbody><tr><td>"Release review takes too long." The statement sits in a meeting note with no defined owner or reuse path.</td><td><strong>Claim:</strong> release review may exceed the approved window. <strong>Sources:</strong> linked change-control records plus the dated interview excerpt. <strong>Provenance:</strong> record IDs, excerpt boundaries, and transformation history. <strong>Grade:</strong> corroborated records separated from self-report. <strong>Permission:</strong> QA and process engineering. <strong>Decision use:</strong> a candidate problem to investigate, not proof of root cause.</td></tr></tbody></table></div>
+<p class="">The governed version does not make the claim true by formatting it. It makes the source, uncertainty, permission, and intended decision use inspectable. That is what allows another application to reuse the evidence without silently upgrading a fragment into a fact.</p>
+<h3 id="what-exists-today">What exists today</h3>
+<ul class="prose-list">
+<li><strong>Observed:</strong> a working local demonstration environment shows evidence-backed discovery, owner-specific decision conversations, governed information sharing, bounded refusals, and preserved decision context.</li>
+<li><strong>Observed local corpus:</strong> a working public-record layer contains 444,248 U.S. patent records—237,261 grants and 206,987 published applications—with ranked semantic search, running on one workstation.</li>
+<li><strong>Observed scope:</strong> these are working internal demonstrations and sales walkthroughs, not a claimed production deployment inside a customer.</li>
+<li><strong>Next proof:</strong> run the first bounded Discovery Engine engagement against a buyer's own decision, evidence, constraints, and baseline outcome.</li>
+</ul>
+</section>
+<section class="content-section" id="phased-rollout-by-design">
+<h2>Phased rollout by design</h2>
+<p class="">The architecture is the destination, not a demand to build everything at once. A credible rollout begins with one consequential decision and the smallest foundation and application capable of improving it.</p>
+<figure class="diagram-card" data-diagram="3">
+                    <div class="diagram-toolbar">
+                      <figcaption>Phased rollout by design</figcaption>
+                      <div class="diagram-controls" aria-label="Diagram view controls">
+                        <button class="diagram-mode" data-mode="fit" type="button" aria-pressed="true">Fit overview</button>
+                        <button class="diagram-mode" data-mode="read" type="button" aria-pressed="false">Readable</button>
+                        <button class="diagram-expand" type="button" aria-label="Open Phased rollout by design in a full-screen readable view">Full screen</button>
+                      </div>
+                      <div class="diagram-hint">The overview carries the executive argument. Use Readable or Full screen only when you want to inspect the labels in detail.</div>
+                    </div>
+                    <div class="diagram-viewport"><pre class="mermaid">%%{init: {"flowchart": {"useMaxWidth": true, "htmlLabels": true, "nodeSpacing": 28, "rankSpacing": 36, "curve": "basis"}, "themeVariables": {"fontSize": "17px"}}}%%
+flowchart LR
+    SCOPE["1. Scope the first decision&lt;br/&gt;owner; stakes; observable outcome"]
+    DATA["2. Build its data spine&lt;br/&gt;sources; harmonization; permissions; connections"]
+    APP["3. Launch the Discovery Engine&lt;br/&gt;ranked problems with evidence of demand"]
+    EXTEND["4. Prove, harden and extend&lt;br/&gt;observe the result; then apply the Research Engine to the selected problem"]
+
+    SCOPE --&gt; DATA --&gt; APP --&gt; EXTEND
+    EXTEND -. "reuse foundation, connections and traces" .-&gt; DATA</pre></div>
+                  </figure>
+<p class=""><strong>The rule is foundation first, leverage next, expansion after proof.</strong> For the current product sequence, the first decision is which problem deserves funded attention. The Discovery Engine produces the ranked shortlist; the Research Engine becomes the second act after a problem is selected. A different buyer may begin with another application, but the same rule applies: one owner, one decision, one observable outcome, and no expansion until the loop works.</p>
+</section>
+<section class="content-section" id="application-network-and-potential-outcomes">
+<h2>Application network and potential outcomes</h2>
+<p class="">The collapsed view is the executive argument. It is complete without the detail: the shared foundation supports discovery, learning, and action; the observed result returns as governed evidence. On the website, select a family to inspect its applications and recognition-phrased potential outcomes.</p>
+<figure class="diagram-card" data-diagram="4">
+                    <div class="diagram-toolbar">
+                      <figcaption>Application network and potential outcomes</figcaption>
+                      <div class="diagram-controls" aria-label="Diagram view controls">
+                        <button class="diagram-mode" data-mode="fit" type="button" aria-pressed="true">Fit overview</button>
+                        <button class="diagram-mode" data-mode="read" type="button" aria-pressed="false">Readable</button>
+                        <button class="diagram-expand" type="button" aria-label="Open Application network and potential outcomes in a full-screen readable view">Full screen</button>
+                      </div>
+                      <div class="diagram-hint">The overview carries the executive argument. Use Readable or Full screen only when you want to inspect the labels in detail.</div>
+                    </div>
+                    <div class="diagram-viewport"><pre class="mermaid">%%{init: {"flowchart": {"useMaxWidth": true, "htmlLabels": true, "nodeSpacing": 30, "rankSpacing": 44, "curve": "basis"}, "themeVariables": {"fontSize": "17px"}}}%%
+flowchart LR
+    FOUNDATION["Shared substrate&lt;br/&gt;A fact can be reused without re-researching it"]
+    FIND["Discover &amp;amp; understand&lt;br/&gt;A shortlist of problems someone is already paying to solve"]
+    LEARN["Learn &amp;amp; predict&lt;br/&gt;A signal early enough to change the plan"]
+    ACT["Decide &amp;amp; operationalize&lt;br/&gt;Tradeoffs settled by the trace, not the loudest voice"]
+    TRACE["Outcome &amp;amp; trace&lt;br/&gt;What happened returns to evidence"]
+
+    FOUNDATION --&gt; FIND --&gt; LEARN --&gt; ACT --&gt; TRACE
+    TRACE --&gt; FOUNDATION
+
+    classDef foundation fill:#dce7e2,stroke:#58766d,color:#202a2a;
+    classDef discover fill:#edf2ef,stroke:#58766d,color:#202a2a;
+    classDef analyze fill:#e6eeee,stroke:#6c8584,color:#202a2a;
+    classDef decide fill:#f0eadc,stroke:#9a8e78,color:#202a2a;
+    classDef trace fill:#e9e2d4,stroke:#9a8e78,color:#202a2a;
+    class FOUNDATION foundation;
+    class FIND discover;
+    class LEARN analyze;
+    class ACT decide;
+    class TRACE trace;</pre></div>
+                  </figure>
+<div class="application-families" aria-label="Application family details">
+<details class="application-family" id="shared-substrate-and-delivery-surfaces"><summary><span class="family-name">Shared substrate and delivery surfaces</span><span class="family-action">Inspect applications + outcomes</span></summary><div class="family-panel">
+<div class="table-scroll"><table><thead><tr><th>Capability</th><th>Function</th><th>Potential outcome in the reader's world</th></tr></thead><tbody><tr><td>Evidence &amp; Data Foundation</td><td>Govern sources, provenance, grades, permissions, and reusable records.</td><td>The source, permission, and confidence travel with the claim.</td></tr><tr><td>Shared context and handoffs</td><td>Carry relevant state between applications without one rigid chain.</td><td>The next application begins with what the organization already knows.</td></tr><tr><td>Existing software and interfaces</td><td>Surface intelligence through systems of record, dashboards, desktop tools, and chat.</td><td>The answer appears where the work already happens.</td></tr><tr><td>Optional governed gateway</td><td>Connect selected tasks to external SaaS or frontier models.</td><td>External capability remains available without surrendering the local system of record.</td></tr></tbody></table></div>
+</div></details>
+<details class="application-family" id="discover-and-understand"><summary><span class="family-name">Discover and understand</span><span class="family-action">Inspect applications + outcomes</span></summary><div class="family-panel">
+<div class="table-scroll"><table><thead><tr><th>Application</th><th>Function</th><th>Potential outcome in the reader's world</th></tr></thead><tbody><tr><td>Discovery Engine</td><td>Find recurring problems with evidence of stakes and demand.</td><td>A shortlist of problems someone is already paying to solve.</td></tr><tr><td>Research Engine</td><td>Analyze literature and actual datasets for the selected problem.</td><td>A decision brief whose important claims can be traced back to evidence and reproducible analysis.</td></tr><tr><td>Regulatory &amp; Evidence Monitoring</td><td>Track changes, obligations, and evidence gaps.</td><td>The rule change understood before it becomes an audit surprise.</td></tr></tbody></table></div>
+</div></details>
+<details class="application-family" id="learn-and-predict"><summary><span class="family-name">Learn and predict</span><span class="family-action">Inspect applications + outcomes</span></summary><div class="family-panel">
+<p class="">These are illustrative scientific and operational instantiations, not the identity every buyer must adopt.</p>
+<div class="table-scroll"><table><thead><tr><th>Application</th><th>Function</th><th>Potential outcome in the reader's world</th></tr></thead><tbody><tr><td>Bioprocess Intelligence</td><td>Detect drift, compare against a golden batch, and support quality decisions.</td><td>The batch problem caught on day two instead of day five.</td></tr><tr><td>Biomolecular Discovery</td><td>Work across structure, sequence, variants, and candidates.</td><td>A candidate ranking whose rationale survives the handoff to validation.</td></tr><tr><td>Experiment &amp; Active Learning</td><td>Choose the next test expected to reduce the most uncertainty.</td><td>Fewer runs that only confirm what the team already knew.</td></tr><tr><td>Forecasting &amp; Operations</td><td>Evaluate risk, demand, failure, and trajectory.</td><td>The plan changes while there is still time to change it.</td></tr></tbody></table></div>
+</div></details>
+<details class="application-family" id="decide-and-operationalize"><summary><span class="family-name">Decide and operationalize</span><span class="family-action">Inspect applications + outcomes</span></summary><div class="family-panel">
+<div class="table-scroll"><table><thead><tr><th>Application</th><th>Function</th><th>Potential outcome in the reader's world</th></tr></thead><tbody><tr><td>Resource Allocation</td><td>Compare people, budget, capacity, and portfolio constraints.</td><td>The budget argument settled by the trace instead of the loudest voice.</td></tr><tr><td>Decision &amp; Optimization Engine</td><td>Make actions, constraints, and tradeoffs explicit.</td><td>A feasible action plan whose compromises are visible before approval.</td></tr><tr><td>Governed Workflow Applications</td><td>Turn briefs, reviews, copilots, and collaboration patterns into controlled tools.</td><td>The method a power user invented becomes a repeatable workflow for everyone else.</td></tr></tbody></table></div>
+<p class="">Potential outcomes are propositions to validate against each organization's baseline, constraints, and operating measures. They are not customer results or universal ROI claims. Existing software can be orchestrated inside the network, left outside with manual exchange, or connected selectively through the governed gateway.</p>
+</div></details>
+</div>
+</section>
+<section class="content-section" id="own-the-core-choose-the-boundary">
+<h2>Own the core; choose the boundary</h2>
+<div class="table-scroll"><table><thead><tr><th>Shape</th><th>What crosses the boundary</th><th>Best fit</th></tr></thead><tbody><tr><td><strong>Air-gapped</strong></td><td>No live network path. Models, updates, and evidence enter only through controlled offline transfer.</td><td>Maximum custody or highly sensitive work.</td></tr><tr><td><strong>Inside the company firewall</strong></td><td>Internal systems connect over the local network; approved public material may be retrieved through controlled egress.</td><td>The natural default for a shared company system.</td></tr><tr><td><strong>Hybrid</strong></td><td>The foundation and durable records stay local; selected tasks or approved data may reach external tools through the governed gateway.</td><td>Organizations that want local custody and optional frontier capability.</td></tr></tbody></table></div>
+<p class="">"Air-gapped" is accurate only when there is no live network path. A machine that is merely disconnected for a period is offline, but not necessarily air-gapped.</p>
+<h3 id="why-own-the-core">Why own the core</h3>
+<ul class="prose-list">
+<li><strong>Data and question privacy.</strong> Source material, prompts, intermediate work, and durable records can remain on hardware the organization controls.</li>
+<li><strong>Durable custody of the means of intelligence.</strong> The organization owns its hardware, workflows, evidence store, and lawful copies of licensed model artifacts. Rights remain governed by each artifact's license.</li>
+<li><strong>Policy fit for legitimate sensitive domains.</strong> Approved biological, regulatory, pre-IP, and security-adjacent work can operate under the organization's own access, biosafety, legal, and review controls rather than the generalized policies of a public chatbot.</li>
+<li><strong>Connection without dependence.</strong> External models and SaaS can remain available as optional capabilities through the gateway while the system of record and institutional memory stay local.</li>
+<li><strong>Reuse instead of reinvention.</strong> One evidence foundation, connector layer, permission model, and trace can support many applications without rebuilding the same intake and governance work for every use case.</li>
+<li><strong>Adoption through products, not prompt heroics.</strong> Advanced users can invent new patterns. The organization can turn the patterns that survive review into shared tools for colleagues who should not have to become prompt engineers. This is consistent with <a href="https://www.atlassian.com/blog/ai-at-work/how-to-identify-ai-superusers" target="_blank" rel="noopener">Atlassian's function-specific superuser framing</a>, but it is an operating design choice rather than a universal adoption ratio.</li>
+</ul>
+</section>
+<section class="content-section" id="a-local-model-no-longer-means-a-toy">
+<h2>A local model no longer means a toy</h2>
+<p class=""><a href="https://huggingface.co/Qwen/Qwen3.8-27B" target="_blank" rel="noopener">Qwen3.8-27B</a> is a compact, downloadable 27B-class multimodal model. Its significance is not that it uniformly replaces hosted frontier models. It is that a model small enough for owned workstation-class hardware can now enter the same performance conversation on selected practical evaluations.</p>
+<p class="">Selected scores from Qwen's vendor-reported model card:</p>
+<div class="table-scroll"><table><thead><tr><th>Evaluation - higher is better</th><th>Qwen3.8-27B</th><th>Claude Opus 4.6 Max</th></tr></thead><tbody><tr><td>Computer use - OSWorld-Verified</td><td><strong>84.3</strong></td><td>72.7</td></tr><tr><td>Agentic coding - SWE-bench Pro</td><td><strong>61.7</strong></td><td>53.4</td></tr><tr><td>Long-horizon office work - CoWorkBench</td><td><strong>70.7</strong></td><td>68.2</td></tr><tr><td>Document intelligence - OmniDocBench 1.5</td><td><strong>91.1</strong></td><td>86.6</td></tr><tr><td>Agentic terminal coding - Terminal Bench 2.1</td><td>73.0</td><td><strong>78.2</strong></td></tr><tr><td>Scientific reasoning - GPQA Diamond</td><td>89.2</td><td><strong>91.3</strong></td></tr></tbody></table></div>
+<p class="">These are vendor-reported point estimates, not an independent parity claim. Harnesses, prompts, tools, quantization, context, and workflow design can change results. The Qwen card compares against Claude Opus 4.6; Anthropic <a href="https://www.anthropic.com/news/claude-opus-4-8" target="_blank" rel="noopener">subsequently released Opus 4.8</a>, so the table is evidence of local-model capability, not a current frontier leaderboard.</p>
+<p class=""><a href="https://www.anthropic.com/news/claude-opus-4-6" target="_blank" rel="noopener">Anthropic's Opus 4.6 announcement</a> lists standard API pricing of $5 per million input tokens and $25 per million output tokens. Local inference has no per-token model-vendor charge, but still consumes hardware, integration, support, electricity, and time.</p>
+</section>
+<section class="content-section" id="hardware-and-ownership-starting-points">
+<h2>Hardware and ownership starting points</h2>
+<p class="">A 27-billion-parameter model requires about 54 GB for weights at 16-bit, 27 GB at 8-bit, or 13.5 GB at 4-bit before runtime, context, and application overhead. Those figures are arithmetic estimates, not proof of usable speed or context on a particular machine.</p>
+<p class="">Illustrative U.S. hardware examples checked on 16 August 2026:</p>
+<div class="table-scroll"><table><thead><tr><th>Starting point</th><th>Observed price</th><th>What it honestly establishes</th></tr></thead><tbody><tr><td>Reuse a current 32-64 GB computer</td><td><strong>$0 incremental</strong></td><td>A low-cost proof of fit; quantized 27B-class work may use system memory or partial-GPU offload and must be timed on the actual workflow.</td></tr><tr><td><a href="https://www.apple.com/shop/buy-mac/mac-studio/m4-max-chip-14-core-cpu-32-core-gpu-36gb-memory-512gb-storage" target="_blank" rel="noopener">Apple Mac Studio, entry configuration</a></td><td><strong>from $2,499</strong></td><td>A compact unified-memory starting point; memory must be configured for the target model, context, and concurrency.</td></tr><tr><td><a href="https://marketplace.nvidia.com/en-us/enterprise/personal-ai-supercomputers/dgx-spark/" target="_blank" rel="noopener">NVIDIA DGX Spark</a></td><td><strong>$4,699</strong></td><td>128 GB coherent unified memory and 4 TB storage in a purpose-built local AI appliance.</td></tr></tbody></table></div>
+<p class="">Prices are examples, not quotations or total project budgets. Storage, backup, integration, support, tax, security, and operating costs are additional. A machine that loads a model has not yet proved the workflow.</p>
+</section>
+<section class="content-section" id="design-rules">
+<h2>Design rules</h2>
+<ol class="prose-list">
+<li><strong>Roll out in phases.</strong> Scope the first important decision, construct the evidence foundation and connections it requires, deploy the highest-leverage application, observe the outcome, and extend only after the loop works.</li>
+<li><strong>Start with evidence.</strong> Sources and the Evidence &amp; Data Foundation come before applications.</li>
+<li><strong>Do not confuse available data with AI-ready data.</strong> Fragmented inputs must become fit for a bounded use case; organization-wide readiness adds governed reuse across applications, teams, and decisions.</li>
+<li><strong>Make applications interoperable.</strong> Every application can read traceable evidence and write governed outputs back to the foundation.</li>
+<li><strong>Separate the intelligence core from its surfaces.</strong> Govern evidence, permissions, provenance, decisions, and outcomes beneath the interface so the same capability can appear in existing or new tools without becoming trapped in one UI or chat history.</li>
+<li><strong>Orchestrate without creating a rigid pipeline.</strong> Applications can route work and share context without forcing every problem through one sequence.</li>
+<li><strong>Carry the decision record into action.</strong> Evidence, rationale, uncertainty, alternatives, constraints, and approvals travel with the decision.</li>
+<li><strong>Reconnect action to outcome.</strong> Decision traces, actions, and observed results return as learnable records.</li>
+<li><strong>Govern learning.</strong> Outcomes may improve evaluation, routing, and future decision policies, but must not silently rewrite evidence or expand an application's authority.</li>
+<li><strong>Preserve deployment choice.</strong> The owned core can run air-gapped, inside the company firewall, or in hybrid mode through logged connections.</li>
+</ol>
+</section>
+<section class="content-section" id="learning-loop-interpretation">
+<h2>Learning-loop interpretation</h2>
+<p class="">The architecture is best described as a <strong>closed-loop decision-learning system</strong>. It becomes literal reinforcement learning only when an application has a valid reward signal, an explicit policy that may change, controlled exploration, and evaluation gates that prevent harmful or misleading updates. In other cases, the foundation supports organizational learning by preserving which evidence, rationale, decision, approval, action, and outcome belonged to the same chain.</p>
+<p class="">A <strong>decision and reasoning trace</strong> does not mean a model's private chain-of-thought. It means auditable decision provenance: the sources, transformations, analyses, claims, assumptions, alternatives, uncertainties, rules, tool actions, approvals, overrides, final action, and observed outcome needed to reconstruct and evaluate why a decision was made.</p>
+</section>
+<section class="content-section" id="evidence-notes">
+<h2>Evidence notes</h2>
+<ul class="prose-list">
+<li>Application outcomes are hypotheses to validate against a buyer's baseline; no universal savings or uplift is claimed.</li>
+<li>Model scores are vendor-reported from the linked Qwen model card and should be reproduced on target workflows before procurement or deployment.</li>
+<li>Hardware prices were observed on official U.S. vendor pages on 16 August 2026 and may change.</li>
+<li>Deployment terms describe architecture choices, not automatic compliance. Security, privacy, legal, biosafety, and regulatory controls remain specific to the organization and use case.</li>
+<li>Local corpus counts were read from the working database on 17 August 2026. The corpus is CPC- and date-scoped rather than a claim of complete patent coverage; public-record matches remain signals until sources are fetched and graded for a decision.</li>
+</ul>
+</section></main>
+  <footer><div class="footer-inner"><span>Private Intelligence Network &middot; ForetoData field notes</span><span>Architecture and strategic narrative; not a security certification, legal opinion or implementation contract.</span></div></footer>
+  <dialog id="diagram-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-bar"><span class="dialog-title" id="dialog-title"></span><div class="dialog-controls"><button class="dialog-mode dialog-fit" type="button" aria-pressed="true">Fit overview</button><button class="dialog-mode dialog-read" type="button" aria-pressed="false">Readable</button><button class="dialog-close" type="button">Close</button></div></div>
+    <div class="dialog-canvas"></div>
+  </dialog>
+  <script src="assets/mermaid.min.js"></script>
+  <script>
+    const diagramDialog = document.querySelector('#diagram-dialog');
+    const dialogCanvas = diagramDialog.querySelector('.dialog-canvas');
+    const dialogTitle = diagramDialog.querySelector('.dialog-title');
+    const dialogFit = diagramDialog.querySelector('.dialog-fit');
+    const dialogRead = diagramDialog.querySelector('.dialog-read');
+    let dialogReadWidth = 1200;
+    let dialogDiagramId = '';
+    const setSvgMode = (svg, mode, readWidth) => {
+      svg.style.width = mode === 'fit' ? '100%' : `${readWidth}px`;
+      svg.style.height = 'auto';
+      svg.style.maxWidth = 'none';
+    };
+    const positionDiagram = (viewport, svg, diagramId, mode) => {
+      viewport.scrollLeft = 0;
+      viewport.scrollTop = 0;
+      if (diagramId !== '4' || mode !== 'read') return;
+      const svgRect = svg.getBoundingClientRect();
+      const startingNodes = Array.from(svg.querySelectorAll('g[class*="node default"]')).filter((node) => {
+        const label = node.textContent.replace(/\s+/g, ' ');
+        return label.includes('Evidence & Data Foundation') || label.includes('Discovery Engine');
+      });
+      if (!startingNodes.length) return;
+      const startingTop = Math.min(...startingNodes.map((node) => node.getBoundingClientRect().top - svgRect.top));
+      viewport.scrollTop = Math.max(0, startingTop - 48);
+    };
+    const setCardMode = (card, mode) => {
+      const svg = card.querySelector('svg');
+      if (!svg) return;
+      setSvgMode(svg, mode, Number(card.dataset.readWidth));
+      card.dataset.mode = mode;
+      card.querySelectorAll('.diagram-mode').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.mode === mode)));
+      positionDiagram(card.querySelector('.diagram-viewport'), svg, card.dataset.diagram, mode);
+    };
+    const setDialogMode = (mode) => {
+      const svg = dialogCanvas.querySelector('svg');
+      if (!svg) return;
+      setSvgMode(svg, mode, dialogReadWidth);
+      dialogFit.setAttribute('aria-pressed', String(mode === 'fit'));
+      dialogRead.setAttribute('aria-pressed', String(mode === 'read'));
+      positionDiagram(dialogCanvas, svg, dialogDiagramId, mode);
+    };
+    mermaid.initialize({
+      startOnLoad: false,
+      securityLevel: 'strict',
+      theme: 'base',
+      flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' },
+      themeVariables: {
+        background: '#f7f4ec', primaryColor: '#dce7e2', primaryTextColor: '#202a2a',
+        primaryBorderColor: '#58766d', lineColor: '#456a61', secondaryColor: '#e0e9e9',
+        tertiaryColor: '#e9e2d4', clusterBkg: '#f1eee6', clusterBorder: '#718d85',
+        edgeLabelBackground: '#f5f2ea',
+        fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '18px'
+      }
+    });
+    (async () => {
+      await mermaid.run({ querySelector: '.mermaid' });
+      document.querySelectorAll('.diagram-card').forEach((card) => {
+        const svg = card.querySelector('svg');
+        const viewBox = svg.viewBox.baseVal;
+        card.dataset.readWidth = String(Math.ceil(viewBox.width));
+        svg.removeAttribute('width');
+        svg.removeAttribute('height');
+        setCardMode(card, 'fit');
+        card.querySelectorAll('.diagram-mode').forEach((button) => {
+          button.addEventListener('click', () => setCardMode(card, button.dataset.mode));
+        });
+        card.querySelector('.diagram-expand').addEventListener('click', () => {
+          dialogReadWidth = Number(card.dataset.readWidth);
+          dialogDiagramId = card.dataset.diagram;
+          dialogTitle.textContent = card.querySelector('figcaption').textContent;
+          dialogCanvas.replaceChildren(svg.cloneNode(true));
+          diagramDialog.showModal();
+          setDialogMode('fit');
+        });
+      });
+      document.querySelectorAll('.application-family').forEach((family) => {
+        family.addEventListener('toggle', () => {
+          if (!family.open) return;
+          document.querySelectorAll('.application-family').forEach((other) => {
+            if (other !== family) other.open = false;
+          });
+        });
+      });
+      document.documentElement.classList.add('mermaid-ready');
+    })();
+    dialogFit.addEventListener('click', () => setDialogMode('fit'));
+    dialogRead.addEventListener('click', () => setDialogMode('read'));
+    diagramDialog.querySelector('.dialog-close').addEventListener('click', () => diagramDialog.close());
+    diagramDialog.addEventListener('click', (event) => { if (event.target === diagramDialog) diagramDialog.close(); });
+  </script>
+</body>
+</html>
