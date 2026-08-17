@@ -357,6 +357,7 @@ export type Insight = {
   published: string;
   href: string;
   external?: boolean;
+  newTab?: boolean;
   action?: string;
 };
 
@@ -367,6 +368,7 @@ export const featuredInsights: Insight[] = [
     published: 'August 2026',
     href: 'field-notes/private-intelligence-network/',
     external: false,
+    newTab: true,
     action: 'Explore the interactive field note',
   },
   {
