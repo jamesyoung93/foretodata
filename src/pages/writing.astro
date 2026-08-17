@@ -2,6 +2,9 @@
 import Base from '../layouts/Base.astro';
 import { featuredInsights, profile } from '../data/site';
 import { sitePath } from '../utils/paths';
+
+const insightHref = (insight: (typeof featuredInsights)[number]) =>
+  insight.external === false ? sitePath(insight.href) : insight.href;
 ---
 
 <Base
@@ -22,14 +25,22 @@ import { sitePath } from '../utils/paths';
     <div class="shell">
       <div class="insight-grid">
         {featuredInsights.map((insight) => (
-          <a class="insight-card" href={insight.href} target="_blank" rel="noopener noreferrer">
+          <a
+            class="insight-card"
+            href={insightHref(insight)}
+            target={insight.external === false ? undefined : '_blank'}
+            rel={insight.external === false ? undefined : 'noopener noreferrer'}
+          >
             <div class="insight-card-meta">
               <span>{insight.published}</span>
-              <span aria-hidden="true">↗</span>
+              <span aria-hidden="true">{insight.external === false ? '→' : '↗'}</span>
             </div>
             <h2>{insight.title}</h2>
             <p>{insight.description}</p>
-            <span class="card-action">Read on Substack <span aria-hidden="true">↗</span></span>
+            <span class="card-action">
+              {insight.action ?? 'Read on Substack'}
+              <span aria-hidden="true">{insight.external === false ? '→' : '↗'}</span>
+            </span>
           </a>
         ))}
       </div>

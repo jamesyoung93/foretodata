@@ -356,9 +356,19 @@ export type Insight = {
   description: string;
   published: string;
   href: string;
+  external?: boolean;
+  action?: string;
 };
 
 export const featuredInsights: Insight[] = [
+  {
+    title: 'The Private Intelligence Network',
+    description: 'An interactive field note on turning governed evidence into consequential decisions, carrying those decisions into action, and learning from what happens next.',
+    published: 'August 2026',
+    href: 'field-notes/private-intelligence-network/',
+    external: false,
+    action: 'Explore the interactive field note',
+  },
   {
     title: 'Fluent and Wrong Can Look Exactly Like Fluent and Right',
     description: 'Why conversational AI should interpret questions while governed analytical engines calculate the answers and show the evidence behind every result.',

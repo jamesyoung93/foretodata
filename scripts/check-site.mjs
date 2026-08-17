@@ -7,6 +7,7 @@ const failures = [];
 let htmlCount = 0;
 let referenceCount = 0;
 const expectedRoutes = [
+  'field-notes/private-intelligence-network',
   'writing',
   'writing/archive',
   'posts',

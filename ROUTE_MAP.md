@@ -25,7 +25,8 @@ All public routes are generated beneath the GitHub Pages base path `/foretodata/
 | `/work/independent-scientific-ml-advisory` | Redirect for retired advisory content | Preserved as a `noindex` redirect to `/work` |
 | `/research` | Connected research program | New |
 | `/publications` | Publications grouped by research program | Canonical, preserved |
-| `/writing` | Insights landing page with three current Substack essays | Canonical |
+| `/writing` | Insights landing page with one interactive field note and three current Substack essays | Canonical |
+| `/field-notes/private-intelligence-network` | Interactive Private Intelligence Network field note with downloadable PDF | New permanent field-note route |
 | `/writing/archive` | Three earlier technical notes | New archive route |
 | `/posts` | Compatibility redirect | Preserved as a `noindex` redirect to Insights at `/writing` |
 | `/posts/[slug]` | Three technical notes plus six retired paths | Curated; retired paths redirect to Insights at `/writing` |
