@@ -28,18 +28,18 @@ const insightHref = (insight: (typeof featuredInsights)[number]) =>
           <a
             class="insight-card"
             href={insightHref(insight)}
-            target={insight.external === false ? undefined : '_blank'}
-            rel={insight.external === false ? undefined : 'noopener noreferrer'}
+            target={insight.newTab || insight.external !== false ? '_blank' : undefined}
+            rel={insight.newTab || insight.external !== false ? 'noopener noreferrer' : undefined}
           >
             <div class="insight-card-meta">
               <span>{insight.published}</span>
-              <span aria-hidden="true">{insight.external === false ? '→' : '↗'}</span>
+              <span aria-hidden="true">{insight.newTab || insight.external !== false ? '↗' : '→'}</span>
             </div>
             <h2>{insight.title}</h2>
             <p>{insight.description}</p>
             <span class="card-action">
               {insight.action ?? 'Read on Substack'}
-              <span aria-hidden="true">{insight.external === false ? '→' : '↗'}</span>
+              <span aria-hidden="true">{insight.newTab || insight.external !== false ? '↗' : '→'}</span>
             </span>
           </a>
         ))}
