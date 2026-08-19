@@ -75,11 +75,18 @@
     .diagram-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; min-height: 54px; padding: .7rem 1rem; border-bottom: 1px solid rgba(63,102,93,.22); }
     .diagram-toolbar figcaption { margin-right: auto; color: var(--forest); font-size: .8rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
     .diagram-controls, .dialog-controls { display: flex; flex-wrap: wrap; gap: .4rem; }
-    .diagram-mode, .diagram-expand, .dialog-mode { border: 1px solid var(--rule); padding: .45rem .7rem; background: transparent; color: var(--forest); font: inherit; font-size: .76rem; font-weight: 800; cursor: pointer; }
-    .diagram-mode:hover, .diagram-expand:hover, .dialog-mode:hover { background: var(--pale-green); }
+    .diagram-mode, .diagram-expand, .diagram-zoom, .dialog-mode, .dialog-zoom { border: 1px solid var(--rule); padding: .45rem .7rem; background: transparent; color: var(--forest); font: inherit; font-size: .76rem; font-weight: 800; cursor: pointer; }
+    .diagram-mode:hover, .diagram-expand:hover, .diagram-zoom:hover, .dialog-mode:hover, .dialog-zoom:hover { background: var(--pale-green); }
     .diagram-mode[aria-pressed="true"], .dialog-mode[aria-pressed="true"] { border-color: var(--forest); background: var(--forest); color: white; }
+    .diagram-scale, .dialog-scale { min-width: 3.3rem; align-self: center; color: var(--muted); font-size: .74rem; font-weight: 800; text-align: center; font-variant-numeric: tabular-nums; }
     .diagram-hint { flex-basis: 100%; color: var(--muted); font-size: .76rem; line-height: 1.45; }
+    .diagram-guide { max-width: none; margin: 1.5rem 0 .8rem; padding: 1rem 1.15rem; border-left: 4px solid var(--river); background: var(--pale-blue); }
+    .diagram-guide > strong { color: var(--forest); font-size: .88rem; letter-spacing: .04em; text-transform: uppercase; }
+    .diagram-guide ol { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .65rem 1.4rem; margin: .7rem 0 0; padding-left: 1.2rem; }
+    .diagram-guide li { padding-left: .2rem; color: var(--muted); font-size: .82rem; line-height: 1.5; }
+    .diagram-guide b { color: var(--ink); }
     .diagram-viewport { overflow: auto; padding: 1.5rem; overscroll-behavior: contain; scrollbar-gutter: stable; }
+    .diagram-viewport:focus-visible { outline: 3px solid rgba(63,102,93,.45); outline-offset: -3px; }
     .diagram-viewport svg { display: block; width: auto; min-width: 0; max-width: none; height: auto; margin: auto; }
     .application-families { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 2rem 0 2.6rem; }
     .application-family { min-width: 0; border: 1px solid rgba(63,102,93,.32); background: var(--white); box-shadow: 0 8px 26px rgba(32,42,42,.06); }
@@ -118,10 +125,11 @@
       .diagram-viewport { padding: 1rem; }
       .diagram-toolbar figcaption { flex-basis: 100%; }
       .diagram-controls { width: 100%; }
+      .diagram-guide ol { grid-template-columns: 1fr; }
       .footer-inner { flex-direction: column; }
     }
     @media print {
-      .site-nav, .hero-actions, .diagram-controls, .diagram-hint, .application-families, dialog { display: none !important; }
+      .site-nav, .hero-actions, .diagram-controls, .diagram-hint, .diagram-guide, .application-families, dialog { display: none !important; }
       body { font-size: 11pt; background: white; }
       .hero { padding-top: 0; }
       .hero-art { height: 2.6in; box-shadow: none; }
@@ -189,45 +197,86 @@ flowchart LR
 <section class="content-section" id="executive-business-flow">
 <h2>Executive business flow</h2>
 <p class="">The value center is not model output. It is the decision-to-action boundary, where analysis changes research, marketing, sales, strategy, operations, or the allocation of real resources. The system preserves how each decision was reached and what happened next. This is a functional architecture, not an all-at-once implementation plan: rollout starts with the required foundation and connections, then moves through prioritized applications one at a time.</p>
+<div class="diagram-guide" aria-label="How to explore the full decision-learning architecture">
+  <strong>How to explore this architecture</strong>
+  <ol>
+    <li><b>Orient.</b> In Fit overview, read downward from sources to foundation, applications, and the decision-to-action boundary.</li>
+    <li><b>Zoom.</b> Choose Full screen, then Readable. Use the minus and plus controls for the level of detail you need.</li>
+    <li><b>Trace the loop.</b> Scroll inside the canvas—Shift + mouse wheel or the bottom scrollbar moves sideways—and follow the trace and outcome arrows back to the foundation.</li>
+  </ol>
+</div>
 <figure class="diagram-card" data-diagram="2">
                     <div class="diagram-toolbar">
-                      <figcaption>Executive business flow</figcaption>
+                      <figcaption>Full decision-learning architecture</figcaption>
                       <div class="diagram-controls" aria-label="Diagram view controls">
                         <button class="diagram-mode" data-mode="fit" type="button" aria-pressed="true">Fit overview</button>
                         <button class="diagram-mode" data-mode="read" type="button" aria-pressed="false">Readable</button>
-                        <button class="diagram-expand" type="button" aria-label="Open Executive business flow in a full-screen readable view">Full screen</button>
+                        <button class="diagram-zoom" data-step="-0.2" type="button" aria-label="Zoom out">−</button>
+                        <span class="diagram-scale" aria-live="polite">Fit</span>
+                        <button class="diagram-zoom" data-step="0.2" type="button" aria-label="Zoom in">+</button>
+                        <button class="diagram-expand" type="button" aria-label="Open Full decision-learning architecture in a full-screen readable view">Full screen</button>
                       </div>
-                      <div class="diagram-hint">The overview carries the executive argument. Use Readable or Full screen only when you want to inspect the labels in detail.</div>
+                      <div class="diagram-hint">Solid arrows carry evidence toward action. Dotted arrows preserve how the decision was made. Outcomes return both new data and a learning signal.</div>
                     </div>
-                    <div class="diagram-viewport"><pre class="mermaid">%%{init: {"flowchart": {"useMaxWidth": true, "htmlLabels": true, "nodeSpacing": 30, "rankSpacing": 42, "curve": "basis", "subGraphTitleMargin": {"top": 0, "bottom": 12}}, "themeVariables": {"fontSize": "18px"}}}%%
-flowchart LR
-    S["1. Sources and operating environment&lt;br/&gt;Public evidence + internal scientific and operational data + human judgment&lt;br/&gt;Optional external tools enter only through a governed gateway"]
-
-    subgraph LOCAL["OWNED LOCAL TRUST BOUNDARY"]
+                    <div class="diagram-viewport" tabindex="0"><pre class="mermaid">%%{init: {"flowchart": {"useMaxWidth": true, "htmlLabels": true, "nodeSpacing": 34, "rankSpacing": 42, "curve": "basis"}, "themeVariables": {"fontSize": "18px"}}}%%
+flowchart TB
+    subgraph S["1. Sources and operating environment"]
         direction LR
-        F["2. Evidence &amp; Data Foundation&lt;br/&gt;Govern, harmonize and contextualize inputs&lt;br/&gt;Create evidence products usable now and reusable later"]
-        N["3. Orchestrated Application Network&lt;br/&gt;AI-native applications + existing software&lt;br/&gt;Share context, routing and permissions"]
-        D["4. Decision-to-action boundary&lt;br/&gt;Evidence + rationale + uncertainty + alternatives&lt;br/&gt;Review leads to authorized action or deliberate no-action"]
-
-        F --&gt; N --&gt; D
+        PUB["Public evidence"]
+        INTERNAL["Internal knowledge"]
+        DATA["Scientific and operational data"]
+        HUMAN["Human questions, constraints and judgment"]
     end
 
-    L["5. Trace, evaluation and governed learning&lt;br/&gt;Capture evidence, rationale, approval, action and observed outcome&lt;br/&gt;Use the trace to improve the next decision cycle"]
+    subgraph F["2. Evidence &amp; Data Foundation — shared system of record"]
+        direction LR
+        INTAKE["Governed intake"]
+        MEANING["Catalog, semantics and identity"]
+        READY["Reusable evidence, datasets, features and state"]
+        TRACE["Decision, action and outcome trace ledger"]
+        LEARN["Evaluation and governed learning"]
 
-    S --&gt;|"controlled, permissioned intake"| F
-    D --&gt;|"action and observed outcome"| L
-    L --&gt;|"improves the next cycle"| F
+        INTAKE --&gt; MEANING --&gt; READY
+        TRACE --&gt; LEARN --&gt; READY
+    end
+
+    APPS["3. Orchestrated application network&lt;br/&gt;Applications share foundation data and hand work to one another"]
+
+    subgraph D["4. Decision-to-action boundary"]
+        direction LR
+        PACKAGE["Decision package&lt;br/&gt;evidence • rationale • uncertainty • alternatives"]
+        REVIEW["Human, policy and guardrail review"]
+        ACTION["Authorized action&lt;br/&gt;or deliberate no-action"]
+        RESULT["Observed result"]
+
+        PACKAGE --&gt; REVIEW --&gt; ACTION --&gt; RESULT
+    end
+
+    PUB --&gt; INTAKE
+    INTERNAL --&gt; INTAKE
+    DATA --&gt; INTAKE
+    HUMAN --&gt; INTAKE
+
+    READY &lt;--&gt; APPS
+    APPS --&gt; PACKAGE
+    REVIEW --&gt;|"route to another application"| APPS
+
+    PACKAGE -. "decision and rationale trace" .-&gt; TRACE
+    REVIEW -. "approval, override and rationale" .-&gt; TRACE
+    ACTION -. "execution trace" .-&gt; TRACE
+    RESULT --&gt;|"new evidence and data"| INTAKE
+    RESULT --&gt;|"outcome and learning signal"| TRACE
 
     classDef source fill:#e9e2d4,stroke:#9a8e78,color:#202a2a;
     classDef foundation fill:#dce7e2,stroke:#58766d,color:#202a2a;
     classDef application fill:#e0e9e9,stroke:#6c8584,color:#202a2a;
     classDef decision fill:#edf2ef,stroke:#58766d,color:#202a2a;
     classDef feedback fill:#f0eadc,stroke:#9a8e78,color:#202a2a;
-    class S source;
-    class F foundation;
-    class N application;
-    class D decision;
-    class L feedback;</pre></div>
+    class PUB,INTERNAL,DATA,HUMAN source;
+    class INTAKE,MEANING,READY foundation;
+    class TRACE,LEARN feedback;
+    class APPS application;
+    class PACKAGE,REVIEW,ACTION,RESULT decision;</pre></div>
                   </figure>
 <h3 id="one-intelligence-core-many-surfaces">One intelligence core, many surfaces</h3>
 <div class="table-scroll"><table><thead><tr><th>Layer</th><th>Examples</th><th>Design rule</th></tr></thead><tbody><tr><td><strong>Governed core</strong></td><td>Relational data, documents, vectors, event logs, semantic layers, knowledge graphs, permissions, and traces.</td><td>Choose the representation that fits the decision; it is not the user experience.</td></tr><tr><td><strong>Delivery surfaces</strong></td><td>CRM, ERP, LIMS, dashboards, custom applications, desktop or operating-system tools, agents, and chat.</td><td>Surface intelligence where people already work.</td></tr><tr><td><strong>Durable record</strong></td><td>Evidence, transformations, decisions, approvals, actions, and outcomes.</td><td>A chat log can be interaction evidence, but it is not the canonical state.</td></tr></tbody></table></div>
@@ -273,7 +322,7 @@ flowchart LR
 </section>
 <section class="content-section" id="application-network-and-potential-outcomes">
 <h2>Application network and potential outcomes</h2>
-<p class="">The collapsed view is the executive argument. It is complete without the detail: the shared foundation supports discovery, learning, and action; the observed result returns as governed evidence. On the website, select a family to inspect its applications and recognition-phrased potential outcomes.</p>
+<p class="">The collapsed view is the executive argument. It is complete without the detail: the shared foundation supports discovery, learning, and action; the observed result returns as governed evidence. The detailed topology that follows shows common application-to-application handoffs without turning the network into one mandatory pipeline.</p>
 <figure class="diagram-card" data-diagram="4">
                     <div class="diagram-toolbar">
                       <figcaption>Application network and potential outcomes</figcaption>
@@ -306,6 +355,85 @@ flowchart LR
     class ACT decide;
     class TRACE trace;</pre></div>
                   </figure>
+<h3 id="detailed-application-topology">Detailed application topology</h3>
+<p class="">This is the extensible map beneath the collapsed view. It names the current application families while preserving the central design rule: every application can reuse governed context and return a traceable record to the shared foundation.</p>
+<div class="diagram-guide" aria-label="How to explore the detailed application topology">
+  <strong>How to explore this architecture</strong>
+  <ol>
+    <li><b>Orient.</b> Begin at the Evidence &amp; Data Foundation, then Shared application context and handoffs.</li>
+    <li><b>Zoom.</b> Open Full screen, choose Readable, and use the minus and plus controls until individual application labels are comfortable to read.</li>
+    <li><b>Follow a path.</b> Start with Discovery Engine, trace one plausible handoff, then scroll across the map. The arrows are common routes—not a required sequence.</li>
+  </ol>
+</div>
+<figure class="diagram-card" data-diagram="5">
+                    <div class="diagram-toolbar">
+                      <figcaption>Detailed application topology and common handoffs</figcaption>
+                      <div class="diagram-controls" aria-label="Diagram view controls">
+                        <button class="diagram-mode" data-mode="fit" type="button" aria-pressed="true">Fit overview</button>
+                        <button class="diagram-mode" data-mode="read" type="button" aria-pressed="false">Readable</button>
+                        <button class="diagram-zoom" data-step="-0.2" type="button" aria-label="Zoom out">−</button>
+                        <span class="diagram-scale" aria-live="polite">Fit</span>
+                        <button class="diagram-zoom" data-step="0.2" type="button" aria-label="Zoom in">+</button>
+                        <button class="diagram-expand" type="button" aria-label="Open Detailed application topology and common handoffs in a full-screen readable view">Full screen</button>
+                      </div>
+                      <div class="diagram-hint">Solid arrows show common handoffs. The shared context layer means every application can also read from and write traceable records to the foundation.</div>
+                    </div>
+                    <div class="diagram-viewport" tabindex="0"><pre class="mermaid">%%{init: {"flowchart": {"useMaxWidth": true, "htmlLabels": true, "nodeSpacing": 34, "rankSpacing": 48, "curve": "basis"}, "themeVariables": {"fontSize": "18px"}}}%%
+flowchart TB
+    FOUNDATION["Evidence &amp; Data Foundation"]
+    CONTEXT["Shared application context and handoffs"]
+
+    FOUNDATION &lt;--&gt; CONTEXT
+
+    subgraph A["Application layer — extensible and orchestrated"]
+        direction TB
+
+        DISCOVERY["Discovery Engine&lt;br/&gt;Find problems with real stakes and demand"]
+        RESEARCH["Research Engine&lt;br/&gt;Analyze literature and actual datasets"]
+        EXPERIMENT["Experiment &amp; Active-Learning Engine&lt;br/&gt;Choose informative next tests"]
+        PROCESS["Bioprocess Intelligence&lt;br/&gt;Golden batch • drift • quality • optimization"]
+        BIOMOLECULAR["Biomolecular Discovery&lt;br/&gt;Structure • sequence • variants • candidates"]
+        FORECAST["Forecasting &amp; Operational Intelligence&lt;br/&gt;Risk • demand • failure • trajectory"]
+        RESOURCE["Resource Allocation Intelligence&lt;br/&gt;People • budget • capacity • portfolio"]
+        REGULATORY["Regulatory &amp; Evidence Monitoring&lt;br/&gt;Changes • obligations • evidence gaps"]
+        OPTIMIZE["Decision &amp; Optimization Engine&lt;br/&gt;Actions • constraints • tradeoffs"]
+        WORKFLOW["Governed Workflow Applications&lt;br/&gt;Briefs • copilots • reviews • collaboration"]
+
+        DISCOVERY --&gt;|"selected problem"| RESEARCH
+        RESEARCH &lt;--&gt; |"evidence gaps and results"| EXPERIMENT
+        RESEARCH &lt;--&gt; PROCESS
+        RESEARCH &lt;--&gt; BIOMOLECULAR
+        RESEARCH &lt;--&gt; FORECAST
+        RESEARCH &lt;--&gt; REGULATORY
+        PROCESS --&gt; OPTIMIZE
+        BIOMOLECULAR --&gt; EXPERIMENT
+        FORECAST --&gt; OPTIMIZE
+        RESOURCE &lt;--&gt; OPTIMIZE
+        REGULATORY --&gt; OPTIMIZE
+        EXPERIMENT --&gt; OPTIMIZE
+        OPTIMIZE --&gt; WORKFLOW
+        WORKFLOW -. "new question or unresolved decision" .-&gt; DISCOVERY
+    end
+
+    CONTEXT &lt;--&gt; DISCOVERY
+    CONTEXT &lt;--&gt; RESEARCH
+    CONTEXT &lt;--&gt; EXPERIMENT
+    CONTEXT &lt;--&gt; PROCESS
+    CONTEXT &lt;--&gt; BIOMOLECULAR
+    CONTEXT &lt;--&gt; FORECAST
+    CONTEXT &lt;--&gt; RESOURCE
+    CONTEXT &lt;--&gt; REGULATORY
+    CONTEXT &lt;--&gt; OPTIMIZE
+    CONTEXT &lt;--&gt; WORKFLOW
+
+    classDef foundation fill:#dce7e2,stroke:#58766d,color:#202a2a;
+    classDef context fill:#e9e2d4,stroke:#9a8e78,color:#202a2a;
+    classDef application fill:#e0e9e9,stroke:#6c8584,color:#202a2a;
+    class FOUNDATION foundation;
+    class CONTEXT context;
+    class DISCOVERY,RESEARCH,EXPERIMENT,PROCESS,BIOMOLECULAR,FORECAST,RESOURCE,REGULATORY,OPTIMIZE,WORKFLOW application;</pre></div>
+                  </figure>
+<p class="">Use the expandable families below as the business translation of the technical map: what each application does and what a useful outcome could look like in the reader's world.</p>
 <div class="application-families" aria-label="Application family details">
 <details class="application-family" id="shared-substrate-and-delivery-surfaces"><summary><span class="family-name">Shared substrate and delivery surfaces</span><span class="family-action">Inspect applications + outcomes</span></summary><div class="family-panel">
 <div class="table-scroll"><table><thead><tr><th>Capability</th><th>Function</th><th>Potential outcome in the reader's world</th></tr></thead><tbody><tr><td>Evidence &amp; Data Foundation</td><td>Govern sources, provenance, grades, permissions, and reusable records.</td><td>The source, permission, and confidence travel with the claim.</td></tr><tr><td>Shared context and handoffs</td><td>Carry relevant state between applications without one rigid chain.</td><td>The next application begins with what the organization already knows.</td></tr><tr><td>Existing software and interfaces</td><td>Surface intelligence through systems of record, dashboards, desktop tools, and chat.</td><td>The answer appears where the work already happens.</td></tr><tr><td>Optional governed gateway</td><td>Connect selected tasks to external SaaS or frontier models.</td><td>External capability remains available without surrendering the local system of record.</td></tr></tbody></table></div>
@@ -384,7 +512,7 @@ flowchart LR
 </section></main>
   <footer><div class="footer-inner"><span>Private Intelligence Network &middot; ForetoData field notes</span><span>Architecture and strategic narrative; not a security certification, legal opinion or implementation contract.</span></div></footer>
   <dialog id="diagram-dialog" aria-labelledby="dialog-title">
-    <div class="dialog-bar"><span class="dialog-title" id="dialog-title"></span><div class="dialog-controls"><button class="dialog-mode dialog-fit" type="button" aria-pressed="true">Fit overview</button><button class="dialog-mode dialog-read" type="button" aria-pressed="false">Readable</button><button class="dialog-close" type="button">Close</button></div></div>
+    <div class="dialog-bar"><span class="dialog-title" id="dialog-title"></span><div class="dialog-controls"><button class="dialog-mode dialog-fit" type="button" aria-pressed="true">Fit overview</button><button class="dialog-mode dialog-read" type="button" aria-pressed="false">Readable</button><button class="dialog-zoom dialog-zoom-out" type="button" aria-label="Zoom out">−</button><span class="dialog-scale" aria-live="polite">Fit</span><button class="dialog-zoom dialog-zoom-in" type="button" aria-label="Zoom in">+</button><button class="dialog-close" type="button">Close</button></div></div>
     <div class="dialog-canvas"></div>
   </dialog>
   <script src="assets/mermaid.min.js"></script>
@@ -394,17 +522,20 @@ flowchart LR
     const dialogTitle = diagramDialog.querySelector('.dialog-title');
     const dialogFit = diagramDialog.querySelector('.dialog-fit');
     const dialogRead = diagramDialog.querySelector('.dialog-read');
+    const dialogZoomOut = diagramDialog.querySelector('.dialog-zoom-out');
+    const dialogZoomIn = diagramDialog.querySelector('.dialog-zoom-in');
+    const dialogScale = diagramDialog.querySelector('.dialog-scale');
     let dialogReadWidth = 1200;
     let dialogDiagramId = '';
-    const setSvgMode = (svg, mode, readWidth) => {
-      svg.style.width = mode === 'fit' ? '100%' : `${readWidth}px`;
+    const setSvgMode = (svg, mode, readWidth, scale = 1) => {
+      svg.style.width = mode === 'fit' ? '100%' : `${Math.round(readWidth * scale)}px`;
       svg.style.height = 'auto';
       svg.style.maxWidth = 'none';
     };
     const positionDiagram = (viewport, svg, diagramId, mode) => {
       viewport.scrollLeft = 0;
       viewport.scrollTop = 0;
-      if (diagramId !== '4' || mode !== 'read') return;
+      if (diagramId !== '5' || mode === 'fit') return;
       const svgRect = svg.getBoundingClientRect();
       const startingNodes = Array.from(svg.querySelectorAll('g[class*="node default"]')).filter((node) => {
         const label = node.textContent.replace(/\s+/g, ' ');
@@ -419,8 +550,24 @@ flowchart LR
       if (!svg) return;
       setSvgMode(svg, mode, Number(card.dataset.readWidth));
       card.dataset.mode = mode;
+      card.dataset.scale = '1';
       card.querySelectorAll('.diagram-mode').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.mode === mode)));
+      const scaleLabel = card.querySelector('.diagram-scale');
+      if (scaleLabel) scaleLabel.textContent = mode === 'fit' ? 'Fit' : '100%';
       positionDiagram(card.querySelector('.diagram-viewport'), svg, card.dataset.diagram, mode);
+    };
+    const zoomCard = (card, step) => {
+      const svg = card.querySelector('svg');
+      if (!svg) return;
+      const readWidth = Number(card.dataset.readWidth);
+      const displayedScale = svg.getBoundingClientRect().width / readWidth;
+      const nextScale = Math.min(2.4, Math.max(0.5, displayedScale + step));
+      setSvgMode(svg, 'read', readWidth, nextScale);
+      card.dataset.mode = 'zoom';
+      card.dataset.scale = String(nextScale);
+      card.querySelectorAll('.diagram-mode').forEach((button) => button.setAttribute('aria-pressed', 'false'));
+      const scaleLabel = card.querySelector('.diagram-scale');
+      if (scaleLabel) scaleLabel.textContent = `${Math.round(nextScale * 100)}%`;
     };
     const setDialogMode = (mode) => {
       const svg = dialogCanvas.querySelector('svg');
@@ -428,7 +575,18 @@ flowchart LR
       setSvgMode(svg, mode, dialogReadWidth);
       dialogFit.setAttribute('aria-pressed', String(mode === 'fit'));
       dialogRead.setAttribute('aria-pressed', String(mode === 'read'));
+      dialogScale.textContent = mode === 'fit' ? 'Fit' : '100%';
       positionDiagram(dialogCanvas, svg, dialogDiagramId, mode);
+    };
+    const zoomDialog = (step) => {
+      const svg = dialogCanvas.querySelector('svg');
+      if (!svg) return;
+      const displayedScale = svg.getBoundingClientRect().width / dialogReadWidth;
+      const nextScale = Math.min(2.4, Math.max(0.5, displayedScale + step));
+      setSvgMode(svg, 'read', dialogReadWidth, nextScale);
+      dialogFit.setAttribute('aria-pressed', 'false');
+      dialogRead.setAttribute('aria-pressed', 'false');
+      dialogScale.textContent = `${Math.round(nextScale * 100)}%`;
     };
     mermaid.initialize({
       startOnLoad: false,
@@ -455,6 +613,9 @@ flowchart LR
         card.querySelectorAll('.diagram-mode').forEach((button) => {
           button.addEventListener('click', () => setCardMode(card, button.dataset.mode));
         });
+        card.querySelectorAll('.diagram-zoom').forEach((button) => {
+          button.addEventListener('click', () => zoomCard(card, Number(button.dataset.step)));
+        });
         card.querySelector('.diagram-expand').addEventListener('click', () => {
           dialogReadWidth = Number(card.dataset.readWidth);
           dialogDiagramId = card.dataset.diagram;
@@ -476,6 +637,8 @@ flowchart LR
     })();
     dialogFit.addEventListener('click', () => setDialogMode('fit'));
     dialogRead.addEventListener('click', () => setDialogMode('read'));
+    dialogZoomOut.addEventListener('click', () => zoomDialog(-0.2));
+    dialogZoomIn.addEventListener('click', () => zoomDialog(0.2));
     diagramDialog.querySelector('.dialog-close').addEventListener('click', () => diagramDialog.close());
     diagramDialog.addEventListener('click', (event) => { if (event.target === diagramDialog) diagramDialog.close(); });
   </script>
